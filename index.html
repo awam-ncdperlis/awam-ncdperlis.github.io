@@ -1,157 +1,629 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="ms" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Saringan & Penilaian Kesihatan Mental | JKN Perlis</title>
+    <title>Portal Informasi & Saringan NCD | JKN Perlis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="favicon/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: '#6EBF32',
-                        'brand-dark': '#5aa825',
-                        'brand-light': '#f0f9e8'
+                        brand: {
+                            blue: '#0284C7',     /* Biru Avast Tech */
+                            blueDark: '#0369A1',
+                            green: '#10B981',    /* Hijau KKM Kesihatan */
+                            greenDark: '#059669',
+                            lightBg: '#F8FAFC',
+                            cardBg: '#FFFFFF'
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* 📜 FULL PAGE SCROLL / SECTION SNAP ENGINE */
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-section {
+            height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
+
+        /* Hide scrollbar for clean visual */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .hero-slide { opacity: 0; transition: opacity 0.8s ease-in-out; }
+        .hero-slide.active { opacity: 1; }
+
+        .tab-btn.active {
+            background-color: #0284C7;
+            color: #FFFFFF;
+            font-weight: 800;
+        }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 antialiased flex flex-col justify-between">
 
-    <!-- 🌐 HEADER / NAVBAR UTAMA -->
-    <header class="w-full bg-white border-b border-slate-100 px-4 py-3.5 sticky top-0 z-30 shadow-xs">
-        <div class="max-w-5xl mx-auto flex items-center justify-between">
+<!-- 🖼️ 2. TEMPAT MASUKKAN LINK GAMBAR LATAR BELAKANG WEBSITE 
+     Gantikan 'URL_GAMBAR_LATAR_ANDA_DI_SINI' dengan link/path gambar anda (e.g., 'images/bg.webp' atau 'https://...'). -->
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-blue selection:text-white bg-cover bg-center bg-fixed"
+      style="background-image: linear-gradient(to bottom, rgba(248, 250, 252, 0.94), rgba(248, 250, 252, 0.96)), url('URL_GAMBAR_LATAR_ANDA_DI_SINI');">
+
+    <!-- 📌 TOP NAVIGATION BAR (STICKY) -->
+    <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200/80 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+            
             <div class="flex items-center gap-3">
-                <img src="images/logo.png" alt="Logo KKM" class="h-9 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/6EBF32/ffffff?text=KKM';">
-                <img src="images/logo-ncd/logo-ncd-default.png" alt="Logo NCD" class="h-9 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x80/6EBF32/ffffff?text=NCD';">
+                <img src="images/logo.png" alt="Logo KKM" class="h-9 sm:h-10 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/0284C7/ffffff?text=KKM';">
                 <div class="h-6 w-[1px] bg-slate-200 hidden sm:block"></div>
-                <div class="hidden sm:block">
-                    <h1 class="text-xs font-black text-slate-900 tracking-wider uppercase leading-none">
-                        Kempen Hentikan Stigma
+                <div>
+                    <h1 class="text-xs font-black tracking-tight text-slate-900 uppercase leading-none">
+                        Unit NCD & Kesihatan Mental
                     </h1>
-                    <span class="text-[10px] text-slate-400 font-semibold">Jabatan Kesihatan Negeri Perlis</span>
+                    <span class="text-[10px] text-slate-500 font-semibold mt-0.5 block">Jabatan Kesihatan Negeri Perlis</span>
                 </div>
             </div>
 
-            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#5aa825] bg-brand-light px-3 py-1 rounded-full border border-[#6EBF32]/20">
-                Portal Akses Awam
-            </span>
+            <!-- 🌐 1. TOGGLE BAHASA (BM | EN) GANTI BUTTON KANAN -->
+            <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-full border border-slate-200/80 text-xs font-extrabold">
+                <button id="btnBM" onclick="tukarBahasa('BM')" class="px-3 py-1 rounded-full bg-brand-blue text-white shadow-xs transition-all">
+                    BM
+                </button>
+                <button id="btnEN" onclick="tukarBahasa('EN')" class="px-3 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all">
+                    EN
+                </button>
+            </div>
+
         </div>
     </header>
 
-    <!-- 🚀 KANDUNGAN UTAMA / HERO & SENARAI SISTEM -->
-    <main class="flex-1 w-full max-w-5xl mx-auto p-4 sm:p-6 space-y-6 my-auto">
+    <!-- 📜 CONTAINER UTAMA FULL PAGE SCROLL -->
+    <div class="scroll-container no-scrollbar">
 
-        <!-- BANNER TAJUK UTAMA -->
-        <div class="text-center space-y-2 max-w-2xl mx-auto pt-2">
-            <span class="text-[10px] font-extrabold text-[#5aa825] uppercase tracking-widest bg-brand-light px-3 py-1 rounded-full border border-[#6EBF32]/20">
-                Sistem Digital Interaktif
-            </span>
-            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                Pusat Akses Saringan & Penilaian Komuniti
-            </h1>
-            <p class="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
-                Sila pilih borang atau sistem di bawah untuk melengkapkan soal selidik program. Terima kasih atas sokongan anda dalam menjayakan Kempen Hentikan Stigma Kesihatan Mental.
-            </p>
-        </div>
+        <!-- 🌟 SEKSYEN 1: HERO BANNER (FULL SCREEN SNAP) -->
+        <section class="scroll-section relative pt-20 border-b border-slate-200">
+            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 my-auto space-y-6">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <!-- TEKS UTAMA -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="inline-flex items-center gap-2 bg-sky-50 border border-sky-200/80 px-3.5 py-1.5 rounded-full text-xs font-bold text-brand-blue">
+                            <span>🛡️</span>
+                            <span data-lang-bm="Perkhidmatan Kesihatan Komuniti KKM" data-lang-en="MOH Community Health Services">Perkhidmatan Kesihatan Komuniti KKM</span>
+                        </div>
 
-        <!-- GRID SENARAI SISTEM (2 SISTEM UTAMA) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-
-            <!-- KAD 1: SISTEM STIG-9 KOMUNITI -->
-            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:border-[#6EBF32]/40 transition-all flex flex-col justify-between space-y-5 group">
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="w-12 h-12 bg-brand-light text-[#5aa825] rounded-2xl flex items-center justify-center text-2xl font-black group-hover:scale-105 transition-all">
-                            🧠
-                        </span>
-                        <span class="text-[9px] font-extrabold uppercase tracking-wider text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
-                            Instrumen STIG-9
-                        </span>
-                    </div>
-
-                    <div>
-                        <h2 class="text-lg font-black text-slate-900 tracking-tight group-hover:text-[#5aa825] transition-colors">
-                            Soal Selidik Profil Stigma Komuniti (STIG-9)
+                        <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight" data-lang-bm="Perlindungan Kesihatan & Minda Komuniti Perlis." data-lang-en="Health & Mental Protection for Perlis Community.">
+                            Perlindungan Kesihatan & Minda Komuniti Perlis.
                         </h2>
-                        <p class="text-xs text-slate-500 font-medium leading-relaxed mt-1">
-                            Ujian saringan khas 9 soalan bagi menilai persepsi, stigma, dan pandangan masyarakat awam terhadap isu kesihatan mental di dalam komuniti.
+
+                        <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed" data-lang-bm="Akses modul saringan kesihatan mental, penilaian keberkesanan program, dan direktori 14 inisiatif rasmi Unit Kawalan Penyakit Tidak Berjangkit (NCD) JKN Perlis." data-lang-en="Access mental health screening modules, program effectiveness evaluations, and the official directory of 14 NCD initiatives by JKN Perlis.">
+                            Akses modul saringan kesihatan mental, penilaian keberkesanan program, dan direktori 14 inisiatif rasmi Unit Kawalan Penyakit Tidak Berjangkit (NCD) JKN Perlis.
                         </p>
+
+                        <div class="pt-2 flex flex-wrap gap-3">
+                            <a href="#saringan" class="bg-brand-green hover:bg-brand-greenDark text-white font-black text-xs px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-all flex items-center gap-2">
+                                <span data-lang-bm="Mula Ujian STIG-9" data-lang-en="Start STIG-9 Test">Mula Ujian STIG-9</span>
+                                <span>↓</span>
+                            </a>
+                            <a href="#direktori" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs px-6 py-3.5 rounded-xl border border-slate-200 transition-all" data-lang-bm="Terokai 14 Program NCD" data-lang-en="Explore 14 NCD Programs">
+                                Terokai 14 Program NCD
+                            </a>
+                        </div>
                     </div>
 
-                    <div class="pt-1 flex flex-wrap gap-2 text-[10px] font-bold text-slate-400">
-                        <span class="bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">🌐 5 Bahasa (BM/EN/ZH/TA/TH)</span>
-                        <span class="bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">⏱️ ~3 Minit</span>
+                    <!-- SLIDER KARDUTAMA -->
+                    <div class="lg:col-span-5 bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-200 relative min-h-[280px] sm:min-h-[320px] flex flex-col justify-end p-6 text-white">
+                        <div id="heroSliderContainer" class="absolute inset-0 z-0">
+                            <img src="images/banner-1.webp" alt="Banner 1" class="hero-slide active absolute inset-0 w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80';">
+                            <img src="images/banner-2.webp" alt="Banner 2" class="hero-slide absolute inset-0 w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1000&q=80';">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent z-10"></div>
+                        
+                        <div class="relative z-20 space-y-1">
+                            <span class="text-[10px] font-black uppercase tracking-wider text-brand-green bg-emerald-950/80 px-2.5 py-0.5 rounded border border-emerald-500/30" data-lang-bm="Advokasi Utama" data-lang-en="Main Advocacy">Advokasi Utama</span>
+                            <h3 class="text-base font-extrabold text-white" data-lang-bm="Kempen Hentikan Stigma Kesihatan Mental" data-lang-en="Stop Mental Health Stigma Campaign">Kempen Hentikan Stigma Kesihatan Mental</h3>
+                            <p class="text-xs text-slate-300" data-lang-bm="Pendidikan awal kesihatan minda sejahtera komuniti Perlis." data-lang-en="Early mental health awareness for Perlis community.">Pendidikan awal kesihatan minda sejahtera komuniti Perlis.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            
+            <div class="text-center py-3 text-slate-400 text-xs font-bold animate-bounce" data-lang-bm="Tatal ke bawah untuk borang saringan ↓" data-lang-en="Scroll down for screening forms ↓">
+                Tatal ke bawah untuk borang saringan ↓
+            </div>
+        </section>
+
+        <!-- 🚀 SEKSYEN 2: DUA BORANG UTAMA (FULL SCREEN SNAP) -->
+        <section id="saringan" class="scroll-section relative pt-20 border-b border-slate-200">
+            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 my-auto space-y-6">
+                
+                <div class="space-y-1">
+                    <span class="text-xs font-extrabold text-brand-blue uppercase tracking-wider" data-lang-bm="Modul Interaktif" data-lang-en="Interactive Module">Modul Interaktif</span>
+                    <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" data-lang-bm="Modul Saringan & Maklum Balas Awam" data-lang-en="Public Screening & Feedback Module">Modul Saringan & Maklum Balas Awam</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 font-medium" data-lang-bm="Sila pilih borang digital yang berkaitan untuk tindakan anda." data-lang-en="Please select the relevant digital form for your action.">Sila pilih borang digital yang berkaitan untuk tindakan anda.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- CARD 1: STIG-9 -->
+                    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-brand-blue hover:shadow-xl transition-all flex flex-col justify-between space-y-6 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="w-12 h-12 rounded-2xl bg-sky-50 text-brand-blue border border-sky-100 flex items-center justify-center text-2xl font-black">
+                                    🧠
+                                </span>
+                                <span class="text-[10px] font-black uppercase tracking-wider text-brand-blue bg-sky-50 px-3 py-1 rounded-full border border-sky-100" data-lang-bm="Saringan Utama" data-lang-en="Main Screening">
+                                    Saringan Utama
+                                </span>
+                            </div>
+
+                            <div class="space-y-1">
+                                <h4 class="text-xl font-black text-slate-900 group-hover:text-brand-blue transition-colors" data-lang-bm="Soal Selidik STIG-9 Komuniti" data-lang-en="STIG-9 Community Questionnaire">
+                                    Soal Selidik STIG-9 Komuniti
+                                </h4>
+                                <p class="text-xs text-slate-500 font-medium leading-relaxed" data-lang-bm="Instrumen saringan 9 soalan bagi mengukur tahap persepsi dan stigma kesihatan mental di dalam masyarakat." data-lang-en="A 9-question screening tool measuring public perception and mental health stigma in society.">
+                                    Instrumen saringan 9 soalan bagi mengukur tahap persepsi dan stigma kesihatan mental di dalam masyarakat.
+                                </p>
+                            </div>
+                        </div>
+
+                        <a href="stig9/index.html" class="w-full py-3.5 bg-brand-blue hover:bg-brand-blueDark text-white font-extrabold text-xs rounded-xl text-center shadow-md active:scale-95 transition-all block" data-lang-bm="Jawab Soal Selidik STIG-9 →" data-lang-en="Answer STIG-9 Questionnaire →">
+                            Jawab Soal Selidik STIG-9 →
+                        </a>
+                    </div>
+
+                    <!-- CARD 2: BORANG KEBERKESANAN -->
+                    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-brand-green hover:shadow-xl transition-all flex flex-col justify-between space-y-6 group">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-brand-green border border-emerald-100 flex items-center justify-center text-2xl font-black">
+                                    📊
+                                </span>
+                                <span class="text-[10px] font-black uppercase tracking-wider text-brand-green bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100" data-lang-bm="Lampiran B KKM" data-lang-en="MOH Appendix B">
+                                    Lampiran B KKM
+                                </span>
+                            </div>
+
+                            <div class="space-y-1">
+                                <h4 class="text-xl font-black text-slate-900 group-hover:text-brand-green transition-colors" data-lang-bm="Borang Penilaian Keberkesanan" data-lang-en="Program Effectiveness Evaluation Form">
+                                    Borang Penilaian Keberkesanan
+                                </h4>
+                                <p class="text-xs text-slate-500 font-medium leading-relaxed" data-lang-bm="Maklum balas peserta program untuk mengukur tahap kepuasan dan amalan penjagaan kendiri (self-care)." data-lang-en="Participant feedback to measure satisfaction levels and self-care practices.">
+                                    Maklum balas peserta program untuk mengukur tahap kepuasan dan amalan penjagaan kendiri (*self-care*).
+                                </p>
+                            </div>
+                        </div>
+
+                        <a href="borang-keberkesanan.html" class="w-full py-3.5 bg-brand-green hover:bg-brand-greenDark text-white font-extrabold text-xs rounded-xl text-center shadow-md active:scale-95 transition-all block" data-lang-bm="Isi Borang Keberkesanan →" data-lang-en="Fill Effectiveness Form →">
+                            Isi Borang Keberkesanan →
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 📂 SEKSYEN 3: DIREKTORI 14 PROGRAM NCD (FULL SCREEN SNAP) -->
+        <section id="direktori" class="scroll-section relative pt-20">
+            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 my-auto space-y-5">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs font-extrabold text-brand-blue uppercase tracking-wider" data-lang-bm="Direktori Rasmi" data-lang-en="Official Directory">Direktori Rasmi</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight" data-lang-bm="14 Program Pemantauan NCD JKN Perlis" data-lang-en="14 NCD Monitoring Programs JKN Perlis">14 Program Pemantauan NCD JKN Perlis</h3>
+                    </div>
+
+                    <!-- TAB FILTERS -->
+                    <div class="flex flex-wrap gap-2 text-xs font-bold">
+                        <button onclick="filterProgram('all')" class="tab-btn active px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Semua" data-lang-en="All">Semua</button>
+                        <button onclick="filterProgram('kronik')" class="tab-btn px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Kronik" data-lang-en="Chronic">Kronik</button>
+                        <button onclick="filterProgram('kanser')" class="tab-btn px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Kanser" data-lang-en="Cancer">Kanser</button>
+                        <button onclick="filterProgram('komuniti')" class="tab-btn px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Komuniti" data-lang-en="Community">Komuniti</button>
                     </div>
                 </div>
 
-                <!-- PAUTAN / LINK KE STIG-9 -->
-                <a href="stig9/index.html" class="w-full py-3.5 bg-[#6EBF32] hover:bg-[#5aa825] text-white font-extrabold text-xs rounded-xl shadow-md shadow-emerald-600/20 active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <span>Mula Saringan STIG-9</span>
-                    <span>→</span>
-                </a>
-            </div>
+                <!-- GRID 14 PROGRAM -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-h-[55vh] overflow-y-auto pr-1" id="programGrid">
 
-            <!-- KAD 2: BORANG PENILAIAN KEBERKESANAN PROGRAM -->
-            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-xl hover:shadow-2xl hover:border-[#6EBF32]/40 transition-all flex flex-col justify-between space-y-5 group">
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="w-12 h-12 bg-brand-light text-[#5aa825] rounded-2xl flex items-center justify-center text-2xl font-black group-hover:scale-105 transition-all">
-                            📊
-                        </span>
-                        <span class="text-[9px] font-extrabold uppercase tracking-wider text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
-                            Lampiran B KKM
-                        </span>
+                    <!-- 1. DIABETES -->
+                    <div onclick="bukaModal('p1')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-1.jpg" alt="Diabetes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">01</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Diabetes Mellitus</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Kawalan gula darah, ujian HbA1c, & Pinggan Sihat.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
                     </div>
 
-                    <div>
-                        <h2 class="text-lg font-black text-slate-900 tracking-tight group-hover:text-[#5aa825] transition-colors">
-                            Borang Penilaian Keberkesanan Program
-                        </h2>
-                        <p class="text-xs text-slate-500 font-medium leading-relaxed mt-1">
-                            Borang maklum balas peserta untuk mengukur kepuasan, kefahaman amalan penjagaan kendiri (*self-care*), dan pendedahan logo kempen.
-                        </p>
+                    <!-- 2. HIPERTENSI -->
+                    <div onclick="bukaModal('p2')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-2.jpg" alt="Hipertensi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">02</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Hipertensi</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Pemantauan tekanan darah & kawalan garam.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
                     </div>
 
-                    <div class="pt-1 flex flex-wrap gap-2 text-[10px] font-bold text-slate-400">
-                        <span class="bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">🎯 Autofill Acara</span>
-                        <span class="bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100">⏱️ ~2 Minit</span>
+                    <!-- 3. MEROKOK -->
+                    <div onclick="bukaModal('p3')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-3.jpg" alt="Merokok" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">03</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Merokok (mQuit)</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Klinik mQuit berhenti merokok & kawalan vape.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
                     </div>
+
+                    <!-- 4. OSCA & ALKOHOL -->
+                    <div onclick="bukaModal('p4')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-4.jpg" alt="OSCA & Alkohol" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">04</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program OSCA & Alkohol</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">One Stop Centre for Addiction penyalahgunaan bahan.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. KANSER KOLOREKTAL -->
+                    <div onclick="bukaModal('p5')" data-kat="kanser" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-5.jpg" alt="Kanser Kolorektal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">05</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Saringan Kanser Kolorektal</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Kit saringan iFOBT kanser usus sasaran 50-75 tahun.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. VERBAL AUTOPSY -->
+                    <div onclick="bukaModal('p6')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-6.jpg" alt="Verbal Autopsy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">06</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Verbal Autopsy</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Penyiasatan punca kematian luar hospital NCD.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 7. OSCC DAN SCAN -->
+                    <div onclick="bukaModal('p7')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-7.jpg" alt="OSCC & SCAN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">07</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program OSCC dan SCAN</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Bantuan krisis keganasan rumahtangga & penderaan.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 8. KOSPEN -->
+                    <div onclick="bukaModal('p8')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-8.jpg" alt="KOSPEN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">08</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program KOSPEN</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Sukarelawan komuniti bagi saringan NCD akar umbi.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 9. KESIHATAN MENTAL -->
+                    <div onclick="bukaModal('p9')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-9.jpg" alt="Kesihatan Mental" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">09</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Kesihatan Mental</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Saringan DASS-21, Talian HEAL 15555, & Hentikan Stigma.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 10. NHSI -->
+                    <div onclick="bukaModal('p10')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-10.jpg" alt="NHSI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">10</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Saringan NHSI</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">National Health Screening Initiative percuma umur 18+.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 11. VENDING MACHINE -->
+                    <div onclick="bukaModal('p11')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-11.jpg" alt="Vending Machine" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">11</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Vending Machine</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Pemantauan garis panduan minuman sihat mesin layan diri.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 12. CANCER REGISTRY -->
+                    <div onclick="bukaModal('p12')" data-kat="kanser" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-12.jpg" alt="Cancer Registry" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">12</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Cancer Registry</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Pendaftaran & analisis epidemologi kes kanser Perlis.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 13. OBESITI -->
+                    <div onclick="bukaModal('p13')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-13.jpg" alt="Pengurusan Obesiti" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">13</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Pengurusan Obesiti</h4>
+                                <p class="text-[11px] text-slate-500 line-clamp-2">Intervensi berat badan, kawalan BMI, & gaya hidup aktif.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
+                    <!-- 14. PERLIS SIHAT SEJAHTERA -->
+                    <div onclick="bukaModal('p14')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden sm:col-span-2">
+                        <div>
+                            <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
+                                <img src="images/prog-14.jpg" alt="Perlis Sihat Sejahtera" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1000&q=80';">
+                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">14</span>
+                            </div>
+                            <div class="p-3.5 space-y-1">
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Perlis Sihat Sejahtera</h4>
+                                <p class="text-[11px] text-slate-500">Inisiatif flagship penggabungan promosi kesihatan awam rentas sektor Negeri Perlis.</p>
+                            </div>
+                        </div>
+                        <div class="px-3.5 pb-3">
+                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- PAUTAN / LINK KE BORANG KEBERKESANAN -->
-                <a href="borang-keberkesanan.html" class="w-full py-3.5 bg-slate-900 hover:bg-slate-950 text-white font-extrabold text-xs rounded-xl shadow-md active:scale-95 transition-all flex items-center justify-center gap-2">
-                    <span>Isi Borang Keberkesanan</span>
-                    <span>→</span>
-                </a>
+                <!-- FOOTER PAGE 3 -->
+                <footer class="pt-2 border-t border-slate-200 text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    Unit Kawalan Penyakit Tidak Berjangkit (NCD) · JKN Perlis © 2026
+                </footer>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 🪟 POPUP MODAL DIALOG CONTAINER -->
+    <div id="modalOverlay" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-100 relative max-h-[85vh] overflow-y-auto">
+            
+            <button onclick="tutupModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 font-bold text-xs flex items-center justify-center">
+                ✕
+            </button>
+
+            <div id="modalContent" class="space-y-4">
+                <!-- Content injected via JS -->
             </div>
 
+            <div class="pt-3 border-t border-slate-100">
+                <button onclick="tutupModal()" class="w-full py-3 bg-brand-blue hover:bg-brand-blueDark text-white font-extrabold text-xs rounded-xl transition-all" data-lang-bm="Tutup Maklumat" data-lang-en="Close Info">
+                    Tutup Maklumat
+                </button>
+            </div>
         </div>
+    </div>
 
-        <!-- NOTA MAKLUMAT SULIT -->
-        <div class="p-4 bg-emerald-50/60 rounded-2xl border border-[#6EBF32]/20 text-center space-y-1 max-w-2xl mx-auto">
-            <span class="text-xs font-bold text-[#5aa825]">🔒 Maklumat Anda Dilindungi</span>
-            <p class="text-[11px] text-slate-500 font-medium">
-                Semua maklumat yang diisi adalah sulit dan hanya digunakan untuk tujuan perancangan serta penambahbaikan program kesihatan KKM.
-            </p>
-        </div>
+    <!-- ⚙️ JAVASCRIPT ENGINE -->
+    <script>
+        // 🌐 TOGGLE BAHASA ENGINE (BM / EN)
+        let bahasaSemasa = 'BM';
+        function tukarBahasa(lang) {
+            bahasaSemasa = lang;
+            const btnBM = document.getElementById('btnBM');
+            const btnEN = document.getElementById('btnEN');
 
-    </main>
+            if (lang === 'BM') {
+                btnBM.className = "px-3 py-1 rounded-full bg-brand-blue text-white shadow-xs transition-all";
+                btnEN.className = "px-3 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all";
+            } else {
+                btnEN.className = "px-3 py-1 rounded-full bg-brand-blue text-white shadow-xs transition-all";
+                btnBM.className = "px-3 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all";
+            }
 
-    <!-- 📄 FOOTER -->
-    <footer class="w-full bg-white py-4 px-4 text-center border-t border-slate-100">
-        <p class="text-[10px] text-slate-400 font-semibold tracking-wider uppercase">
-            Hak Cipta © 2026 Unit Kawalan Penyakit Tidak Berjangkit (NCD) & NCEMH · Jabatan Kesihatan Negeri Perlis
-        </p>
-    </footer>
+            // Kemas kini semua teks bertanda data-lang
+            const elements = document.querySelectorAll('[data-lang-bm]');
+            elements.forEach(el => {
+                const text = el.getAttribute(`data-lang-${lang.toLowerCase()}`);
+                if (text) el.textContent = text;
+            });
+        }
 
+        // SLIDER ENGINE
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        function showNextSlide() {
+            if (slides.length <= 1) return;
+            slides[currentSlideIndex].classList.remove('active');
+            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+            slides[currentSlideIndex].classList.add('active');
+        }
+        setInterval(showNextSlide, 4000);
+
+        // FILTER PROGRAM TAB FUNCTION
+        function filterProgram(kategori) {
+            const cards = document.querySelectorAll('.prog-card');
+            const btns = document.querySelectorAll('.tab-btn');
+
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (kategori === 'all' || card.getAttribute('data-kat') === kategori) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // DATA 14 PROGRAM
+        const dataProgram = {
+            p1: { no: "01", tajuk: "Program Diabetes Mellitus", penerangan: "Fokus kepada kawalan paras gula darah, ujian HbA1c, saringan komplikasi, dan amalan Pinggan Sihat Malaysia.", inisiatif: ["Saringan Ujian Gula Darah", "Kaunseling Pemakanan Sihat", "Pencegahan komplikasi kaki/mata"] },
+            p2: { no: "02", tajuk: "Program Hipertensi", penerangan: "Pemantauan tekanan darah tinggi berkala bagi mengurangkan risiko strok dan serangan jantung.", inisiatif: ["Saringan Tekanan Darah", "Kempen Pengurangan Garam Harian", "Pencegahan kerosakan organ"] },
+            p3: { no: "03", tajuk: "Program Merokok (mQuit)", penerangan: "Khidmat nasihat dan kaunseling berhenti merokok mQuit KKM serta kawalan produk tembakau/vape.", inisiatif: ["Klinik mQuit Berhenti Merokok", "Edukasi Bahaya Vape", "Terapi Gantian Nikotin (NRT)"] },
+            p4: { no: "04", tajuk: "Program OSCA & Kemudaratan Alkohol", penerangan: "One Stop Centre for Addiction (OSCA) bagi merawat dan membimbing individu berdepan isu ketagihan alkohol & bahan.", inisiatif: ["Intervensi awal ketagihan alkohol", "Saringan risiko ketum/bahan", "Khidmat kaunseling OSCA"] },
+            p5: { no: "05", tajuk: "Program Saringan Kanser Kolorektal", penerangan: "Program saringan awal kanser usus besar khusus bagi kumpulan sasaran berumur 50 hingga 75 tahun.", inisiatif: ["Kit Ujian iFOBT Percuma", "Rujukan Ujian Kolonoskopi", "Pendidikan tanda awal kanser usus"] },
+            p6: { no: "06", tajuk: "Program Verbal Autopsy", penerangan: "Sistem penyiasatan punca kematian di luar hospital bagi mengumpul data tepat trend penyakit kronik NCD.", inisiatif: ["Temubual sejarah perubatan waris", "Pengesahan data morbiditi NCD", "Statistik data kematian luar hospital"] },
+            p7: { no: "07", tajuk: "Program OSCC dan SCAN", penerangan: "One Stop Crisis Centre (OSCC) dan Suspek Penderaan/Penganiayaan Kanak-Kanak (SCAN) bagi bantuan krisis trauma.", inisiatif: ["Rawatan krisis di Hospital KKM", "Sokongan kaunseling & kesihatan mental", "Kerjasama Jabatan Kebajikan Masyarakat"] },
+            p8: { no: "08", tajuk: "Program KOSPEN", penerangan: "Komuniti Sihat Pembina Negara (KOSPEN) yang melatih sukarelawan tempatan bagi saringan NCD dari rumah ke rumah.", inisiatif: ["Saringan percuma oleh Sukarelawan", "Kempen Berjalan 10,000 Langkah", "KOSPEN Plus di tempat kerja"] },
+            p9: { no: "09", tajuk: "Program Kesihatan Mental", penerangan: "Memperkasakan kesedaran minda sejahtera, ujian saringan DASS-21, dan kempen menangani stigma kesihatan mental.", inisiatif: ["Talian HEAL 15555", "Saringan STIG-9 & DASS-21", "Program KCP di Klinik Kesihatan"] },
+            p10: { no: "10", tajuk: "Program Saringan NHSI", penerangan: "National Health Screening Initiative (NHSI) untuk memastikan setiap rakyat berumur 18 tahun ke atas membuat saringan.", inisiatif: ["Saringan Percuma Klinik Kesihatan", "Ujian Kolesterol, Gula & BMI", "Pengesanan awal faktor risiko"] },
+            p11: { no: "11", tajuk: "Program Vending Machine", penerangan: "Pemantauan jualan makanan dan minuman di mesin layan diri bagi mematuhi garis panduan pilihan lebih sihat.", inisiatif: ["Kawalan paras gula minuman", "Promosi pilihan sihat di mesin", "Audit premis & fasiliti awam/KKM"] },
+            p12: { no: "12", tajuk: "Program Cancer Registry", penerangan: "Pendaftaran dan pemantauan data epidemologi kes kanser di seluruh negeri Perlis bagi perancangan rawatan.", inisiatif: ["Pengumpulan data kes kanser", "Kajian corak kejadian kanser", "Perancangan fasiliti onkologi"] },
+            p13: { no: "13", tajuk: "Program Pengurusan Obesiti", penerangan: "Intervensi pengurangan berat badan berlebihan menerusi modifikasi gaya hidup, pemakanan, dan sukan.", inisiatif: ["Pemantauan Indeks Jisim Badan (BMI)", "Klinik Berat Badan KKM", "Aktiviti fizikal komuniti"] },
+            p14: { no: "14", tajuk: "Program Perlis Sihat Sejahtera", penerangan: "Inisiatif flagship penggabungan promosi kesihatan awam rentas sektor kerajaan negeri Perlis.", inisiatif: ["Program Promosi Kesihatan Negeri", "Penglibatan Agensi & NGO", "Kempen Perlis Bebas NCD"] }
+        };
+
+        // MODAL ENGINE
+        function bukaModal(id) {
+            const data = dataProgram[id];
+            if (!data) return;
+
+            let list = '';
+            data.inisiatif.forEach(item => {
+                list += `<li class="text-xs text-slate-600 flex items-start gap-2"><span class="text-brand-green font-bold">✓</span> <span>${item}</span></li>`;
+            });
+
+            const html = `
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-black text-white bg-brand-blue px-2.5 py-1 rounded">${data.no}</span>
+                    <h3 class="text-base font-extrabold text-slate-900">${data.tajuk}</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">${data.penerangan}</p>
+                <div class="space-y-2 pt-1">
+                    <span class="text-xs font-bold text-slate-900 block">📌 Skop Aktiviti Utama:</span>
+                    <ul class="space-y-2 bg-slate-50 p-4 rounded-2xl border border-slate-100">${list}</ul>
+                </div>
+            `;
+
+            document.getElementById('modalContent').innerHTML = html;
+            document.getElementById('modalOverlay').classList.remove('hidden');
+        }
+
+        function tutupModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) tutupModal();
+        });
+    </script>
 </body>
 </html>
