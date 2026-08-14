@@ -12,13 +12,13 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            blue: '#0284C7',     /* Biru Avast Tech */
-                            blueDark: '#0369A1',
-                            green: '#10B981',    /* Hijau KKM Kesihatan */
-                            greenDark: '#059669',
-                            lightBg: '#F8FAFC',
-                            cardBg: '#FFFFFF'
+                        ncd: {
+                            blue: '#2A4B9B',       /* Biru Logo NCD */
+                            blueDark: '#1d3570',
+                            green: '#38B44A',      /* Hijau Logo NCD */
+                            greenDark: '#298c38',
+                            lightBlue: '#EFF4FF',
+                            lightGreen: '#EBFBEE'
                         }
                     }
                 }
@@ -50,7 +50,6 @@
             overflow-y: auto;
         }
 
-        /* Hide scrollbar for clean visual */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -58,72 +57,159 @@
         .hero-slide.active { opacity: 1; }
 
         .tab-btn.active {
-            background-color: #0284C7;
+            background-color: #2A4B9B;
             color: #FFFFFF;
             font-weight: 800;
+        }
+
+        /* Hover animation for dropdown */
+        .dropdown:hover .dropdown-menu {
+            display: block;
         }
     </style>
 </head>
 
-<!-- 🖼️ 2. TEMPAT MASUKKAN LINK GAMBAR LATAR BELAKANG WEBSITE 
-     Gantikan 'URL_GAMBAR_LATAR_ANDA_DI_SINI' dengan link/path gambar anda (e.g., 'images/bg.webp' atau 'https://...'). -->
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-blue selection:text-white bg-cover bg-center bg-fixed"
-      style="background-image: linear-gradient(to bottom, rgba(248, 250, 252, 0.94), rgba(248, 250, 252, 0.96)), url('URL_GAMBAR_LATAR_ANDA_DI_SINI');">
+<body class="text-slate-800 antialiased selection:bg-ncd-blue selection:text-white">
 
-    <!-- 📌 TOP NAVIGATION BAR (STICKY) -->
-    <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200/80 z-50">
+    <!-- 📌 TOP NAVIGATION BAR DENGAN DROPDOWN MENU -->
+    <header class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/90 z-50 shadow-2xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
             
-            <div class="flex items-center gap-3">
-                <img src="images/logo.png" alt="Logo KKM" class="h-9 sm:h-10 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/100x100/0284C7/ffffff?text=KKM';">
+            <!-- LOGO UTAMA -->
+            <a href="#utama" class="flex items-center gap-3 group">
+                <img src="images/logo.png" alt="Logo NCD Perlis" class="h-9 sm:h-11 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/120x120/2A4B9B/ffffff?text=NCD';">
                 <div class="h-6 w-[1px] bg-slate-200 hidden sm:block"></div>
-                <div>
-                    <h1 class="text-xs font-black tracking-tight text-slate-900 uppercase leading-none">
-                        Unit NCD & Kesihatan Mental
+                <div class="hidden sm:block">
+                    <h1 class="text-xs font-black tracking-tight text-slate-900 uppercase leading-none group-hover:text-ncd-blue transition-colors">
+                        Unit Kawalan Penyakit Tidak Berjangkit
                     </h1>
-                    <span class="text-[10px] text-slate-500 font-semibold mt-0.5 block">Jabatan Kesihatan Negeri Perlis</span>
+                    <span class="text-[10px] text-slate-500 font-bold mt-0.5 block">Jabatan Kesihatan Negeri Perlis</span>
                 </div>
+            </a>
+
+            <!-- 🌐 MENU NAVIGASI DESKTOP DENGAN DROPDOWN -->
+            <nav class="hidden md:flex items-center gap-8 text-xs font-extrabold text-slate-700">
+                
+                <a href="#utama" class="hover:text-ncd-blue transition-colors py-2">Utama</a>
+
+                <!-- DROPDOWN 1: SARINGAN DIGITAL -->
+                <div class="relative dropdown py-2">
+                    <button class="flex items-center gap-1 hover:text-ncd-blue transition-colors focus:outline-none">
+                        <span>Saringan Digital</span>
+                        <span class="text-[10px]">▼</span>
+                    </button>
+                    <!-- DROPDOWN MENU -->
+                    <div class="dropdown-menu hidden absolute left-0 top-full pt-2 w-56">
+                        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-2 space-y-1">
+                            <!-- PAUTAN 1 -->
+                            <a href="stig9/index.html" class="block px-3.5 py-2.5 rounded-xl hover:bg-ncd-lightBlue text-slate-800 hover:text-ncd-blue font-bold transition-all">
+                                🧠 Soal Selidik STIG-9
+                            </a>
+                            <!-- PAUTAN 2 -->
+                            <a href="borang-keberkesanan.html" class="block px-3.5 py-2.5 rounded-xl hover:bg-ncd-lightGreen text-slate-800 hover:text-ncd-green font-bold transition-all">
+                                📊 Borang Keberkesanan
+                            </a>
+                            <!-- PAUTAN TEMPAT MASUK LINK LAIN -->
+                            <a href="LINK_HALAMAN_LAIN_1.html" class="block px-3.5 py-2.5 rounded-xl hover:bg-slate-100 text-slate-600 font-semibold transition-all">
+                                🩺 Ujian Saringan DASS-21 →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DROPDOWN 2: DIREKTORI PROGRAM -->
+                <div class="relative dropdown py-2">
+                    <button class="flex items-center gap-1 hover:text-ncd-blue transition-colors focus:outline-none">
+                        <span>14 Program NCD</span>
+                        <span class="text-[10px]">▼</span>
+                    </button>
+                    <div class="dropdown-menu hidden absolute left-0 top-full pt-2 w-64">
+                        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-2 space-y-1">
+                            <a href="#direktori" class="block px-3.5 py-2 rounded-xl hover:bg-slate-100 text-slate-800 font-bold">
+                                📂 Semua Program NCD
+                            </a>
+                            <a href="LINK_PROGRAM_KRONIK.html" class="block px-3.5 py-2 rounded-xl hover:bg-slate-100 text-slate-600 font-medium">
+                                🩺 Program Penyakit Kronik
+                            </a>
+                            <a href="LINK_PROGRAM_KANSER.html" class="block px-3.5 py-2 rounded-xl hover:bg-slate-100 text-slate-600 font-medium">
+                                🎗️ Program Saringan Kanser
+                            </a>
+                            <a href="LINK_PROGRAM_KOMUNITI.html" class="block px-3.5 py-2 rounded-xl hover:bg-slate-100 text-slate-600 font-medium">
+                                👥 Program Kesihatan Komuniti
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAUTAN TAMBAHAN LAIN -->
+                <a href="LINK_INFO_KAMI.html" class="hover:text-ncd-blue transition-colors py-2">Mengenai NCD</a>
+
+            </nav>
+
+            <!-- KANAN: TOGGLE BAHASA & HAMBURGER MOBILE -->
+            <div class="flex items-center gap-3">
+                
+                <!-- TOGGLE BAHASA (BM | EN) -->
+                <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200 text-xs font-extrabold">
+                    <button id="btnBM" onclick="tukarBahasa('BM')" class="px-2.5 py-1 rounded-full bg-ncd-blue text-white shadow-xs transition-all">
+                        BM
+                    </button>
+                    <button id="btnEN" onclick="tukarBahasa('EN')" class="px-2.5 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all">
+                        EN
+                    </button>
+                </div>
+
+                <!-- BUTANG MENU MOBILE (HAMBURGER) -->
+                <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-black text-base border border-slate-200 active:scale-95 transition-all">
+                    ☰
+                </button>
+
             </div>
 
-            <!-- 🌐 1. TOGGLE BAHASA (BM | EN) GANTI BUTTON KANAN -->
-            <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-full border border-slate-200/80 text-xs font-extrabold">
-                <button id="btnBM" onclick="tukarBahasa('BM')" class="px-3 py-1 rounded-full bg-brand-blue text-white shadow-xs transition-all">
-                    BM
-                </button>
-                <button id="btnEN" onclick="tukarBahasa('EN')" class="px-3 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all">
-                    EN
-                </button>
+        </div>
+
+        <!-- MENU MOBILE DROPDOWN (PADA TELEFON) -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-200 px-5 py-4 space-y-3 text-xs font-extrabold text-slate-700 shadow-xl">
+            <a href="#utama" onclick="toggleMobileMenu()" class="block py-2 border-b border-slate-100 hover:text-ncd-blue">🏠 Utama</a>
+            
+            <div class="space-y-1 py-1 border-b border-slate-100">
+                <span class="text-[10px] text-slate-400 font-black uppercase">Saringan Digital:</span>
+                <a href="stig9/index.html" class="block py-1 text-ncd-blue">🧠 Soal Selidik STIG-9</a>
+                <a href="borang-keberkesanan.html" class="block py-1 text-ncd-green">📊 Borang Keberkesanan</a>
             </div>
 
+            <a href="#direktori" onclick="toggleMobileMenu()" class="block py-2 hover:text-ncd-blue">📁 Direktori 14 Program NCD</a>
         </div>
     </header>
 
     <!-- 📜 CONTAINER UTAMA FULL PAGE SCROLL -->
     <div class="scroll-container no-scrollbar">
 
-        <!-- 🌟 SEKSYEN 1: HERO BANNER (FULL SCREEN SNAP) -->
-        <section class="scroll-section relative pt-20 border-b border-slate-200">
-            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 my-auto space-y-6">
+        <!-- 🌟 SEKSYEN 1: HERO BANNER DENGAN KAD STATISTIK & TIP (RICHER DESIGN) -->
+        <section id="utama" class="scroll-section relative pt-20 bg-white border-b border-slate-200 bg-cover bg-center"
+                 style="background-image: url('URL_GAMBAR_SEKSYEN_1');">
+            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-8 my-auto space-y-6">
                 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     
                     <!-- TEKS UTAMA -->
-                    <div class="lg:col-span-7 space-y-5">
-                        <div class="inline-flex items-center gap-2 bg-sky-50 border border-sky-200/80 px-3.5 py-1.5 rounded-full text-xs font-bold text-brand-blue">
-                            <span>🛡️</span>
+                    <div class="lg:col-span-7 space-y-4 sm:space-y-5">
+                        <div class="inline-flex items-center gap-2 bg-ncd-lightBlue border border-ncd-blue/20 px-3.5 py-1.5 rounded-full text-xs font-bold text-ncd-blue">
+                            <span class="w-2 h-2 rounded-full bg-ncd-blue animate-pulse"></span>
                             <span data-lang-bm="Perkhidmatan Kesihatan Komuniti KKM" data-lang-en="MOH Community Health Services">Perkhidmatan Kesihatan Komuniti KKM</span>
                         </div>
 
-                        <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight" data-lang-bm="Perlindungan Kesihatan & Minda Komuniti Perlis." data-lang-en="Health & Mental Protection for Perlis Community.">
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight" data-lang-bm="Perlindungan Kesihatan & Minda Komuniti Perlis." data-lang-en="Health & Mental Protection for Perlis Community.">
                             Perlindungan Kesihatan & Minda Komuniti Perlis.
                         </h2>
 
-                        <p class="text-sm sm:text-base text-slate-600 font-medium leading-relaxed" data-lang-bm="Akses modul saringan kesihatan mental, penilaian keberkesanan program, dan direktori 14 inisiatif rasmi Unit Kawalan Penyakit Tidak Berjangkit (NCD) JKN Perlis." data-lang-en="Access mental health screening modules, program effectiveness evaluations, and the official directory of 14 NCD initiatives by JKN Perlis.">
+                        <p class="text-xs sm:text-base text-slate-600 font-medium leading-relaxed" data-lang-bm="Akses modul saringan kesihatan mental, penilaian keberkesanan program, dan direktori 14 inisiatif rasmi Unit Kawalan Penyakit Tidak Berjangkit (NCD) JKN Perlis." data-lang-en="Access mental health screening modules, program effectiveness evaluations, and the official directory of 14 NCD initiatives by JKN Perlis.">
                             Akses modul saringan kesihatan mental, penilaian keberkesanan program, dan direktori 14 inisiatif rasmi Unit Kawalan Penyakit Tidak Berjangkit (NCD) JKN Perlis.
                         </p>
 
+                        <!-- PINTASAN AKSI & KAD AKSI -->
                         <div class="pt-2 flex flex-wrap gap-3">
-                            <a href="#saringan" class="bg-brand-green hover:bg-brand-greenDark text-white font-black text-xs px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-all flex items-center gap-2">
+                            <a href="#saringan" class="bg-ncd-green hover:bg-ncd-greenDark text-white font-black text-xs px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/20 active:scale-95 transition-all flex items-center gap-2">
                                 <span data-lang-bm="Mula Ujian STIG-9" data-lang-en="Start STIG-9 Test">Mula Ujian STIG-9</span>
                                 <span>↓</span>
                             </a>
@@ -131,20 +217,37 @@
                                 Terokai 14 Program NCD
                             </a>
                         </div>
+
+                        <!-- 📊 KAD STATISTIK & MAKLUMAT TAMBAHAN (MENAMBAH ELEMEN DENSITI) -->
+                        <div class="grid grid-cols-3 gap-3 pt-3 border-t border-slate-100">
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80">
+                                <span class="text-base font-black text-ncd-blue block">14</span>
+                                <span class="text-[10px] text-slate-500 font-bold">Program NCD</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80">
+                                <span class="text-base font-black text-ncd-green block">STIG-9</span>
+                                <span class="text-[10px] text-slate-500 font-bold">Saringan Awam</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/80">
+                                <span class="text-base font-black text-slate-800 block">15555</span>
+                                <span class="text-[10px] text-slate-500 font-bold">Talian HEAL</span>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <!-- SLIDER KARDUTAMA -->
-                    <div class="lg:col-span-5 bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-200 relative min-h-[280px] sm:min-h-[320px] flex flex-col justify-end p-6 text-white">
+                    <!-- SLIDER KARD UTAMA WITH BADGES -->
+                    <div class="lg:col-span-5 bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-200 relative min-h-[280px] sm:min-h-[340px] flex flex-col justify-end p-6 text-white">
                         <div id="heroSliderContainer" class="absolute inset-0 z-0">
                             <img src="images/banner-1.webp" alt="Banner 1" class="hero-slide active absolute inset-0 w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1000&q=80';">
                             <img src="images/banner-2.webp" alt="Banner 2" class="hero-slide absolute inset-0 w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1000&q=80';">
                         </div>
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent z-10"></div>
                         
-                        <div class="relative z-20 space-y-1">
-                            <span class="text-[10px] font-black uppercase tracking-wider text-brand-green bg-emerald-950/80 px-2.5 py-0.5 rounded border border-emerald-500/30" data-lang-bm="Advokasi Utama" data-lang-en="Main Advocacy">Advokasi Utama</span>
+                        <div class="relative z-20 space-y-1.5">
+                            <span class="text-[10px] font-black uppercase tracking-wider text-ncd-green bg-emerald-950/80 px-2.5 py-0.5 rounded border border-emerald-500/30" data-lang-bm="Advokasi Utama" data-lang-en="Main Advocacy">Advokasi Utama</span>
                             <h3 class="text-base font-extrabold text-white" data-lang-bm="Kempen Hentikan Stigma Kesihatan Mental" data-lang-en="Stop Mental Health Stigma Campaign">Kempen Hentikan Stigma Kesihatan Mental</h3>
-                            <p class="text-xs text-slate-300" data-lang-bm="Pendidikan awal kesihatan minda sejahtera komuniti Perlis." data-lang-en="Early mental health awareness for Perlis community.">Pendidikan awal kesihatan minda sejahtera komuniti Perlis.</p>
+                            <p class="text-xs text-slate-300 leading-relaxed" data-lang-bm="Pendidikan awal kesihatan minda sejahtera komuniti Perlis." data-lang-en="Early mental health awareness for Perlis community.">Pendidikan awal kesihatan minda sejahtera komuniti Perlis.</p>
                         </div>
                     </div>
 
@@ -152,37 +255,38 @@
 
             </div>
             
-            <div class="text-center py-3 text-slate-400 text-xs font-bold animate-bounce" data-lang-bm="Tatal ke bawah untuk borang saringan ↓" data-lang-en="Scroll down for screening forms ↓">
+            <div class="text-center py-2 text-slate-400 text-[11px] font-bold animate-bounce" data-lang-bm="Tatal ke bawah untuk borang saringan ↓" data-lang-en="Scroll down for screening forms ↓">
                 Tatal ke bawah untuk borang saringan ↓
             </div>
         </section>
 
-        <!-- 🚀 SEKSYEN 2: DUA BORANG UTAMA (FULL SCREEN SNAP) -->
-        <section id="saringan" class="scroll-section relative pt-20 border-b border-slate-200">
-            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 my-auto space-y-6">
+        <!-- 🚀 SEKSYEN 2: DUA BORANG UTAMA (MODUL INTERAKTIF) -->
+        <section id="saringan" class="scroll-section relative pt-20 bg-slate-100 border-b border-slate-200 bg-cover bg-center"
+                 style="background-image: url('URL_GAMBAR_SEKSYEN_2');">
+            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-8 my-auto space-y-6">
                 
                 <div class="space-y-1">
-                    <span class="text-xs font-extrabold text-brand-blue uppercase tracking-wider" data-lang-bm="Modul Interaktif" data-lang-en="Interactive Module">Modul Interaktif</span>
+                    <span class="text-xs font-extrabold text-ncd-blue uppercase tracking-wider" data-lang-bm="Modul Interaktif" data-lang-en="Interactive Module">Modul Interaktif</span>
                     <h3 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight" data-lang-bm="Modul Saringan & Maklum Balas Awam" data-lang-en="Public Screening & Feedback Module">Modul Saringan & Maklum Balas Awam</h3>
                     <p class="text-xs sm:text-sm text-slate-500 font-medium" data-lang-bm="Sila pilih borang digital yang berkaitan untuk tindakan anda." data-lang-en="Please select the relevant digital form for your action.">Sila pilih borang digital yang berkaitan untuk tindakan anda.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
 
                     <!-- CARD 1: STIG-9 -->
-                    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-brand-blue hover:shadow-xl transition-all flex flex-col justify-between space-y-6 group">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 hover:border-ncd-blue hover:shadow-xl transition-all flex flex-col justify-between space-y-6 group">
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <span class="w-12 h-12 rounded-2xl bg-sky-50 text-brand-blue border border-sky-100 flex items-center justify-center text-2xl font-black">
+                                <span class="w-12 h-12 rounded-2xl bg-ncd-lightBlue text-ncd-blue border border-ncd-blue/20 flex items-center justify-center text-2xl font-black">
                                     🧠
                                 </span>
-                                <span class="text-[10px] font-black uppercase tracking-wider text-brand-blue bg-sky-50 px-3 py-1 rounded-full border border-sky-100" data-lang-bm="Saringan Utama" data-lang-en="Main Screening">
+                                <span class="text-[10px] font-black uppercase tracking-wider text-ncd-blue bg-ncd-lightBlue px-3 py-1 rounded-full border border-ncd-blue/20" data-lang-bm="Saringan Utama" data-lang-en="Main Screening">
                                     Saringan Utama
                                 </span>
                             </div>
 
                             <div class="space-y-1">
-                                <h4 class="text-xl font-black text-slate-900 group-hover:text-brand-blue transition-colors" data-lang-bm="Soal Selidik STIG-9 Komuniti" data-lang-en="STIG-9 Community Questionnaire">
+                                <h4 class="text-xl font-black text-slate-900 group-hover:text-ncd-blue transition-colors" data-lang-bm="Soal Selidik STIG-9 Komuniti" data-lang-en="STIG-9 Community Questionnaire">
                                     Soal Selidik STIG-9 Komuniti
                                 </h4>
                                 <p class="text-xs text-slate-500 font-medium leading-relaxed" data-lang-bm="Instrumen saringan 9 soalan bagi mengukur tahap persepsi dan stigma kesihatan mental di dalam masyarakat." data-lang-en="A 9-question screening tool measuring public perception and mental health stigma in society.">
@@ -191,25 +295,25 @@
                             </div>
                         </div>
 
-                        <a href="stig9/index.html" class="w-full py-3.5 bg-brand-blue hover:bg-brand-blueDark text-white font-extrabold text-xs rounded-xl text-center shadow-md active:scale-95 transition-all block" data-lang-bm="Jawab Soal Selidik STIG-9 →" data-lang-en="Answer STIG-9 Questionnaire →">
+                        <a href="stig9/index.html" class="w-full py-3.5 bg-ncd-blue hover:bg-ncd-blueDark text-white font-extrabold text-xs rounded-xl text-center shadow-md active:scale-95 transition-all block" data-lang-bm="Jawab Soal Selidik STIG-9 →" data-lang-en="Answer STIG-9 Questionnaire →">
                             Jawab Soal Selidik STIG-9 →
                         </a>
                     </div>
 
                     <!-- CARD 2: BORANG KEBERKESANAN -->
-                    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-brand-green hover:shadow-xl transition-all flex flex-col justify-between space-y-6 group">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 hover:border-ncd-green hover:shadow-xl transition-all flex flex-col justify-between space-y-6 group">
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-brand-green border border-emerald-100 flex items-center justify-center text-2xl font-black">
+                                <span class="w-12 h-12 rounded-2xl bg-ncd-lightGreen text-ncd-green border border-ncd-green/20 flex items-center justify-center text-2xl font-black">
                                     📊
                                 </span>
-                                <span class="text-[10px] font-black uppercase tracking-wider text-brand-green bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100" data-lang-bm="Lampiran B KKM" data-lang-en="MOH Appendix B">
+                                <span class="text-[10px] font-black uppercase tracking-wider text-ncd-green bg-ncd-lightGreen px-3 py-1 rounded-full border border-ncd-green/20" data-lang-bm="Lampiran B KKM" data-lang-en="MOH Appendix B">
                                     Lampiran B KKM
                                 </span>
                             </div>
 
                             <div class="space-y-1">
-                                <h4 class="text-xl font-black text-slate-900 group-hover:text-brand-green transition-colors" data-lang-bm="Borang Penilaian Keberkesanan" data-lang-en="Program Effectiveness Evaluation Form">
+                                <h4 class="text-xl font-black text-slate-900 group-hover:text-ncd-green transition-colors" data-lang-bm="Borang Penilaian Keberkesanan" data-lang-en="Program Effectiveness Evaluation Form">
                                     Borang Penilaian Keberkesanan
                                 </h4>
                                 <p class="text-xs text-slate-500 font-medium leading-relaxed" data-lang-bm="Maklum balas peserta program untuk mengukur tahap kepuasan dan amalan penjagaan kendiri (self-care)." data-lang-en="Participant feedback to measure satisfaction levels and self-care practices.">
@@ -218,273 +322,282 @@
                             </div>
                         </div>
 
-                        <a href="borang-keberkesanan.html" class="w-full py-3.5 bg-brand-green hover:bg-brand-greenDark text-white font-extrabold text-xs rounded-xl text-center shadow-md active:scale-95 transition-all block" data-lang-bm="Isi Borang Keberkesanan →" data-lang-en="Fill Effectiveness Form →">
+                        <a href="borang-keberkesanan.html" class="w-full py-3.5 bg-ncd-green hover:bg-ncd-greenDark text-white font-extrabold text-xs rounded-xl text-center shadow-md active:scale-95 transition-all block" data-lang-bm="Isi Borang Keberkesanan →" data-lang-en="Fill Effectiveness Form →">
                             Isi Borang Keberkesanan →
                         </a>
                     </div>
 
                 </div>
 
+                <!-- NOTA PRIVASI DATA -->
+                <div class="p-4 bg-white rounded-2xl border border-slate-200 text-xs text-slate-600 flex items-center gap-3">
+                    <span class="text-xl">🔒</span>
+                    <p class="text-[11px] font-medium leading-relaxed">
+                        <strong>Etika Kerahsiaan:</strong> Semua jawapan saringan adalah SULIT & RAHSIA mengikut Etika Privasi Data Perubatan KKM.
+                    </p>
+                </div>
+
             </div>
         </section>
 
-        <!-- 📂 SEKSYEN 3: DIREKTORI 14 PROGRAM NCD (FULL SCREEN SNAP) -->
-        <section id="direktori" class="scroll-section relative pt-20">
-            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 my-auto space-y-5">
+        <!-- 📂 SEKSYEN 3: DIREKTORI 14 PROGRAM -->
+        <section id="direktori" class="scroll-section relative pt-20 bg-sky-50 bg-cover bg-center"
+                 style="background-image: url('URL_GAMBAR_SEKSYEN_3');">
+            <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-8 my-auto space-y-4 sm:space-y-5">
                 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                        <span class="text-xs font-extrabold text-brand-blue uppercase tracking-wider" data-lang-bm="Direktori Rasmi" data-lang-en="Official Directory">Direktori Rasmi</span>
+                        <span class="text-xs font-extrabold text-ncd-blue uppercase tracking-wider" data-lang-bm="Direktori Rasmi" data-lang-en="Official Directory">Direktori Rasmi</span>
                         <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight" data-lang-bm="14 Program Pemantauan NCD JKN Perlis" data-lang-en="14 NCD Monitoring Programs JKN Perlis">14 Program Pemantauan NCD JKN Perlis</h3>
                     </div>
 
                     <!-- TAB FILTERS -->
                     <div class="flex flex-wrap gap-2 text-xs font-bold">
-                        <button onclick="filterProgram('all')" class="tab-btn active px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Semua" data-lang-en="All">Semua</button>
-                        <button onclick="filterProgram('kronik')" class="tab-btn px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Kronik" data-lang-en="Chronic">Kronik</button>
-                        <button onclick="filterProgram('kanser')" class="tab-btn px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Kanser" data-lang-en="Cancer">Kanser</button>
-                        <button onclick="filterProgram('komuniti')" class="tab-btn px-3.5 py-1.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 transition-all" data-lang-bm="Komuniti" data-lang-en="Community">Komuniti</button>
+                        <button onclick="filterProgram('all')" class="tab-btn active px-3.5 py-1.5 rounded-full bg-white text-slate-600 border border-slate-200 transition-all" data-lang-bm="Semua" data-lang-en="All">Semua</button>
+                        <button onclick="filterProgram('kronik')" class="tab-btn px-3.5 py-1.5 rounded-full bg-white text-slate-600 border border-slate-200 transition-all" data-lang-bm="Kronik" data-lang-en="Chronic">Kronik</button>
+                        <button onclick="filterProgram('kanser')" class="tab-btn px-3.5 py-1.5 rounded-full bg-white text-slate-600 border border-slate-200 transition-all" data-lang-bm="Kanser" data-lang-en="Cancer">Kanser</button>
+                        <button onclick="filterProgram('komuniti')" class="tab-btn px-3.5 py-1.5 rounded-full bg-white text-slate-600 border border-slate-200 transition-all" data-lang-bm="Komuniti" data-lang-en="Community">Komuniti</button>
                     </div>
                 </div>
 
                 <!-- GRID 14 PROGRAM -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-h-[55vh] overflow-y-auto pr-1" id="programGrid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 max-h-[50vh] sm:max-h-[55vh] overflow-y-auto pr-1" id="programGrid">
 
                     <!-- 1. DIABETES -->
-                    <div onclick="bukaModal('p1')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p1')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-1.jpg" alt="Diabetes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">01</span>
+                                <span class="absolute top-2 left-2 bg-ncd-blue text-white text-[10px] font-black px-2 py-0.5 rounded">01</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Diabetes Mellitus</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-blue transition-colors">Program Diabetes Mellitus</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Kawalan gula darah, ujian HbA1c, & Pinggan Sihat.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 2. HIPERTENSI -->
-                    <div onclick="bukaModal('p2')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p2')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-2.jpg" alt="Hipertensi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">02</span>
+                                <span class="absolute top-2 left-2 bg-ncd-blue text-white text-[10px] font-black px-2 py-0.5 rounded">02</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Hipertensi</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-blue transition-colors">Program Hipertensi</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Pemantauan tekanan darah & kawalan garam.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 3. MEROKOK -->
-                    <div onclick="bukaModal('p3')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p3')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-3.jpg" alt="Merokok" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">03</span>
+                                <span class="absolute top-2 left-2 bg-ncd-green text-white text-[10px] font-black px-2 py-0.5 rounded">03</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Merokok (mQuit)</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-green transition-colors">Program Merokok (mQuit)</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Klinik mQuit berhenti merokok & kawalan vape.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 4. OSCA & ALKOHOL -->
-                    <div onclick="bukaModal('p4')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p4')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-4.jpg" alt="OSCA & Alkohol" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">04</span>
+                                <span class="absolute top-2 left-2 bg-ncd-green text-white text-[10px] font-black px-2 py-0.5 rounded">04</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program OSCA & Alkohol</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-green transition-colors">Program OSCA & Alkohol</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">One Stop Centre for Addiction penyalahgunaan bahan.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 5. KANSER KOLOREKTAL -->
-                    <div onclick="bukaModal('p5')" data-kat="kanser" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p5')" data-kat="kanser" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-5.jpg" alt="Kanser Kolorektal" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">05</span>
+                                <span class="absolute top-2 left-2 bg-ncd-blue text-white text-[10px] font-black px-2 py-0.5 rounded">05</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Saringan Kanser Kolorektal</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-blue transition-colors">Saringan Kanser Kolorektal</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Kit saringan iFOBT kanser usus sasaran 50-75 tahun.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 6. VERBAL AUTOPSY -->
-                    <div onclick="bukaModal('p6')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p6')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-6.jpg" alt="Verbal Autopsy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">06</span>
+                                <span class="absolute top-2 left-2 bg-ncd-blue text-white text-[10px] font-black px-2 py-0.5 rounded">06</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Verbal Autopsy</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-blue transition-colors">Program Verbal Autopsy</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Penyiasatan punca kematian luar hospital NCD.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 7. OSCC DAN SCAN -->
-                    <div onclick="bukaModal('p7')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p7')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-7.jpg" alt="OSCC & SCAN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">07</span>
+                                <span class="absolute top-2 left-2 bg-ncd-green text-white text-[10px] font-black px-2 py-0.5 rounded">07</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program OSCC dan SCAN</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-green transition-colors">Program OSCC dan SCAN</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Bantuan krisis keganasan rumahtangga & penderaan.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 8. KOSPEN -->
-                    <div onclick="bukaModal('p8')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p8')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-8.jpg" alt="KOSPEN" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">08</span>
+                                <span class="absolute top-2 left-2 bg-ncd-green text-white text-[10px] font-black px-2 py-0.5 rounded">08</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program KOSPEN</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-green transition-colors">Program KOSPEN</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Sukarelawan komuniti bagi saringan NCD akar umbi.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 9. KESIHATAN MENTAL -->
-                    <div onclick="bukaModal('p9')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p9')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-9.jpg" alt="Kesihatan Mental" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">09</span>
+                                <span class="absolute top-2 left-2 bg-ncd-green text-white text-[10px] font-black px-2 py-0.5 rounded">09</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Kesihatan Mental</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-green transition-colors">Program Kesihatan Mental</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Saringan DASS-21, Talian HEAL 15555, & Hentikan Stigma.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 10. NHSI -->
-                    <div onclick="bukaModal('p10')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p10')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-10.jpg" alt="NHSI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">10</span>
+                                <span class="absolute top-2 left-2 bg-ncd-blue text-white text-[10px] font-black px-2 py-0.5 rounded">10</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Saringan NHSI</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-blue transition-colors">Program Saringan NHSI</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">National Health Screening Initiative percuma umur 18+.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 11. VENDING MACHINE -->
-                    <div onclick="bukaModal('p11')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p11')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-11.jpg" alt="Vending Machine" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">11</span>
+                                <span class="absolute top-2 left-2 bg-ncd-green text-white text-[10px] font-black px-2 py-0.5 rounded">11</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Vending Machine</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-green transition-colors">Program Vending Machine</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Pemantauan garis panduan minuman sihat mesin layan diri.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 12. CANCER REGISTRY -->
-                    <div onclick="bukaModal('p12')" data-kat="kanser" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p12')" data-kat="kanser" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-12.jpg" alt="Cancer Registry" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">12</span>
+                                <span class="absolute top-2 left-2 bg-ncd-blue text-white text-[10px] font-black px-2 py-0.5 rounded">12</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Cancer Registry</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-blue transition-colors">Program Cancer Registry</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Pendaftaran & analisis epidemologi kes kanser Perlis.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 13. OBESITI -->
-                    <div onclick="bukaModal('p13')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
+                    <div onclick="bukaModal('p13')" data-kat="kronik" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-blue hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-13.jpg" alt="Pengurusan Obesiti" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-blue text-white text-[10px] font-black px-2 py-0.5 rounded">13</span>
+                                <span class="absolute top-2 left-2 bg-ncd-blue text-white text-[10px] font-black px-2 py-0.5 rounded">13</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-blue transition-colors">Program Pengurusan Obesiti</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-blue transition-colors">Program Pengurusan Obesiti</h4>
                                 <p class="text-[11px] text-slate-500 line-clamp-2">Intervensi berat badan, kawalan BMI, & gaya hidup aktif.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-blue" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
                     <!-- 14. PERLIS SIHAT SEJAHTERA -->
-                    <div onclick="bukaModal('p14')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-brand-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden sm:col-span-2">
+                    <div onclick="bukaModal('p14')" data-kat="komuniti" class="prog-card bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 hover:border-ncd-green hover:shadow-lg transition-all cursor-pointer group flex flex-col justify-between overflow-hidden sm:col-span-2">
                         <div>
                             <div class="h-28 w-full bg-slate-100 relative overflow-hidden">
                                 <img src="images/prog-14.jpg" alt="Perlis Sihat Sejahtera" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1000&q=80';">
-                                <span class="absolute top-2 left-2 bg-brand-green text-white text-[10px] font-black px-2 py-0.5 rounded">14</span>
+                                <span class="absolute top-2 left-2 bg-ncd-green text-white text-[10px] font-black px-2 py-0.5 rounded">14</span>
                             </div>
                             <div class="p-3.5 space-y-1">
-                                <h4 class="text-xs font-black text-slate-900 group-hover:text-brand-green transition-colors">Program Perlis Sihat Sejahtera</h4>
+                                <h4 class="text-xs font-black text-slate-900 group-hover:text-ncd-green transition-colors">Program Perlis Sihat Sejahtera</h4>
                                 <p class="text-[11px] text-slate-500">Inisiatif flagship penggabungan promosi kesihatan awam rentas sektor Negeri Perlis.</p>
                             </div>
                         </div>
                         <div class="px-3.5 pb-3">
-                            <span class="text-[11px] font-extrabold text-brand-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
+                            <span class="text-[11px] font-extrabold text-ncd-green" data-lang-bm="Info Lanjut →" data-lang-en="More Info →">Info Lanjut →</span>
                         </div>
                     </div>
 
@@ -513,7 +626,7 @@
             </div>
 
             <div class="pt-3 border-t border-slate-100">
-                <button onclick="tutupModal()" class="w-full py-3 bg-brand-blue hover:bg-brand-blueDark text-white font-extrabold text-xs rounded-xl transition-all" data-lang-bm="Tutup Maklumat" data-lang-en="Close Info">
+                <button onclick="tutupModal()" class="w-full py-3 bg-ncd-blue hover:bg-ncd-blueDark text-white font-extrabold text-xs rounded-xl transition-all" data-lang-bm="Tutup Maklumat" data-lang-en="Close Info">
                     Tutup Maklumat
                 </button>
             </div>
@@ -522,6 +635,12 @@
 
     <!-- ⚙️ JAVASCRIPT ENGINE -->
     <script>
+        // 📱 MOBILE MENU TOGGLE
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
         // 🌐 TOGGLE BAHASA ENGINE (BM / EN)
         let bahasaSemasa = 'BM';
         function tukarBahasa(lang) {
@@ -530,14 +649,13 @@
             const btnEN = document.getElementById('btnEN');
 
             if (lang === 'BM') {
-                btnBM.className = "px-3 py-1 rounded-full bg-brand-blue text-white shadow-xs transition-all";
-                btnEN.className = "px-3 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all";
+                btnBM.className = "px-2.5 py-1 rounded-full bg-ncd-blue text-white shadow-xs transition-all";
+                btnEN.className = "px-2.5 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all";
             } else {
-                btnEN.className = "px-3 py-1 rounded-full bg-brand-blue text-white shadow-xs transition-all";
-                btnBM.className = "px-3 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all";
+                btnEN.className = "px-2.5 py-1 rounded-full bg-ncd-blue text-white shadow-xs transition-all";
+                btnBM.className = "px-2.5 py-1 rounded-full text-slate-500 hover:text-slate-900 transition-all";
             }
 
-            // Kemas kini semua teks bertanda data-lang
             const elements = document.querySelectorAll('[data-lang-bm]');
             elements.forEach(el => {
                 const text = el.getAttribute(`data-lang-${lang.toLowerCase()}`);
@@ -598,12 +716,12 @@
 
             let list = '';
             data.inisiatif.forEach(item => {
-                list += `<li class="text-xs text-slate-600 flex items-start gap-2"><span class="text-brand-green font-bold">✓</span> <span>${item}</span></li>`;
+                list += `<li class="text-xs text-slate-600 flex items-start gap-2"><span class="text-ncd-green font-bold">✓</span> <span>${item}</span></li>`;
             });
 
             const html = `
                 <div class="flex items-center gap-2">
-                    <span class="text-xs font-black text-white bg-brand-blue px-2.5 py-1 rounded">${data.no}</span>
+                    <span class="text-xs font-black text-white bg-ncd-blue px-2.5 py-1 rounded">${data.no}</span>
                     <h3 class="text-base font-extrabold text-slate-900">${data.tajuk}</h3>
                 </div>
                 <p class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">${data.penerangan}</p>
