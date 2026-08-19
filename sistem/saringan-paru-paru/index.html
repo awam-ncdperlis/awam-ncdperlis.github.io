@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Senarai Semak LHI | JKN Perlis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="../../favicon/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ncd: { blue: '#2A4B9B', blueDark: '#1d3570', green: '#38B44A', greenDark: '#298c38' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style> 
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        .step-indicator.active { background-color: #2A4B9B; color: #ffffff; border-color: #2A4B9B; }
+        .step-indicator.completed { background-color: #38B44A; color: #ffffff; border-color: #38B44A; }
+
+        @media print {
+            body { background-color: #ffffff !important; padding: 0 !important; }
+            .no-print { display: none !important; }
+            #printLetterTemplate { display: block !important; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen py-8 px-4 sm:px-6">
+
+    <!-- 🔗 GOOGLE APPS SCRIPT URL -->
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyP1wvbH7RHAgThEk8WN5vWpsdisEaQatFBv0eLKa1fxiIxgUymAqbSuevInpzYwn8-/exec";
+    </script>
+
+    <!-- CONTAINER BORANG WEB -->
+    <div class="no-print max-w-3xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+        
+        <!-- 🖼️ 1. BANNER UTAMA BERGAMBAR DENGAN 3 LOGO DI SEBELAH KIRI (TANPA KAD BEKAS) -->
+        <div class="relative bg-slate-900 bg-cover bg-center p-6 sm:p-8 text-white min-h-[160px] flex flex-col justify-between overflow-hidden"
+             style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.70)), url('images/lhi-banner.png');">
+            
+            <!-- OVERLAY TEKS & 3 LOGO -->
+            <div class="relative z-10 space-y-4">
+                
+                <!-- 📌 3 LOGO RASMI DI SEBELAH KIRI (TANPA BACKGROUND CARD) -->
+                <div class="flex items-center gap-3.5 inline-flex">
+                    <!-- Logo 1: KKM -->
+                    <img src="images/logo.png" alt="Logo KKM" class="h-8 sm:h-10 w-auto object-contain drop-shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=KKM';">
+                    <div class="h-6 w-[1px] bg-white/40"></div>
+                    <!-- Logo 2: LHI -->
+                    <img src="images/logo-lhi.png" alt="Logo LHI" class="h-8 sm:h-10 w-auto object-contain drop-shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/38B44A/ffffff?text=LHI';">
+                    <div class="h-6 w-[1px] bg-white/40"></div>
+                    <!-- Logo 3: NCD -->
+                    <img src="images/logo-ncd/logo-ncd-black.png" alt="Logo NCD" class="h-8 sm:h-10 w-auto object-contain drop-shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=NCD';">
+                </div>
+
+                <!-- TEKS TAJUK BANNER -->
+                <div class="space-y-1">
+                    <span class="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-ncd-green text-white px-2.5 py-0.5 rounded shadow-xs">
+                        Inisiatif Kesihatan Paru-Paru Kebangsaan
+                    </span>
+                    <h1 class="text-xl sm:text-2xl font-black drop-shadow-md">Senarai Semak Saringan Paru-Paru (LHI)</h1>
+                    <p class="text-xs text-slate-200 font-medium drop-shadow-xs">Unit Kawalan Penyakit Tidak Berjangkit (NCD), Jabatan Kesihatan Negeri Perlis</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 📌 INDIKATOR 3 SEKSYEN / STEPS -->
+        <div class="bg-slate-100 p-4 border-b border-slate-200 flex justify-between items-center text-xs font-extrabold">
+            <div class="flex items-center gap-2">
+                <span id="stepDot1" class="step-indicator active w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all">1</span>
+                <span id="stepText1" class="hidden sm:inline text-ncd-blue">Demografi</span>
+            </div>
+            <div class="h-[2px] flex-1 bg-slate-200 mx-2"></div>
+            <div class="flex items-center gap-2">
+                <span id="stepDot2" class="step-indicator w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all text-slate-400">2</span>
+                <span id="stepText2" class="hidden sm:inline text-slate-400">Soalan Saringan</span>
+            </div>
+            <div class="h-[2px] flex-1 bg-slate-200 mx-2"></div>
+            <div class="flex items-center gap-2">
+                <span id="stepDot3" class="step-indicator w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all text-slate-400">3</span>
+                <span id="stepText3" class="hidden sm:inline text-slate-400">Keputusan & Persetujuan</span>
+            </div>
+        </div>
+
+        <form id="lhiForm" onsubmit="event.preventDefault();" class="p-6 sm:p-8 space-y-6">
+
+            <!-- ---------------------------------------------------- -->
+            <!-- 👤 SEKSYEN 1: DEMOGRAFI -->
+            <!-- ---------------------------------------------------- -->
+            <div id="section1" class="space-y-4">
+                
+                <div class="p-3.5 bg-ncd-lightBlue rounded-2xl border border-ncd-blue/20 flex items-center gap-3">
+                    <span class="text-xl">📋</span>
+                    <div>
+                        <h2 class="text-xs font-black text-ncd-blue uppercase tracking-wider">Seksyen 1: Input Demografi Pengguna</h2>
+                        <p class="text-[11px] text-slate-500 font-medium">Sila isi maklumat peribadi dan lokasi saringan dengan lengkap.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+                    <!-- NAMA PENUH -->
+                    <div class="sm:col-span-2">
+                        <label class="font-bold text-slate-700">Nama Penuh (seperti dalam MyKad) *</label>
+                        <input type="text" id="nama" required placeholder="Contoh: Ahmad bin Abdullah" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
+                    </div>
+
+                    <!-- NO KAD PENGENALAN -->
+                    <div>
+                        <label class="font-bold text-slate-700">No. Kad Pengenalan *</label>
+                        <input type="text" id="noIC" required placeholder="Contoh: 880101095050" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
+                    </div>
+
+                    <!-- NO TELEFON -->
+                    <div>
+                        <label class="font-bold text-slate-700">No. Telefon *</label>
+                        <input type="tel" id="noTel" required placeholder="Contoh: 0123456789" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
+                    </div>
+
+                    <!-- JENIS PEKERJAAN -->
+                    <div>
+                        <label class="font-bold text-slate-700">Jenis Pekerjaan / Sektor *</label>
+                        <select id="pekerjaan" required class="w-full p-2.5 rounded-lg border bg-white focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
+                            <option value="">-- Pilih Sektor Pekerjaan --</option>
+                            <option value="Sektor Kerajaan (Persekutuan)">Sektor Kerajaan (Persekutuan)</option>
+                            <option value="Sektor Kerajaan (Negeri)">Sektor Kerajaan (Negeri)</option>
+                            <option value="Sektor Swasta">Sektor Swasta</option>
+                            <option value="Sektor GLC">Sektor GLC (Syarikat Berkaitan Kerajaan)</option>
+                            <option value="Bekerja Sendiri / Peniaga">Bekerja Sendiri / Peniaga</option>
+                            <option value="Pelajar IPTA / IPTS / Sekolah">Pelajar (IPTA / IPTS / Sekolah)</option>
+                            <option value="Pesara">Pesara</option>
+                            <option value="Suri Rumah">Suri Rumah</option>
+                            <option value="Tidak Bekerja / Mencari Pekerjaan">Tidak Bekerja / Mencari Pekerjaan</option>
+                            <option value="Lain-lain">Lain-lain</option>
+                        </select>
+                    </div>
+
+                    <!-- BANGSA -->
+                    <div>
+                        <label class="font-bold text-slate-700">Bangsa *</label>
+                        <select id="bangsa" required class="w-full p-2.5 rounded-lg border bg-white focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
+                            <option value="">-- Pilih Bangsa --</option>
+                            <option value="Melayu">Melayu</option>
+                            <option value="Cina">Cina</option>
+                            <option value="India">India</option>
+                            <option value="Orang Asli">Orang Asli</option>
+                            <option value="Lain-lain">Lain-lain</option>
+                        </select>
+                    </div>
+
+                    <!-- JENIS SARINGAN -->
+                    <div>
+                        <label class="font-bold text-slate-700">Jenis Saringan *</label>
+                        <select id="jenisSaringan" required class="w-full p-2.5 rounded-lg border bg-white focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
+                            <option value="">-- Pilih Jenis Saringan --</option>
+                            <option value="Tempat Kerja">Saringan di Tempat Kerja</option>
+                            <option value="Outreach">Saringan Outreach / Komuniti</option>
+                            <option value="Fasiliti Kesihatan">Saringan di Fasiliti Kesihatan</option>
+                        </select>
+                    </div>
+
+                    <!-- TEMPAT SARINGAN -->
+                    <div class="sm:col-span-2">
+                        <label class="font-bold text-slate-700">Tempat / Lokasi Saringan *</label>
+                        <input type="text" id="tempatSaringan" required placeholder="Contoh: Klinik Kesihatan Kangar / Dewan Komuniti" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-end">
+                    <button type="button" onclick="keSeksyen2()" class="py-3 px-6 bg-ncd-blue hover:bg-ncd-blueDark text-white font-extrabold text-xs rounded-xl shadow-md transition-all">
+                        Seterusnya: Soalan Saringan →
+                    </button>
+                </div>
+            </div>
+
+            <!-- ---------------------------------------------------- -->
+            <!-- 📋 SEKSYEN 2: SOALAN SENARAI SEMAK (PART A) -->
+            <!-- ---------------------------------------------------- -->
+            <div id="section2" class="hidden space-y-4">
+                
+                <div class="p-3.5 bg-ncd-lightGreen rounded-2xl border border-ncd-green/20 flex items-center gap-3">
+                    <span class="text-xl">🩺</span>
+                    <div>
+                        <h2 class="text-xs font-black text-ncd-greenDark uppercase tracking-wider">Seksyen 2: Soalan Senarai Semak Golongan Berisiko</h2>
+                        <p class="text-[11px] text-slate-500 font-medium">Langkah 2 daripada 3 · Sila tandakan Ya sekiranya terdapat faktor risiko[cite: 2].</p>
+                    </div>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>1. Kontak kepada pesakit Tibi</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i1" value="YA" class="risk-check" data-label="Kontak pesakit Tibi"> YA</label>
+                            <label><input type="radio" name="i1" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>2. Pesakit HIV</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i2" value="YA" class="risk-check" data-label="Pesakit HIV"> YA</label>
+                            <label><input type="radio" name="i2" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>3. Pekerjaan terdedah hazad paru-paru (radiasi, asbestos, silika, dll)</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i3" value="YA" class="risk-check" data-label="Pekerjaan terdedah hazad persekitaran/kimia"> YA</label>
+                            <label><input type="radio" name="i3" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>4. Penghuni pusat tahanan (penjara/lokap/depot/CCRC)</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i4" value="YA" class="risk-check" data-label="Penghuni pusat tahanan/depot"> YA</label>
+                            <label><input type="radio" name="i4" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>5. Penghuni institusi warga emas / kesihatan mental</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i5" value="YA" class="risk-check" data-label="Penghuni institusi jagaan/warga emas"> YA</label>
+                            <label><input type="radio" name="i5" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>6. Komorbid Obesiti / Diabetes / ESRD Dialysis</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i6" value="YA" class="risk-check" data-label="Komorbid Obesiti/Diabetes/ESRD Dialysis"> YA</label>
+                            <label><input type="radio" name="i6" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>7. Rawatan imunosupresan / transplan / steroid panjang</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i7" value="YA" class="risk-check" data-label="Rawatan imunosupresan/steroid panjang"> YA</label>
+                            <label><input type="radio" name="i7" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>8. Perokok / Bekas Perokok / Perokok Pasif</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i8" value="YA" class="risk-check" data-label="Perokok / Bekas Perokok / Perokok Pasif"> YA</label>
+                            <label><input type="radio" name="i8" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>9. Sejarah metadon / penyalahgunaan substans</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i9" value="YA" class="risk-check" data-label="Penyalahgunaan substans/metadon"> YA</label>
+                            <label><input type="radio" name="i9" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>10. Kumpulan rentan (Orang Asli / gelandangan / pelarian)</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i10" value="YA" class="risk-check" data-label="Kumpulan rentan"> YA</label>
+                            <label><input type="radio" name="i10" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>11. Sejarah keluarga penyakit paru-paru (Asma/COPD/Kanser/TB)</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i11" value="YA" class="risk-check" data-label="Sejarah keluarga penyakit paru-paru"> YA</label>
+                            <label><input type="radio" name="i11" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>12. Terdedah pencemaran persekitaran / jerebu</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i12" value="YA" class="risk-check" data-label="Terdedah pencemaran alam sekitar/jerebu"> YA</label>
+                            <label><input type="radio" name="i12" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border flex items-center justify-between gap-2">
+                        <span>13. Sejarah kanser diri sendiri / keluarga</span>
+                        <div class="flex items-center gap-3 font-bold flex-shrink-0">
+                            <label><input type="radio" name="i13" value="YA" class="risk-check" data-label="Sejarah peribadi/keluarga kanser"> YA</label>
+                            <label><input type="radio" name="i13" value="TIDAK" checked> TIDAK</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex justify-between gap-3">
+                    <button type="button" onclick="keSeksyen1()" class="py-3 px-5 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
+                        ← Kembali ke Demografi
+                    </button>
+                    <button type="button" onclick="keSeksyen3()" class="py-3 px-6 bg-ncd-blue hover:bg-ncd-blueDark text-white font-extrabold text-xs rounded-xl shadow-md">
+                        Seterusnya: Keputusan & Persetujuan →
+                    </button>
+                </div>
+            </div>
+
+            <!-- ---------------------------------------------------- -->
+            <!-- 🎯 SEKSYEN 3: KEPUTUSAN RESULT & PERSETUJUAN -->
+            <!-- ---------------------------------------------------- -->
+            <div id="section3" class="hidden space-y-4">
+                
+                <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 flex items-center gap-3">
+                    <span class="text-xl">📊</span>
+                    <div>
+                        <h2 class="text-xs font-black text-amber-900 uppercase tracking-wider">Seksyen 3: Paparan Keputusan & Persetujuan Klien</h2>
+                        <p class="text-[11px] text-slate-500 font-medium">Langkah 3 daripada 3 · Proses persetujuan mengikut aliran rujukan LHI[cite: 2].</p>
+                    </div>
+                </div>
+
+                <div id="resultContentContainer">
+                    <!-- Dynamic Content Injected By JS -->
+                </div>
+
+                <div id="backToStep2Container" class="pt-2">
+                    <button type="button" onclick="keSeksyen2()" class="py-2.5 px-4 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
+                        ← Semak Semula Soalan Seksyen 2
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- ---------------------------------------------------- -->
+    <!-- 📄 BORANG SURAT RUJUKAN RASMI KKM (UNTUK PRINTING) -->
+    <!-- ---------------------------------------------------- -->
+    <div id="printLetterTemplate" class="hidden max-w-4xl mx-auto p-8 border border-slate-300 bg-white text-slate-900 space-y-6">
+        
+        <!-- KEPALA SURAT DENGAN 3 LOGO UNTUK PRINTING -->
+        <div class="border-b-2 border-slate-900 pb-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="images/logo.png" alt="Logo KKM" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=KKM';">
+                <img src="images/logo-lhi.png" alt="Logo LHI" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x80/38B44A/ffffff?text=LHI';">
+                <img src="images/logo-ncd/logo-ncd-default.png" alt="Logo NCD" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=NCD';">
+                <div class="h-10 w-[1px] bg-slate-400"></div>
+                <div>
+                    <h1 class="text-xs font-black uppercase tracking-wide leading-tight">Kementerian Kesihatan Malaysia</h1>
+                    <h2 class="text-[11px] font-bold uppercase text-slate-700">Jabatan Kesihatan Negeri Perlis</h2>
+                    <p class="text-[9px] text-slate-500">Unit Kawalan Penyakit Tidak Berjangkit (NCD) · Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) 2026[cite: 2]</p>
+                </div>
+            </div>
+            <div class="text-right text-[10px] text-slate-600 space-y-0.5">
+                <p><strong>No. Rujukan:</strong> LHI/PERLIS/<span id="printRefNo">2026/001</span></p>
+                <p><strong>Tarikh Saringan:</strong> <span id="printDate">--/--/----</span></p>
+            </div>
+        </div>
+
+        <!-- TAJUK SURAT -->
+        <div class="text-center space-y-1">
+            <h3 class="text-base font-black uppercase underline tracking-wide">SURAT RUJUKAN SARINGAN PARU-PARU (LHI)</h3>
+            <p class="text-xs font-bold text-slate-600">Lampiran A (Part A) - Garis Panduan Pelaksanaan LHI KKM 2026[cite: 2]</p>
+        </div>
+
+        <!-- PERENGGAN PENGENALAN -->
+        <div class="text-xs space-y-1 leading-relaxed">
+            <p>To: <strong>Pakar Perubatan Keluarga / Pegawai Perubatan</strong></p>
+            <p>Klinik Kesihatan</p>
+            <p class="pt-2">Tuan/Puan,</p>
+            <p><strong>PER: RUJUKAN INDIVIDU BERISIKO TINGGI UNTUK SARINGAN PARU-PARU LANJUT (LHI)</strong></p>
+            <p class="text-slate-700">
+                Merujuk kepada perkara di atas, penama berikut telah menjalani saringan awal senarai semak golongan berisiko di bawah Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) dan didapati <strong>LAYAK</strong> untuk pemeriksaan perubatan selanjutnya di Klinik Kesihatan[cite: 2].
+            </p>
+        </div>
+
+        <!-- TABLE DEMOGRAFI PESAKIT -->
+        <div class="space-y-2">
+            <h4 class="text-xs font-extrabold uppercase bg-slate-100 p-1.5 border border-slate-300">1. Maklumat Biodata Pesakit</h4>
+            <table class="w-full text-xs border-collapse border border-slate-300">
+                <tbody>
+                    <tr>
+                        <td class="p-2 font-bold border border-slate-300 bg-slate-50 w-1/4">Nama Penuh:</td>
+                        <td class="p-2 border border-slate-300 w-1/4" id="pNama">-</td>
+                        <td class="p-2 font-bold border border-slate-300 bg-slate-50 w-1/4">No. Kad Pengenalan:</td>
+                        <td class="p-2 border border-slate-300 w-1/4" id="pNoIC">-</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">No. Telefon:</td>
+                        <td class="p-2 border border-slate-300" id="pNoTel">-</td>
+                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">Sektor Pekerjaan:</td>
+                        <td class="p-2 border border-slate-300" id="pPekerjaan">-</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">Bangsa:</td>
+                        <td class="p-2 border border-slate-300" id="pBangsa">-</td>
+                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">Jenis & Tempat Saringan:</td>
+                        <td class="p-2 border border-slate-300" id="pTempatSaringan">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TABLE FAKTOR RISIKO YANG DIKESAN -->
+        <div class="space-y-2">
+            <h4 class="text-xs font-extrabold uppercase bg-slate-100 p-1.5 border border-slate-300">2. Dapatan Faktor Risiko Yang Dikesan (Part A)</h4>
+            <div class="p-3 border border-slate-300 text-xs space-y-1 bg-slate-50/50">
+                <p class="font-bold">Jumlah Faktor Risiko Dikesan: <span id="pTotalRisk" class="text-ncd-blue">0</span> Item</p>
+                <ul id="pRiskList" class="list-disc list-inside space-y-1 pt-1 font-medium text-slate-800">
+                    <!-- Dynamic List Injected -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- PERAKUAN PERSETUJUAN & TANDATANGAN -->
+        <div class="grid grid-cols-2 gap-8 pt-6 text-xs">
+            <div class="space-y-8 border-t border-slate-300 pt-3">
+                <p class="font-bold">Persetujuan Pesakit:</p>
+                <p class="text-[11px] text-slate-600">Saya bersetuju untuk hadir ke Klinik Kesihatan bagi ujian lanjut[cite: 2].</p>
+                <div class="pt-6 border-b border-dashed border-slate-400 w-3/4"></div>
+                <p class="text-[10px] text-slate-500">(Tandatangan / Cop Ibu Jari Pesakit)</p>
+            </div>
+
+            <div class="space-y-8 border-t border-slate-300 pt-3">
+                <p class="font-bold">Pengesahan Petugas Saringan:</p>
+                <p class="text-[11px] text-slate-600">Disemak oleh Petugas Program Saringan LHI JKN Perlis[cite: 2].</p>
+                <div class="pt-6 border-b border-dashed border-slate-400 w-3/4"></div>
+                <p class="text-[10px] text-slate-500">(Tandatangan & Cop Rasmi Petugas)</p>
+            </div>
+        </div>
+
+        <!-- FOOTER NOTA CETAKAN -->
+        <div class="border-t border-slate-200 pt-4 text-[9px] text-slate-500 text-center">
+            <p>Borang Rujukan Automatik NCD JKN Perlis © 2026 · Garis Panduan Pelaksanaan Inisiatif Kesihatan Paru-Paru Kebangsaan[cite: 2]</p>
+        </div>
+
+    </div>
+
+    <!-- ⚙️ JAVASCRIPT ENGINE -->
+    <script>
+        let formData = {};
+
+        // NAVIGATION: SEKSYEN 1 -> SEKSYEN 2
+        function keSeksyen2() {
+            const nama = document.getElementById('nama').value;
+            const noIC = document.getElementById('noIC').value;
+            const noTel = document.getElementById('noTel').value;
+            const pekerjaan = document.getElementById('pekerjaan').value;
+            const bangsa = document.getElementById('bangsa').value;
+            const jenisSaringan = document.getElementById('jenisSaringan').value;
+            const tempatSaringan = document.getElementById('tempatSaringan').value;
+
+            if (!nama || !noIC || !noTel || !pekerjaan || !bangsa || !jenisSaringan || !tempatSaringan) {
+                alert("Sila lengkapkan semua maklumat demografi di Seksyen 1 terlebih dahulu.");
+                return;
+            }
+
+            document.getElementById('section1').classList.add('hidden');
+            document.getElementById('section2').classList.remove('hidden');
+
+            document.getElementById('stepDot1').className = "step-indicator completed w-7 h-7 rounded-full border-2 border-ncd-green flex items-center justify-center text-xs font-bold";
+            document.getElementById('stepDot1').innerText = "✓";
+            document.getElementById('stepDot2').className = "step-indicator active w-7 h-7 rounded-full border-2 border-ncd-blue flex items-center justify-center text-xs font-bold";
+        }
+
+        // NAVIGATION: SEKSYEN 2 -> SEKSYEN 1
+        function keSeksyen1() {
+            document.getElementById('section2').classList.add('hidden');
+            document.getElementById('section1').classList.remove('hidden');
+
+            document.getElementById('stepDot1').className = "step-indicator active w-7 h-7 rounded-full border-2 border-ncd-blue flex items-center justify-center text-xs font-bold";
+            document.getElementById('stepDot1').innerText = "1";
+            document.getElementById('stepDot2').className = "step-indicator w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs font-bold text-slate-400";
+        }
+
+        // NAVIGATION: SEKSYEN 2 -> SEKSYEN 3
+        function keSeksyen3() {
+            formData = {
+                nama: document.getElementById('nama').value,
+                noIC: document.getElementById('noIC').value,
+                noTel: document.getElementById('noTel').value,
+                pekerjaan: document.getElementById('pekerjaan').value,
+                bangsa: document.getElementById('bangsa').value,
+                jenisSaringan: document.getElementById('jenisSaringan').value,
+                tempatSaringan: document.getElementById('tempatSaringan').value,
+                i1: document.querySelector('input[name="i1"]:checked').value,
+                i2: document.querySelector('input[name="i2"]:checked').value,
+                i3: document.querySelector('input[name="i3"]:checked').value,
+                i4: document.querySelector('input[name="i4"]:checked').value,
+                i5: document.querySelector('input[name="i5"]:checked').value,
+                i6: document.querySelector('input[name="i6"]:checked').value,
+                i7: document.querySelector('input[name="i7"]:checked').value,
+                i8: document.querySelector('input[name="i8"]:checked').value,
+                i9: document.querySelector('input[name="i9"]:checked').value,
+                i10: document.querySelector('input[name="i10"]:checked').value,
+                i11: document.querySelector('input[name="i11"]:checked').value,
+                i12: document.querySelector('input[name="i12"]:checked').value,
+                i13: document.querySelector('input[name="i13"]:checked').value
+            };
+
+            const totalYa = document.querySelectorAll('.risk-check:checked').length;
+            formData.jumlahRisiko = totalYa;
+
+            document.getElementById('section2').classList.add('hidden');
+            document.getElementById('section3').classList.remove('hidden');
+
+            document.getElementById('stepDot2').className = "step-indicator completed w-7 h-7 rounded-full border-2 border-ncd-green flex items-center justify-center text-xs font-bold";
+            document.getElementById('stepDot2').innerText = "✓";
+            document.getElementById('stepDot3').className = "step-indicator active w-7 h-7 rounded-full border-2 border-ncd-blue flex items-center justify-center text-xs font-bold";
+
+            const container = document.getElementById('resultContentContainer');
+
+            if (totalYa === 0) {
+                formData.statusKlien = "KLIEN SIHAT";
+                formData.persetujuanAwal = "N/A";
+                formData.ubahFikiran = "N/A";
+                formData.keputusanAkhir = "KLIEN SIHAT";
+
+                hantarDataGoogleSheet();
+
+                container.innerHTML = `
+                    <div class="p-5 bg-sky-50 border border-sky-200 rounded-2xl space-y-3">
+                        <span class="text-[10px] font-black uppercase text-ncd-blue bg-white px-2.5 py-0.5 rounded border">OUTPUT: KLIEN SIHAT</span>
+                        <h3 class="text-sm font-extrabold text-slate-900">Keputusan Saringan: Tiada Faktor Risiko Dikesan</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Berdasarkan jawapan anda, tiada sebarang faktor risiko am dikesan[cite: 2]. Data anda telah direkodkan[cite: 2]. Proses saringan tamat[cite: 2].
+                        </p>
+                        <button onclick="location.reload()" class="py-2.5 px-5 bg-slate-900 text-white font-bold text-xs rounded-xl">
+                            Selesai & Tutup
+                        </button>
+                    </div>
+                `;
+            } else {
+                formData.statusKlien = "BERISIKO (LAYAK LHI)";
+                paparPersetujuanKlien();
+            }
+        }
+
+        function paparPersetujuanKlien() {
+            const container = document.getElementById('resultContentContainer');
+            container.innerHTML = `
+                <div class="p-5 bg-white border border-slate-200 rounded-2xl space-y-4 shadow-sm">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <span class="text-[10px] font-black uppercase text-ncd-blue bg-ncd-lightBlue px-2.5 py-0.5 rounded">PERSETUJUAN KLIEN</span>
+                        <span class="text-xs font-bold text-ncd-blue">${formData.jumlahRisiko} Faktor Risiko Dikesan</span>
+                    </div>
+
+                    <h3 class="text-sm font-extrabold text-slate-900">Adakah anda bersetuju untuk mendapatkan saringan perubatan LHI di Klinik Kesihatan (KK)[cite: 2]?</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Saringan di KK merangkumi ujian X-Ray Dada, Spirometri, atau ujian sampel lanjut bagi pengesanan awal penyakit paru-paru[cite: 2].
+                    </p>
+
+                    <div class="flex gap-3 pt-2">
+                        <button onclick="paparRujukanKK('SETUJU')" class="flex-1 py-3 bg-ncd-green hover:bg-ncd-greenDark text-white font-extrabold text-xs rounded-xl shadow-md">
+                            YA (Setuju Rujukan KK)
+                        </button>
+                        <button onclick="paparAreYouSure()" class="flex-1 py-3 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs rounded-xl shadow-md">
+                            TIDAK (Tidak Setuju)
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function paparRujukanKK(statusSetuju) {
+            formData.persetujuanAwal = "SETUJU";
+            formData.ubahFikiran = (statusSetuju === 'UBAH_FIKIRAN') ? "YA (SETUJU)" : "N/A";
+            formData.keputusanAkhir = "RUJUKAN KE KK";
+
+            hantarDataGoogleSheet();
+            janaDataPrintTemplate();
+
+            const container = document.getElementById('resultContentContainer');
+            container.innerHTML = `
+                <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-2xl space-y-3">
+                    <span class="text-[10px] font-black uppercase text-ncd-greenDark bg-white px-2.5 py-0.5 rounded border">RUJUKAN KE KK</span>
+                    <h3 class="text-sm font-extrabold text-slate-900">Surat Rujukan Saringan LHI Dikeluarkan</h3>
+                    <p class="text-xs text-slate-600">Maklumat anda telah disimpan[cite: 2]. Anda boleh mencetak Borang Rujukan Rasmi untuk dibawa ke Klinik Kesihatan (KK)[cite: 2].</p>
+                    
+                    <div class="p-3 bg-white rounded-xl border text-xs space-y-1 text-slate-700">
+                        <p><strong>Nama:</strong> ${formData.nama}</p>
+                        <p><strong>No. IC:</strong> ${formData.noIC}</p>
+                        <p><strong>Sektor Pekerjaan:</strong> ${formData.pekerjaan}</p>
+                        <p><strong>Status Keputusan:</strong> Layak Rujukan LHI (${formData.jumlahRisiko} Risiko)[cite: 2]</p>
+                    </div>
+
+                    <div class="flex gap-2 pt-2">
+                        <button onclick="window.print()" class="py-2.5 px-4 bg-ncd-blue text-white text-xs font-bold rounded-lg shadow-sm">🖨️ Cetak Surat Rujukan Rasmi</button>
+                        <button onclick="location.reload()" class="py-2.5 px-4 bg-slate-200 text-slate-700 text-xs font-bold rounded-lg">Selesai</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function paparAreYouSure() {
+            formData.persetujuanAwal = "TIDAK SETUJU";
+
+            const container = document.getElementById('resultContentContainer');
+            container.innerHTML = `
+                <div class="p-5 bg-amber-50 border border-amber-200 rounded-2xl space-y-3">
+                    <span class="text-[10px] font-black uppercase text-amber-800 bg-white px-2.5 py-0.5 rounded border">AMARAN</span>
+                    <h3 class="text-sm font-extrabold text-slate-900">Adakah Anda Pasti Untuk Menolak Saringan?</h3>
+                    <p class="text-xs text-slate-600">Saringan awal adalah penting untuk mengesan tanda awal penyakit paru-paru sebelum keadaan menjadi lebih teruk[cite: 2].</p>
+
+                    <div class="space-y-2 pt-2">
+                        <p class="text-xs font-bold text-slate-800">ANDA MAHU UBAH FIKIRAN?</p>
+                        <div class="flex gap-3">
+                            <button onclick="paparRujukanKK('UBAH_FIKIRAN')" class="flex-1 py-2.5 bg-ncd-blue hover:bg-ncd-blueDark text-white font-extrabold text-xs rounded-xl shadow-sm">
+                                YA (Ubah Fikiran & Setuju)
+                            </button>
+                            <button onclick="paparOutputNasihat()" class="flex-1 py-2.5 bg-slate-700 hover:bg-slate-800 text-white font-extrabold text-xs rounded-xl shadow-sm">
+                                TIDAK (Kekal Menolak)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function paparOutputNasihat() {
+            formData.ubahFikiran = "TIDAK (KEKAL MENOLAK)";
+            formData.keputusanAkhir = "NASIHAT";
+
+            hantarDataGoogleSheet();
+
+            const container = document.getElementById('resultContentContainer');
+            container.innerHTML = `
+                <div class="p-5 bg-slate-100 border border-slate-300 rounded-2xl space-y-3">
+                    <span class="text-[10px] font-black uppercase text-slate-600 bg-white px-2.5 py-0.5 rounded border">OUTPUT: NASIHAT</span>
+                    <h3 class="text-sm font-extrabold text-slate-900">Saranan & Nasihat Kesihatan</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Pilihan anda telah direkodkan[cite: 2]. Anda dinasihatkan untuk sentiasa mengamalkan gaya hidup sihat dan hadir ke Klinik Kesihatan sekiranya mula mengalami gejala[cite: 2].
+                    </p>
+                    <button onclick="location.reload()" class="py-2.5 px-5 bg-slate-900 text-white font-bold text-xs rounded-xl">
+                        Tutup & Selesai (END)
+                    </button>
+                </div>
+            `;
+        }
+
+        // FUNGSI MENJANA MAKLUMAT PADA SURAT RUJUKAN CETAKAN (PRINT)
+        function janaDataPrintTemplate() {
+            document.getElementById('pNama').innerText = formData.nama;
+            document.getElementById('pNoIC').innerText = formData.noIC;
+            document.getElementById('pNoTel').innerText = formData.noTel;
+            document.getElementById('pPekerjaan').innerText = formData.pekerjaan;
+            document.getElementById('pBangsa').innerText = formData.bangsa;
+            document.getElementById('pTempatSaringan').innerText = `${formData.jenisSaringan} (${formData.tempatSaringan})`;
+            document.getElementById('pTotalRisk').innerText = formData.jumlahRisiko;
+
+            const today = new Date();
+            document.getElementById('printDate').innerText = today.toLocaleDateString('ms-MY');
+            document.getElementById('printRefNo').innerText = today.getFullYear() + "/" + formData.noIC;
+
+            const riskListEl = document.getElementById('pRiskList');
+            riskListEl.innerHTML = "";
+            const checkedRisks = document.querySelectorAll('.risk-check:checked');
+            
+            checkedRisks.forEach(item => {
+                const labelText = item.getAttribute('data-label');
+                const li = document.createElement('li');
+                li.innerText = labelText;
+                riskListEl.appendChild(li);
+            });
+        }
+
+        function hantarDataGoogleSheet() {
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            }).then(() => {
+                console.log("Data berjaya dihantar ke Google Sheet Apps Script.");
+            }).catch(err => console.error("Ralat hantar data:", err));
+        }
+    </script>
+</body>
+</html>
