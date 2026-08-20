@@ -32,34 +32,28 @@
 </head>
 <body class="text-slate-800 antialiased min-h-screen py-8 px-4 sm:px-6">
 
-    <!-- 🔗 GOOGLE APPS SCRIPT URL -->
+    <!-- 🔗 GOOGLE APPS SCRIPT URL & TOKEN KESELAMATAN -->
     <script>
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyP1wvbH7RHAgThEk8WN5vWpsdisEaQatFBv0eLKa1fxiIxgUymAqbSuevInpzYwn8-/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwO1DxGPpatB-UCdQnhdDPOE-4kvBH2W1PXmfhHZzwnTAD1w527g78KnE4qQGjd63hW/exec";
+        const SECRET_TOKEN = "JKN_PERLIS_LHI_SECRET_2026";
     </script>
 
     <!-- CONTAINER BORANG WEB -->
     <div class="no-print max-w-3xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
         
-        <!-- 🖼️ 1. BANNER UTAMA BERGAMBAR DENGAN 3 LOGO DI SEBELAH KIRI (TANPA KAD BEKAS) -->
+        <!-- BANNER UTAMA BERGAMBAR DENGAN 3 LOGO -->
         <div class="relative bg-slate-900 bg-cover bg-center p-6 sm:p-8 text-white min-h-[160px] flex flex-col justify-between overflow-hidden"
              style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.70)), url('images/lhi-banner.png');">
             
-            <!-- OVERLAY TEKS & 3 LOGO -->
             <div class="relative z-10 space-y-4">
-                
-                <!-- 📌 3 LOGO RASMI DI SEBELAH KIRI (TANPA BACKGROUND CARD) -->
                 <div class="flex items-center gap-3.5 inline-flex">
-                    <!-- Logo 1: KKM -->
                     <img src="images/logo.png" alt="Logo KKM" class="h-8 sm:h-10 w-auto object-contain drop-shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=KKM';">
                     <div class="h-6 w-[1px] bg-white/40"></div>
-                    <!-- Logo 2: LHI -->
                     <img src="images/logo-lhi.png" alt="Logo LHI" class="h-8 sm:h-10 w-auto object-contain drop-shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/38B44A/ffffff?text=LHI';">
                     <div class="h-6 w-[1px] bg-white/40"></div>
-                    <!-- Logo 3: NCD -->
                     <img src="images/logo-ncd/logo-ncd-black.png" alt="Logo NCD" class="h-8 sm:h-10 w-auto object-contain drop-shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=NCD';">
                 </div>
 
-                <!-- TEKS TAJUK BANNER -->
                 <div class="space-y-1">
                     <span class="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-ncd-green text-white px-2.5 py-0.5 rounded shadow-xs">
                         Inisiatif Kesihatan Paru-Paru Kebangsaan
@@ -67,11 +61,10 @@
                     <h1 class="text-xl sm:text-2xl font-black drop-shadow-md">Senarai Semak Saringan Paru-Paru (LHI)</h1>
                     <p class="text-xs text-slate-200 font-medium drop-shadow-xs">Unit Kawalan Penyakit Tidak Berjangkit (NCD), Jabatan Kesihatan Negeri Perlis</p>
                 </div>
-
             </div>
         </div>
 
-        <!-- 📌 INDIKATOR 3 SEKSYEN / STEPS -->
+        <!-- INDIKATOR STEPS -->
         <div class="bg-slate-100 p-4 border-b border-slate-200 flex justify-between items-center text-xs font-extrabold">
             <div class="flex items-center gap-2">
                 <span id="stepDot1" class="step-indicator active w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all">1</span>
@@ -91,11 +84,8 @@
 
         <form id="lhiForm" onsubmit="event.preventDefault();" class="p-6 sm:p-8 space-y-6">
 
-            <!-- ---------------------------------------------------- -->
-            <!-- 👤 SEKSYEN 1: DEMOGRAFI -->
-            <!-- ---------------------------------------------------- -->
+            <!-- SEKSYEN 1: DEMOGRAFI -->
             <div id="section1" class="space-y-4">
-                
                 <div class="p-3.5 bg-ncd-lightBlue rounded-2xl border border-ncd-blue/20 flex items-center gap-3">
                     <span class="text-xl">📋</span>
                     <div>
@@ -105,25 +95,18 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
-                    <!-- NAMA PENUH -->
                     <div class="sm:col-span-2">
                         <label class="font-bold text-slate-700">Nama Penuh (seperti dalam MyKad) *</label>
                         <input type="text" id="nama" required placeholder="Contoh: Ahmad bin Abdullah" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
                     </div>
-
-                    <!-- NO KAD PENGENALAN -->
                     <div>
                         <label class="font-bold text-slate-700">No. Kad Pengenalan *</label>
                         <input type="text" id="noIC" required placeholder="Contoh: 880101095050" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
                     </div>
-
-                    <!-- NO TELEFON -->
                     <div>
                         <label class="font-bold text-slate-700">No. Telefon *</label>
                         <input type="tel" id="noTel" required placeholder="Contoh: 0123456789" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
                     </div>
-
-                    <!-- JENIS PEKERJAAN -->
                     <div>
                         <label class="font-bold text-slate-700">Jenis Pekerjaan / Sektor *</label>
                         <select id="pekerjaan" required class="w-full p-2.5 rounded-lg border bg-white focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
@@ -140,8 +123,6 @@
                             <option value="Lain-lain">Lain-lain</option>
                         </select>
                     </div>
-
-                    <!-- BANGSA -->
                     <div>
                         <label class="font-bold text-slate-700">Bangsa *</label>
                         <select id="bangsa" required class="w-full p-2.5 rounded-lg border bg-white focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
@@ -153,8 +134,6 @@
                             <option value="Lain-lain">Lain-lain</option>
                         </select>
                     </div>
-
-                    <!-- JENIS SARINGAN -->
                     <div>
                         <label class="font-bold text-slate-700">Jenis Saringan *</label>
                         <select id="jenisSaringan" required class="w-full p-2.5 rounded-lg border bg-white focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
@@ -164,8 +143,6 @@
                             <option value="Fasiliti Kesihatan">Saringan di Fasiliti Kesihatan</option>
                         </select>
                     </div>
-
-                    <!-- TEMPAT SARINGAN -->
                     <div class="sm:col-span-2">
                         <label class="font-bold text-slate-700">Tempat / Lokasi Saringan *</label>
                         <input type="text" id="tempatSaringan" required placeholder="Contoh: Klinik Kesihatan Kangar / Dewan Komuniti" class="w-full p-2.5 rounded-lg border focus:ring-2 focus:ring-ncd-blue/20 outline-none mt-1">
@@ -179,11 +156,8 @@
                 </div>
             </div>
 
-            <!-- ---------------------------------------------------- -->
-            <!-- 📋 SEKSYEN 2: SOALAN SENARAI SEMAK (PART A) -->
-            <!-- ---------------------------------------------------- -->
+            <!-- SEKSYEN 2: SOALAN SARINGAN -->
             <div id="section2" class="hidden space-y-4">
-                
                 <div class="p-3.5 bg-ncd-lightGreen rounded-2xl border border-ncd-green/20 flex items-center gap-3">
                     <span class="text-xl">🩺</span>
                     <div>
@@ -308,11 +282,8 @@
                 </div>
             </div>
 
-            <!-- ---------------------------------------------------- -->
-            <!-- 🎯 SEKSYEN 3: KEPUTUSAN RESULT & PERSETUJUAN -->
-            <!-- ---------------------------------------------------- -->
+            <!-- SEKSYEN 3: PERSETUJUAN -->
             <div id="section3" class="hidden space-y-4">
-                
                 <div class="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 flex items-center gap-3">
                     <span class="text-xl">📊</span>
                     <div>
@@ -321,9 +292,7 @@
                     </div>
                 </div>
 
-                <div id="resultContentContainer">
-                    <!-- Dynamic Content Injected By JS -->
-                </div>
+                <div id="resultContentContainer"></div>
 
                 <div id="backToStep2Container" class="pt-2">
                     <button type="button" onclick="keSeksyen2()" class="py-2.5 px-4 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">
@@ -336,12 +305,8 @@
 
     </div>
 
-    <!-- ---------------------------------------------------- -->
-    <!-- 📄 BORANG SURAT RUJUKAN RASMI KKM (UNTUK PRINTING) -->
-    <!-- ---------------------------------------------------- -->
+    <!-- BORANG SURAT RUJUKAN CETAKAN -->
     <div id="printLetterTemplate" class="hidden max-w-4xl mx-auto p-8 border border-slate-300 bg-white text-slate-900 space-y-6">
-        
-        <!-- KEPALA SURAT DENGAN 3 LOGO UNTUK PRINTING -->
         <div class="border-b-2 border-slate-900 pb-4 flex items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <img src="images/logo.png" alt="Logo KKM" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=KKM';">
@@ -360,13 +325,11 @@
             </div>
         </div>
 
-        <!-- TAJUK SURAT -->
         <div class="text-center space-y-1">
             <h3 class="text-base font-black uppercase underline tracking-wide">SURAT RUJUKAN SARINGAN PARU-PARU (LHI)</h3>
             <p class="text-xs font-bold text-slate-600">Lampiran A (Part A) - Garis Panduan Pelaksanaan LHI KKM 2026[cite: 2]</p>
         </div>
 
-        <!-- PERENGGAN PENGENALAN -->
         <div class="text-xs space-y-1 leading-relaxed">
             <p>To: <strong>Pakar Perubatan Keluarga / Pegawai Perubatan</strong></p>
             <p>Klinik Kesihatan</p>
@@ -377,7 +340,6 @@
             </p>
         </div>
 
-        <!-- TABLE DEMOGRAFI PESAKIT -->
         <div class="space-y-2">
             <h4 class="text-xs font-extrabold uppercase bg-slate-100 p-1.5 border border-slate-300">1. Maklumat Biodata Pesakit</h4>
             <table class="w-full text-xs border-collapse border border-slate-300">
@@ -404,18 +366,14 @@
             </table>
         </div>
 
-        <!-- TABLE FAKTOR RISIKO YANG DIKESAN -->
         <div class="space-y-2">
             <h4 class="text-xs font-extrabold uppercase bg-slate-100 p-1.5 border border-slate-300">2. Dapatan Faktor Risiko Yang Dikesan (Part A)</h4>
             <div class="p-3 border border-slate-300 text-xs space-y-1 bg-slate-50/50">
                 <p class="font-bold">Jumlah Faktor Risiko Dikesan: <span id="pTotalRisk" class="text-ncd-blue">0</span> Item</p>
-                <ul id="pRiskList" class="list-disc list-inside space-y-1 pt-1 font-medium text-slate-800">
-                    <!-- Dynamic List Injected -->
-                </ul>
+                <ul id="pRiskList" class="list-disc list-inside space-y-1 pt-1 font-medium text-slate-800"></ul>
             </div>
         </div>
 
-        <!-- PERAKUAN PERSETUJUAN & TANDATANGAN -->
         <div class="grid grid-cols-2 gap-8 pt-6 text-xs">
             <div class="space-y-8 border-t border-slate-300 pt-3">
                 <p class="font-bold">Persetujuan Pesakit:</p>
@@ -432,18 +390,15 @@
             </div>
         </div>
 
-        <!-- FOOTER NOTA CETAKAN -->
         <div class="border-t border-slate-200 pt-4 text-[9px] text-slate-500 text-center">
             <p>Borang Rujukan Automatik NCD JKN Perlis © 2026 · Garis Panduan Pelaksanaan Inisiatif Kesihatan Paru-Paru Kebangsaan[cite: 2]</p>
         </div>
-
     </div>
 
     <!-- ⚙️ JAVASCRIPT ENGINE -->
     <script>
         let formData = {};
 
-        // NAVIGATION: SEKSYEN 1 -> SEKSYEN 2
         function keSeksyen2() {
             const nama = document.getElementById('nama').value;
             const noIC = document.getElementById('noIC').value;
@@ -466,7 +421,6 @@
             document.getElementById('stepDot2').className = "step-indicator active w-7 h-7 rounded-full border-2 border-ncd-blue flex items-center justify-center text-xs font-bold";
         }
 
-        // NAVIGATION: SEKSYEN 2 -> SEKSYEN 1
         function keSeksyen1() {
             document.getElementById('section2').classList.add('hidden');
             document.getElementById('section1').classList.remove('hidden');
@@ -476,9 +430,9 @@
             document.getElementById('stepDot2').className = "step-indicator w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs font-bold text-slate-400";
         }
 
-        // NAVIGATION: SEKSYEN 2 -> SEKSYEN 3
         function keSeksyen3() {
             formData = {
+                token: SECRET_TOKEN, // 🔑 TOKEN DITAMBAH DI SINI
                 nama: document.getElementById('nama').value,
                 noIC: document.getElementById('noIC').value,
                 noTel: document.getElementById('noTel').value,
@@ -641,7 +595,6 @@
             `;
         }
 
-        // FUNGSI MENJANA MAKLUMAT PADA SURAT RUJUKAN CETAKAN (PRINT)
         function janaDataPrintTemplate() {
             document.getElementById('pNama').innerText = formData.nama;
             document.getElementById('pNoIC').innerText = formData.noIC;
@@ -667,6 +620,7 @@
             });
         }
 
+        // 🛠️ FUNGSI HANTAR DATA YANG DIBETULKAN DENGAN TOKEN KESELAMATAN
         function hantarDataGoogleSheet() {
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
@@ -674,7 +628,7 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             }).then(() => {
-                console.log("Data berjaya dihantar ke Google Sheet Apps Script.");
+                console.log("Data berjaya dihantar ke Google Sheet dengan Token Keselamatan.");
             }).catch(err => console.error("Ralat hantar data:", err));
         }
     </script>
