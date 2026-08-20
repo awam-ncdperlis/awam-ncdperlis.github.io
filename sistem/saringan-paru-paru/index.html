@@ -41,7 +41,7 @@
     <!-- CONTAINER BORANG WEB -->
     <div class="no-print max-w-3xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
         
-        <!-- BANNER UTAMA BERGAMBAR DENGAN 3 LOGO -->
+        <!-- BANNER UTAMA BERGAMBAR DENGAN LOGO -->
         <div class="relative bg-slate-900 bg-cover bg-center p-6 sm:p-8 text-white min-h-[160px] flex flex-col justify-between overflow-hidden"
              style="background-image: linear-gradient(to right, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.70)), url('images/lhi-banner.png');">
             
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <!-- INDIKATOR STEPS -->
+        <!-- INDIKATOR LANGKAH -->
         <div class="bg-slate-100 p-4 border-b border-slate-200 flex justify-between items-center text-xs font-extrabold">
             <div class="flex items-center gap-2">
                 <span id="stepDot1" class="step-indicator active w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all">1</span>
@@ -89,7 +89,7 @@
                 <div class="p-3.5 bg-ncd-lightBlue rounded-2xl border border-ncd-blue/20 flex items-center gap-3">
                     <span class="text-xl">📋</span>
                     <div>
-                        <h2 class="text-xs font-black text-ncd-blue uppercase tracking-wider">Seksyen 1: Input Demografi Pengguna</h2>
+                        <h2 class="text-xs font-black text-ncd-blue uppercase tracking-wider">Seksyen 1: Maklumat Demografi Pengguna</h2>
                         <p class="text-[11px] text-slate-500 font-medium">Sila isi maklumat peribadi dan lokasi saringan dengan lengkap.</p>
                     </div>
                 </div>
@@ -161,8 +161,8 @@
                 <div class="p-3.5 bg-ncd-lightGreen rounded-2xl border border-ncd-green/20 flex items-center gap-3">
                     <span class="text-xl">🩺</span>
                     <div>
-                        <h2 class="text-xs font-black text-ncd-greenDark uppercase tracking-wider">Seksyen 2: Soalan Senarai Semak Golongan Berisiko</h2>
-                        <p class="text-[11px] text-slate-500 font-medium">Langkah 2 daripada 3 · Sila tandakan Ya sekiranya terdapat faktor risiko[cite: 2].</p>
+                        <h2 class="text-xs font-black text-ncd-greenDark uppercase tracking-wider">Seksyen 2: Senarai Semak Golongan Berisiko</h2>
+                        <p class="text-[11px] text-slate-500 font-medium">Langkah 2 daripada 3 · Sila tandakan Ya sekiranya terdapat faktor risiko.</p>
                     </div>
                 </div>
 
@@ -288,7 +288,7 @@
                     <span class="text-xl">📊</span>
                     <div>
                         <h2 class="text-xs font-black text-amber-900 uppercase tracking-wider">Seksyen 3: Paparan Keputusan & Persetujuan Klien</h2>
-                        <p class="text-[11px] text-slate-500 font-medium">Langkah 3 daripada 3 · Proses persetujuan mengikut aliran rujukan LHI[cite: 2].</p>
+                        <p class="text-[11px] text-slate-500 font-medium">Langkah 3 daripada 3 · Proses persetujuan mengikut aliran rujukan LHI.</p>
                     </div>
                 </div>
 
@@ -306,92 +306,110 @@
     </div>
 
     <!-- BORANG SURAT RUJUKAN CETAKAN -->
-    <div id="printLetterTemplate" class="hidden max-w-4xl mx-auto p-8 border border-slate-300 bg-white text-slate-900 space-y-6">
-        <div class="border-b-2 border-slate-900 pb-4 flex items-center justify-between gap-4">
+    <div id="printLetterTemplate" class="hidden max-w-4xl mx-auto p-8 border border-slate-300 bg-white text-slate-900 space-y-5">
+        
+        <!-- KEPALA SURAT (LETTERHEAD) RASMI KKM JKN PERLIS -->
+        <div class="border-b-2 border-slate-900 pb-3 flex items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <img src="images/logo.png" alt="Logo KKM" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=KKM';">
-                <img src="images/logo-lhi.png" alt="Logo LHI" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x80/38B44A/ffffff?text=LHI';">
-                <img src="images/logo-ncd/logo-ncd-default.png" alt="Logo NCD" class="h-12 w-auto object-contain" onerror="this.onerror=null; this.src='https://placehold.co/80x80/2A4B9B/ffffff?text=NCD';">
                 <div class="h-10 w-[1px] bg-slate-400"></div>
                 <div>
-                    <h1 class="text-xs font-black uppercase tracking-wide leading-tight">Kementerian Kesihatan Malaysia</h1>
-                    <h2 class="text-[11px] font-bold uppercase text-slate-700">Jabatan Kesihatan Negeri Perlis</h2>
-                    <p class="text-[9px] text-slate-500">Unit Kawalan Penyakit Tidak Berjangkit (NCD) · Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) 2026[cite: 2]</p>
+                    <h1 class="text-xs font-black uppercase tracking-wide leading-tight">KEMENTERIAN KESIHATAN MALAYSIA</h1>
+                    <h2 class="text-[11px] font-extrabold uppercase text-slate-800">JABATAN KESIHATAN NEGERI PERLIS</h2>
+                    <p class="text-[10px] font-semibold text-slate-600">Jalan Raja Syed Alwi</p>
+                    <p class="text-[10px] font-semibold text-slate-600">01000 Kangar, Perlis</p>
                 </div>
             </div>
             <div class="text-right text-[10px] text-slate-600 space-y-0.5">
                 <p><strong>No. Rujukan:</strong> LHI/PERLIS/<span id="printRefNo">2026/001</span></p>
-                <p><strong>Tarikh Saringan:</strong> <span id="printDate">--/--/----</span></p>
+                <p><strong>Tarikh Cetakan:</strong> <span id="printDate">--/--/----</span></p>
             </div>
         </div>
 
         <div class="text-center space-y-1">
-            <h3 class="text-base font-black uppercase underline tracking-wide">SURAT RUJUKAN SARINGAN PARU-PARU (LHI)</h3>
-            <p class="text-xs font-bold text-slate-600">Lampiran A (Part A) - Garis Panduan Pelaksanaan LHI KKM 2026[cite: 2]</p>
+            <h3 class="text-sm font-black uppercase underline tracking-wide">SURAT RUJUKAN SARINGAN PARU-PARU (LHI)</h3>
+            <p class="text-[11px] font-bold text-slate-600">Lampiran A (a) - Garis Panduan Pelaksanaan LHI KKM 2026</p>
         </div>
 
         <div class="text-xs space-y-1 leading-relaxed">
-            <p>To: <strong>Pakar Perubatan Keluarga / Pegawai Perubatan</strong></p>
-            <p>Klinik Kesihatan</p>
+            <p>Kepada: </p>
+            <p><strong>Pakar Perubatan Keluarga / Pegawai Perubatan</strong></p>
+            <p>Klinik Kesihatan Berhampiran,</p>
             <p class="pt-2">Tuan/Puan,</p>
-            <p><strong>PER: RUJUKAN INDIVIDU BERISIKO TINGGI UNTUK SARINGAN PARU-PARU LANJUT (LHI)</strong></p>
+            <p><strong>PER: RUJUKAN INDIVIDU BERISIKO TINGGI UNTUK SARINGAN PARU-PARU BAGI INISIATIF SARINGAN PARU-PARU KEBANGSAAN (NLHI)</strong></p>
             <p class="text-slate-700">
-                Merujuk kepada perkara di atas, penama berikut telah menjalani saringan awal senarai semak golongan berisiko di bawah Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) dan didapati <strong>LAYAK</strong> untuk pemeriksaan perubatan selanjutnya di Klinik Kesihatan[cite: 2].
+                Dengan segala hormatnya, perkara di atas adalah dirujuk.
+            </p>
+            <p class="text-slate-700">
+                2.     Untuk makluman pihak Tuan/Puan, penama berikut telah menjalani saringan awal senarai semak golongan berisiko di bawah Inisiatif Kesihatan Paru-Paru Kebangsaan (LHI) secara atas talian, dan didapati <strong>LAYAK</strong> untuk pemeriksaan perubatan selanjutnya di Klinik Kesihatan.
             </p>
         </div>
 
-        <div class="space-y-2">
-            <h4 class="text-xs font-extrabold uppercase bg-slate-100 p-1.5 border border-slate-300">1. Maklumat Biodata Pesakit</h4>
+        <!-- JADUAL BIODATA PESAKIT -->
+        <div class="space-y-1.5">
+            <h4 class="text-[11px] font-extrabold uppercase bg-slate-100 p-1 border border-slate-300">1. Maklumat Biodata Pesakit</h4>
             <table class="w-full text-xs border-collapse border border-slate-300">
                 <tbody>
                     <tr>
-                        <td class="p-2 font-bold border border-slate-300 bg-slate-50 w-1/4">Nama Penuh:</td>
-                        <td class="p-2 border border-slate-300 w-1/4" id="pNama">-</td>
-                        <td class="p-2 font-bold border border-slate-300 bg-slate-50 w-1/4">No. Kad Pengenalan:</td>
-                        <td class="p-2 border border-slate-300 w-1/4" id="pNoIC">-</td>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50 w-1/4">Nama Penuh:</td>
+                        <td class="p-1.5 border border-slate-300 w-1/4" id="pNama">-</td>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50 w-1/4">No. Kad Pengenalan:</td>
+                        <td class="p-1.5 border border-slate-300 w-1/4" id="pNoIC">-</td>
                     </tr>
                     <tr>
-                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">No. Telefon:</td>
-                        <td class="p-2 border border-slate-300" id="pNoTel">-</td>
-                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">Sektor Pekerjaan:</td>
-                        <td class="p-2 border border-slate-300" id="pPekerjaan">-</td>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50">No. Telefon:</td>
+                        <td class="p-1.5 border border-slate-300" id="pNoTel">-</td>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50">Sektor Pekerjaan:</td>
+                        <td class="p-1.5 border border-slate-300" id="pPekerjaan">-</td>
                     </tr>
                     <tr>
-                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">Bangsa:</td>
-                        <td class="p-2 border border-slate-300" id="pBangsa">-</td>
-                        <td class="p-2 font-bold border border-slate-300 bg-slate-50">Jenis & Tempat Saringan:</td>
-                        <td class="p-2 border border-slate-300" id="pTempatSaringan">-</td>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50">Bangsa:</td>
+                        <td class="p-1.5 border border-slate-300" id="pBangsa">-</td>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50">Tarikh Saringan:</td>
+                        <td class="p-1.5 border border-slate-300 font-bold text-ncd-blue" id="pTarikhSaringan">-</td>
+                    </tr>
+                    <tr>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50">Jenis Saringan:</td>
+                        <td class="p-1.5 border border-slate-300" id="pJenisSaringan">-</td>
+                        <td class="p-1.5 font-bold border border-slate-300 bg-slate-50">Tempat / Lokasi:</td>
+                        <td class="p-1.5 border border-slate-300" id="pLokasiSaringan">-</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="space-y-2">
-            <h4 class="text-xs font-extrabold uppercase bg-slate-100 p-1.5 border border-slate-300">2. Dapatan Faktor Risiko Yang Dikesan (Part A)</h4>
-            <div class="p-3 border border-slate-300 text-xs space-y-1 bg-slate-50/50">
+        <!-- 📌 DUA LAJUR BAGI SENARAI FAKTOR RISIKO -->
+        <div class="space-y-1.5">
+            <h4 class="text-[11px] font-extrabold uppercase bg-slate-100 p-1 border border-slate-300">2. Dapatan Faktor Risiko Yang Dikesan (Part A)</h4>
+            <div class="p-2.5 border border-slate-300 text-xs space-y-1 bg-slate-50/50">
                 <p class="font-bold">Jumlah Faktor Risiko Dikesan: <span id="pTotalRisk" class="text-ncd-blue">0</span> Item</p>
-                <ul id="pRiskList" class="list-disc list-inside space-y-1 pt-1 font-medium text-slate-800"></ul>
+                <ul id="pRiskList" class="grid grid-cols-2 gap-x-4 gap-y-1 list-disc list-inside pt-1 font-medium text-slate-800"></ul>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-8 pt-6 text-xs">
-            <div class="space-y-8 border-t border-slate-300 pt-3">
-                <p class="font-bold">Persetujuan Pesakit:</p>
-                <p class="text-[11px] text-slate-600">Saya bersetuju untuk hadir ke Klinik Kesihatan bagi ujian lanjut[cite: 2].</p>
-                <div class="pt-6 border-b border-dashed border-slate-400 w-3/4"></div>
-                <p class="text-[10px] text-slate-500">(Tandatangan / Cop Ibu Jari Pesakit)</p>
-            </div>
-
-            <div class="space-y-8 border-t border-slate-300 pt-3">
-                <p class="font-bold">Pengesahan Petugas Saringan:</p>
-                <p class="text-[11px] text-slate-600">Disemak oleh Petugas Program Saringan LHI JKN Perlis[cite: 2].</p>
-                <div class="pt-6 border-b border-dashed border-slate-400 w-3/4"></div>
-                <p class="text-[10px] text-slate-500">(Tandatangan & Cop Rasmi Petugas)</p>
+        <!-- PERAKUAN PERSETUJUAN KLIEN -->
+        <div class="border border-slate-800 bg-slate-50 p-3 rounded-lg space-y-1.5 text-xs">
+            <h4 class="text-[11px] font-black uppercase text-slate-900 border-b border-slate-300 pb-1">3. Perakuan Persetujuan Saringan Klien</h4>
+            
+            <div class="flex items-center gap-2.5 pt-1">
+                <div class="w-6 h-6 rounded border border-slate-900 bg-emerald-600 text-white flex items-center justify-center font-black text-sm flex-shrink-0 shadow-xs">
+                    ✓
+                </div>
+                
+                <div class="space-y-0.5 flex-1">
+                    <p class="text-xs font-black text-slate-900 uppercase tracking-wide leading-tight">
+                        YA, SAYA BERSETUJU UNTUK DIRUJUK KE KLINIK KESIHATAN
+                    </p>
+                    <p class="text-[11px] font-medium text-slate-700 leading-snug">
+                        Saya mengesahkan secara sukarela bersetuju untuk hadir ke Klinik Kesihatan bagi menjalani ujian saringan perubatan LHI lanjutan.
+                    </p>
+                </div>
             </div>
         </div>
 
         <div class="border-t border-slate-200 pt-4 text-[9px] text-slate-500 text-center">
-            <p>Borang Rujukan Automatik NCD JKN Perlis © 2026 · Garis Panduan Pelaksanaan Inisiatif Kesihatan Paru-Paru Kebangsaan[cite: 2]</p>
+            <p>Dokumen ini adalah cetakan digital dan tidak memerlukan tandatangan.</p>
+            <p>Borang Rujukan Automatik NCD JKN Perlis © 2026 · Garis Panduan Pelaksanaan Inisiatif Kesihatan Paru-Paru Kebangsaan</p>
         </div>
     </div>
 
@@ -432,7 +450,7 @@
 
         function keSeksyen3() {
             formData = {
-                token: SECRET_TOKEN, // 🔑 TOKEN DITAMBAH DI SINI
+                token: SECRET_TOKEN,
                 nama: document.getElementById('nama').value,
                 noIC: document.getElementById('noIC').value,
                 noTel: document.getElementById('noTel').value,
@@ -477,10 +495,10 @@
 
                 container.innerHTML = `
                     <div class="p-5 bg-sky-50 border border-sky-200 rounded-2xl space-y-3">
-                        <span class="text-[10px] font-black uppercase text-ncd-blue bg-white px-2.5 py-0.5 rounded border">OUTPUT: KLIEN SIHAT</span>
+                        <span class="text-[10px] font-black uppercase text-ncd-blue bg-white px-2.5 py-0.5 rounded border">KEPUTUSAN: KLIEN SIHAT</span>
                         <h3 class="text-sm font-extrabold text-slate-900">Keputusan Saringan: Tiada Faktor Risiko Dikesan</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            Berdasarkan jawapan anda, tiada sebarang faktor risiko am dikesan[cite: 2]. Data anda telah direkodkan[cite: 2]. Proses saringan tamat[cite: 2].
+                            Berdasarkan jawapan anda, tiada sebarang faktor risiko am dikesan. Data anda telah berjaya direkodkan. Proses saringan selesai.
                         </p>
                         <button onclick="location.reload()" class="py-2.5 px-5 bg-slate-900 text-white font-bold text-xs rounded-xl">
                             Selesai & Tutup
@@ -502,9 +520,9 @@
                         <span class="text-xs font-bold text-ncd-blue">${formData.jumlahRisiko} Faktor Risiko Dikesan</span>
                     </div>
 
-                    <h3 class="text-sm font-extrabold text-slate-900">Adakah anda bersetuju untuk mendapatkan saringan perubatan LHI di Klinik Kesihatan (KK)[cite: 2]?</h3>
+                    <h3 class="text-sm font-extrabold text-slate-900">Adakah anda bersetuju untuk mendapatkan saringan perubatan LHI di Klinik Kesihatan (KK)?</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">
-                        Saringan di KK merangkumi ujian X-Ray Dada, Spirometri, atau ujian sampel lanjut bagi pengesanan awal penyakit paru-paru[cite: 2].
+                        Saringan di Klinik Kesihatan merangkumi ujian X-Ray Dada, Spirometri, atau ujian sampel lanjutan bagi pengesanan awal penyakit paru-paru.
                     </p>
 
                     <div class="flex gap-3 pt-2">
@@ -532,13 +550,13 @@
                 <div class="p-5 bg-emerald-50 border border-emerald-200 rounded-2xl space-y-3">
                     <span class="text-[10px] font-black uppercase text-ncd-greenDark bg-white px-2.5 py-0.5 rounded border">RUJUKAN KE KK</span>
                     <h3 class="text-sm font-extrabold text-slate-900">Surat Rujukan Saringan LHI Dikeluarkan</h3>
-                    <p class="text-xs text-slate-600">Maklumat anda telah disimpan[cite: 2]. Anda boleh mencetak Borang Rujukan Rasmi untuk dibawa ke Klinik Kesihatan (KK)[cite: 2].</p>
+                    <p class="text-xs text-slate-600">Maklumat anda telah disimpan. Anda boleh mencetak Borang Rujukan Rasmi di bawah untuk dibawa ke Klinik Kesihatan (KK).</p>
                     
                     <div class="p-3 bg-white rounded-xl border text-xs space-y-1 text-slate-700">
                         <p><strong>Nama:</strong> ${formData.nama}</p>
-                        <p><strong>No. IC:</strong> ${formData.noIC}</p>
+                        <p><strong>No. Kad Pengenalan:</strong> ${formData.noIC}</p>
                         <p><strong>Sektor Pekerjaan:</strong> ${formData.pekerjaan}</p>
-                        <p><strong>Status Keputusan:</strong> Layak Rujukan LHI (${formData.jumlahRisiko} Risiko)[cite: 2]</p>
+                        <p><strong>Status Keputusan:</strong> Layak Rujukan LHI (${formData.jumlahRisiko} Risiko Dikesan)</p>
                     </div>
 
                     <div class="flex gap-2 pt-2">
@@ -555,12 +573,12 @@
             const container = document.getElementById('resultContentContainer');
             container.innerHTML = `
                 <div class="p-5 bg-amber-50 border border-amber-200 rounded-2xl space-y-3">
-                    <span class="text-[10px] font-black uppercase text-amber-800 bg-white px-2.5 py-0.5 rounded border">AMARAN</span>
+                    <span class="text-[10px] font-black uppercase text-amber-800 bg-white px-2.5 py-0.5 rounded border">PENGESAHAN</span>
                     <h3 class="text-sm font-extrabold text-slate-900">Adakah Anda Pasti Untuk Menolak Saringan?</h3>
-                    <p class="text-xs text-slate-600">Saringan awal adalah penting untuk mengesan tanda awal penyakit paru-paru sebelum keadaan menjadi lebih teruk[cite: 2].</p>
+                    <p class="text-xs text-slate-600">Saringan awal adalah sangat penting untuk mengesan tanda awal penyakit paru-paru sebelum keadaan menjadi lebih teruk.</p>
 
                     <div class="space-y-2 pt-2">
-                        <p class="text-xs font-bold text-slate-800">ANDA MAHU UBAH FIKIRAN?</p>
+                        <p class="text-xs font-bold text-slate-800">ADAKAH ANDA INGIN MENGUBAH FIKIRAN?</p>
                         <div class="flex gap-3">
                             <button onclick="paparRujukanKK('UBAH_FIKIRAN')" class="flex-1 py-2.5 bg-ncd-blue hover:bg-ncd-blueDark text-white font-extrabold text-xs rounded-xl shadow-sm">
                                 YA (Ubah Fikiran & Setuju)
@@ -583,13 +601,13 @@
             const container = document.getElementById('resultContentContainer');
             container.innerHTML = `
                 <div class="p-5 bg-slate-100 border border-slate-300 rounded-2xl space-y-3">
-                    <span class="text-[10px] font-black uppercase text-slate-600 bg-white px-2.5 py-0.5 rounded border">OUTPUT: NASIHAT</span>
+                    <span class="text-[10px] font-black uppercase text-slate-600 bg-white px-2.5 py-0.5 rounded border">NASIHAT KESIHATAN</span>
                     <h3 class="text-sm font-extrabold text-slate-900">Saranan & Nasihat Kesihatan</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">
-                        Pilihan anda telah direkodkan[cite: 2]. Anda dinasihatkan untuk sentiasa mengamalkan gaya hidup sihat dan hadir ke Klinik Kesihatan sekiranya mula mengalami gejala[cite: 2].
+                        Pilihan anda telah direkodkan. Anda dinasihatkan untuk sentiasa mengamalkan gaya hidup sihat, mengelakkan pendedahan kepada asap rokok, dan segera hadir ke Klinik Kesihatan sekiranya mula mengalami gejala batuk berpanjangan atau sesak nafas.
                     </p>
                     <button onclick="location.reload()" class="py-2.5 px-5 bg-slate-900 text-white font-bold text-xs rounded-xl">
-                        Tutup & Selesai (END)
+                        Tutup & Selesai
                     </button>
                 </div>
             `;
@@ -601,12 +619,17 @@
             document.getElementById('pNoTel').innerText = formData.noTel;
             document.getElementById('pPekerjaan').innerText = formData.pekerjaan;
             document.getElementById('pBangsa').innerText = formData.bangsa;
-            document.getElementById('pTempatSaringan').innerText = `${formData.jenisSaringan} (${formData.tempatSaringan})`;
-            document.getElementById('pTotalRisk').innerText = formData.jumlahRisiko;
-
+            
+            document.getElementById('pJenisSaringan').innerText = formData.jenisSaringan;
+            document.getElementById('pLokasiSaringan').innerText = formData.tempatSaringan;
+            
             const today = new Date();
-            document.getElementById('printDate').innerText = today.toLocaleDateString('ms-MY');
+            const formattedDate = today.toLocaleDateString('ms-MY', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            document.getElementById('pTarikhSaringan').innerText = formattedDate;
+            document.getElementById('printDate').innerText = formattedDate;
             document.getElementById('printRefNo').innerText = today.getFullYear() + "/" + formData.noIC;
+
+            document.getElementById('pTotalRisk').innerText = formData.jumlahRisiko;
 
             const riskListEl = document.getElementById('pRiskList');
             riskListEl.innerHTML = "";
@@ -620,7 +643,6 @@
             });
         }
 
-        // 🛠️ FUNGSI HANTAR DATA YANG DIBETULKAN DENGAN TOKEN KESELAMATAN
         function hantarDataGoogleSheet() {
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
@@ -628,7 +650,7 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             }).then(() => {
-                console.log("Data berjaya dihantar ke Google Sheet dengan Token Keselamatan.");
+                console.log("Data berjaya dihantar ke Google Sheet.");
             }).catch(err => console.error("Ralat hantar data:", err));
         }
     </script>
