@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ujian Pos | Penilaian Kesihatan Mental</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  
+  <style>
+    :root {
+      --primary: #059669;
+      --bg-main: #f8fafc;
+      --text-dark: #0f172a;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-dark);
+      padding-top: 40px;
+      padding-bottom: 60px;
+    }
+
+    .app-card {
+      max-width: 800px;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(5, 150, 105, 0.07);
+      border: 1px solid #e2e8f0;
+      margin: auto;
+    }
+
+    .brand-header { text-align: center; margin-bottom: 30px; }
+    .brand-title { font-weight: 800; font-size: 1.35rem; color: var(--text-dark); }
+    .brand-badge { display: inline-block; background: #d1fae5; color: var(--primary); font-weight: 700; font-size: 0.75rem; padding: 6px 14px; border-radius: 50px; text-transform: uppercase; margin-bottom: 10px; }
+
+    .progress-track { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 30px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #059669); width: 0%; transition: width 0.4s ease; }
+
+    .step-container { display: none; }
+    .step-container.active { display: block; animation: slideUp 0.35s ease-out; }
+
+    @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    .q-title { font-weight: 700; font-size: 1.15rem; margin-bottom: 20px; }
+
+    .option-card {
+      display: flex; align-items: center; padding: 16px 20px; margin-bottom: 12px;
+      border: 2px solid #f1f5f9; background: #f8fafc; border-radius: 14px; cursor: pointer; transition: all 0.2s;
+    }
+    .option-card:hover { background: #ffffff; border-color: #cbd5e1; }
+    .option-card.selected { background: #ecfdf5; border-color: var(--primary); }
+    .option-card .form-check-input { transform: scale(1.2); margin-right: 15px; }
+
+    .btn-action { background: var(--primary); color: white; border: none; padding: 14px 32px; font-weight: 700; border-radius: 12px; transition: all 0.2s; }
+    .btn-action:hover { opacity: 0.9; }
+
+    .feedback-panel { display: none; padding: 16px 20px; border-radius: 12px; font-weight: 600; margin-top: 15px; }
+    .feedback-panel.correct { background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; }
+    .feedback-panel.wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+
+    .roman-num { width: 30px; height: 30px; background: #d1fae5; color: var(--primary); font-weight: 800; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; font-size: 0.8rem; }
+    
+    footer { text-align: center; margin-top: 35px; color: #64748b; font-size: 0.85rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="app-card">
+    
+    <div class="brand-header">
+      <img src="https://lh3.googleusercontent.com/d/1lIkdT2BsA51EX-CoF_lpWluaAGDraz_y" alt="Logo" class="img-fluid mb-2" style="max-height: 80px;">
+      <div><span class="brand-badge">Pusat Kecemerlangan Kesihatan Mental Kebangsaan</span></div>
+      <div class="brand-title">UJIAN POS (POST-TEST) KESEDARAN & ADVOKASI</div>
+    </div>
+
+    <div class="progress-track" id="progressTrack">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <!-- MULA / INPUT MYKAD -->
+    <div id="step-0" class="step-container active">
+      <div class="mb-4">
+        <label for="codeNumber" class="form-label fw-bold">Nombor Kad Pengenalan (MyKad):</label>
+        <input type="text" class="form-control form-control-lg border-2" id="codeNumber" placeholder="Contoh: 900101015522" maxlength="14">
+        <div class="form-text">Masukkan 12 digit Nombor Kad Pengenalan tanpa tanda sempang.</div>
+      </div>
+      <button class="btn btn-action w-100 py-3" id="btnCheckId" onclick="verifyAndStart()">Sahkan IC & Mula Ujian Pos ➔</button>
+    </div>
+
+    <!-- SOALAN 1 HINGGA 10 -->
+    <div id="step-1" class="step-container">
+      <div class="q-title">Soalan 1: Kesihatan Mental adalah keadaan di mana.........</div>
+      <label class="option-card" onclick="selectOption(this, 1)"><input class="form-check-input" type="radio" name="q1" value="A"><span>A. Seseorang yang tidak dapat berfungsi secara optima dan tidak mampu menyumbang kepada masyarakat.</span></label>
+      <label class="option-card" onclick="selectOption(this, 1)"><input class="form-check-input" type="radio" name="q1" value="B"><span>B. Seseorang yang mengalami gangguan pada fungsi otak dan menyebabkan gangguan ketara.</span></label>
+      <label class="option-card" onclick="selectOption(this, 1)"><input class="form-check-input" type="radio" name="q1" value="C"><span>C. Satu keadaan kesejahteraan yang membolehkan seseorang dapat mengatasi tekanan kehidupan, menyedari potensi diri, dapat belajar dan bekerja dengan baik.</span></label>
+      <label class="option-card" onclick="selectOption(this, 1)"><input class="form-check-input" type="radio" name="q1" value="D"><span>D. Individu yang mengalami gangguan emosi atau perasaan yang boleh menyebabkan fungsi kehidupan seharian tidak mencapai tahap optima.</span></label>
+      <div id="feedback-1" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-1" onclick="handleStep(1)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-2" class="step-container">
+      <div class="q-title">Soalan 2: Berikut adalah tanda-tanda awal seseorang yang mempunyai masalah kesihatan mental kecuali...</div>
+      <label class="option-card" onclick="selectOption(this, 2)"><input class="form-check-input" type="radio" name="q2" value="A"><span>A. Hilang selera makan atau berlebihan</span></label>
+      <label class="option-card" onclick="selectOption(this, 2)"><input class="form-check-input" type="radio" name="q2" value="B"><span>B. Masalah atau gangguan untuk tidur</span></label>
+      <label class="option-card" onclick="selectOption(this, 2)"><input class="form-check-input" type="radio" name="q2" value="C"><span>C. Suka menyendiri</span></label>
+      <label class="option-card" onclick="selectOption(this, 2)"><input class="form-check-input" type="radio" name="q2" value="D"><span>D. Produktiviti kerja meningkat</span></label>
+      <div id="feedback-2" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-2" onclick="handleStep(2)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-3" class="step-container">
+      <div class="q-title">Soalan 3: Ciri-ciri seseorang memiliki kesihatan mental yang baik adalah seperti berikut kecuali...</div>
+      <label class="option-card" onclick="selectOption(this, 3)"><input class="form-check-input" type="radio" name="q3" value="A"><span>A. Tidak beremosi secara keterlaluan.</span></label>
+      <label class="option-card" onclick="selectOption(this, 3)"><input class="form-check-input" type="radio" name="q3" value="B"><span>B. Berupaya untuk mengekalkan hubungan dengan orang lain dalam pelbagai situasi.</span></label>
+      <label class="option-card" onclick="selectOption(this, 3)"><input class="form-check-input" type="radio" name="q3" value="C"><span>C. Merasai diri lebih baik dari orang lain.</span></label>
+      <label class="option-card" onclick="selectOption(this, 3)"><input class="form-check-input" type="radio" name="q3" value="D"><span>D. Boleh membuat keputusan dalam kehidupan seharian.</span></label>
+      <div id="feedback-3" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-3" onclick="handleStep(3)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-4" class="step-container">
+      <div class="q-title">Soalan 4: Pesakit mental tidak boleh bekerja.</div>
+      <label class="option-card" onclick="selectOption(this, 4)"><input class="form-check-input" type="radio" name="q4" value="Ya"><span>Ya</span></label>
+      <label class="option-card" onclick="selectOption(this, 4)"><input class="form-check-input" type="radio" name="q4" value="Tidak"><span>Tidak</span></label>
+      <div id="feedback-4" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-4" onclick="handleStep(4)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-5" class="step-container">
+      <div class="q-title">Soalan 5: Pesakit mental selalu mengganas dan perlu diasingkan.</div>
+      <label class="option-card" onclick="selectOption(this, 5)"><input class="form-check-input" type="radio" name="q5" value="Ya"><span>Ya</span></label>
+      <label class="option-card" onclick="selectOption(this, 5)"><input class="form-check-input" type="radio" name="q5" value="Tidak"><span>Tidak</span></label>
+      <div id="feedback-5" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-5" onclick="handleStep(5)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-6" class="step-container">
+      <div class="q-title">Soalan 6: Semua penyakit mental disebabkan faktor genetik atau keturunan.</div>
+      <label class="option-card" onclick="selectOption(this, 6)"><input class="form-check-input" type="radio" name="q6" value="Ya"><span>Ya</span></label>
+      <label class="option-card" onclick="selectOption(this, 6)"><input class="form-check-input" type="radio" name="q6" value="Tidak"><span>Tidak</span></label>
+      <div id="feedback-6" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-6" onclick="handleStep(6)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-7" class="step-container">
+      <div class="q-title">Soalan 7: Apakah kesan stigma dan diskriminasi terhadap individu dengan masalah kesihatan mental?</div>
+      <ul class="list-unstyled mb-3">
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">i</span> Berasa malu dilabelkan “tidak siuman”</li>
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">ii</span> Mengelakkan diri daripada mendapatkan bantuan</li>
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">iii</span> Berasa mempunyai harapan dan terus berjuang</li>
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">iv</span> Menjauhkan diri daripada masyarakat</li>
+      </ul>
+      <label class="option-card" onclick="selectOption(this, 7)"><input class="form-check-input" type="radio" name="q7" value="A"><span>A. ii & iii</span></label>
+      <label class="option-card" onclick="selectOption(this, 7)"><input class="form-check-input" type="radio" name="q7" value="B"><span>B. ii, iii & iv</span></label>
+      <label class="option-card" onclick="selectOption(this, 7)"><input class="form-check-input" type="radio" name="q7" value="C"><span>C. i, ii & iv</span></label>
+      <label class="option-card" onclick="selectOption(this, 7)"><input class="form-check-input" type="radio" name="q7" value="D"><span>D. i, ii, iii, & iv</span></label>
+      <div id="feedback-7" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-7" onclick="handleStep(7)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-8" class="step-container">
+      <div class="q-title">Soalan 8: Berikut adalah amalan dalam penjagaan kesihatan mental kendiri yang baik iaitu:</div>
+      <ul class="list-unstyled mb-3">
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">i</span> Senaman</li>
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">ii</span> Merokok</li>
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">iii</span> Minum alkohol</li>
+        <li class="mb-2 p-2 bg-light rounded"><span class="roman-num">iv</span> Menulis Diari</li>
+      </ul>
+      <label class="option-card" onclick="selectOption(this, 8)"><input class="form-check-input" type="radio" name="q8" value="A"><span>A. ii & iii</span></label>
+      <label class="option-card" onclick="selectOption(this, 8)"><input class="form-check-input" type="radio" name="q8" value="B"><span>B. i & iv</span></label>
+      <label class="option-card" onclick="selectOption(this, 8)"><input class="form-check-input" type="radio" name="q8" value="C"><span>C. i & iii</span></label>
+      <label class="option-card" onclick="selectOption(this, 8)"><input class="form-check-input" type="radio" name="q8" value="D"><span>D. ii & iv</span></label>
+      <div id="feedback-8" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-8" onclick="handleStep(8)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-9" class="step-container">
+      <div class="q-title">Soalan 9: Peranan sokongan sosial sangat penting untuk menjaga kesihatan mental yang baik.</div>
+      <label class="option-card" onclick="selectOption(this, 9)"><input class="form-check-input" type="radio" name="q9" value="Betul"><span>Betul</span></label>
+      <label class="option-card" onclick="selectOption(this, 9)"><input class="form-check-input" type="radio" name="q9" value="Salah"><span>Salah</span></label>
+      <div id="feedback-9" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-9" onclick="handleStep(9)">Semak Jawapan</button></div>
+    </div>
+
+    <div id="step-10" class="step-container">
+      <div class="q-title">Soalan 10: “Terima Kasih” adalah salah satu contoh komunikasi lisan.</div>
+      <label class="option-card" onclick="selectOption(this, 10)"><input class="form-check-input" type="radio" name="q10" value="Betul"><span>Betul</span></label>
+      <label class="option-card" onclick="selectOption(this, 10)"><input class="form-check-input" type="radio" name="q10" value="Salah"><span>Salah</span></label>
+      <div id="feedback-10" class="feedback-panel"></div>
+      <div class="mt-4 text-end"><button class="btn btn-action" id="btn-10" onclick="handleStep(10)">Hantar Ujian Pos</button></div>
+    </div>
+
+    <!-- SUMMARY AKHIR -->
+    <div id="resultArea" class="step-container text-center py-2">
+      <div class="display-6 fw-bold text-success mb-2">🎉 Ujian Pos Selesai</div>
+      <p class="text-muted fs-6 mb-4">No. Kad Pengenalan: <span id="summaryCode" class="fw-bold text-dark"></span></p>
+
+      <div id="scoreDisplayArea"></div>
+      
+      <div id="answersComparisonArea" class="mt-4 text-start">
+        <h6 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-card-checklist me-2"></i>Perbandingan Jawapan Ujian Pra vs Ujian Pos</h6>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm text-center align-middle" style="font-size: 0.85rem;">
+            <thead class="table-light">
+              <tr>
+                <th>Soalan</th>
+                <th>Pre Test</th>
+                <th>Post Test</th>
+                <th>Jawapan Betul</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    Hak Cipta Terpelihara JKN Perlis (2026)
+  </footer>
+</div>
+
+<!-- 🔴 MODAL POPUP SELAMAT WITH DIRECT LINK BUTTON -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold" id="modalTitle">Status Semakan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-4 text-center">
+        <div id="modalIcon" class="fs-1 mb-2"></div>
+        <div id="modalBodyText" class="fw-semibold text-secondary"></div>
+      </div>
+      <div class="modal-footer border-0 justify-content-center pt-0" id="modalFooterBtns">
+        <button type="button" class="btn btn-secondary px-4 py-2 rounded-3" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbwkLkwga-kdvyP8kSzmm7gnf_f0w3R7Jx5ex0YLoxy4PnsgH6PSYeWQ3Oz_7Rsg27Pr/exec";
+  const PRE_TEST_URL = "../pre-test/index.html"; // Alamat lokasi Ujian Pra
+
+  let userData = {};
+  let stepState = {}; 
+  
+  const answersDB = {
+    1: { ans: "C", text: "C. Satu keadaan kesejahteraan..." },
+    2: { ans: "D", text: "D. Produktiviti kerja meningkat" },
+    3: { ans: "C", text: "C. Merasai diri lebih baik dari orang lain." },
+    4: { ans: "Tidak", text: "Tidak" },
+    5: { ans: "Tidak", text: "Tidak" },
+    6: { ans: "Tidak", text: "Tidak" },
+    7: { ans: "C", text: "C. i, ii & iv" },
+    8: { ans: "B", text: "B. i & iv" },
+    9: { ans: "Betul", text: "Betul" },
+    10: { ans: "Betul", text: "Betul" }
+  };
+
+  function showModal(title, text, iconType = "info", showRedirect = false) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalBodyText').innerText = text;
+    
+    const iconEl = document.getElementById('modalIcon');
+    if (iconType === "warning") {
+      iconEl.innerHTML = "⚠️";
+      iconEl.className = "fs-1 mb-2 text-warning";
+    } else if (iconType === "error") {
+      iconEl.innerHTML = "❌";
+      iconEl.className = "fs-1 mb-2 text-danger";
+    } else {
+      iconEl.innerHTML = "ℹ️";
+      iconEl.className = "fs-1 mb-2 text-primary";
+    }
+
+    const footerBtns = document.getElementById('modalFooterBtns');
+    if (showRedirect) {
+      footerBtns.innerHTML = `
+        <button type="button" class="btn btn-secondary px-3 py-2 rounded-3" data-bs-dismiss="modal">Tutup</button>
+        <a href="${PRE_TEST_URL}" class="btn btn-primary px-4 py-2 rounded-3 fw-bold"><i class="bi bi-arrow-left-circle me-1"></i> Ke Ujian Pra (Pre-Test)</a>
+      `;
+    } else {
+      footerBtns.innerHTML = `<button type="button" class="btn btn-success px-4 py-2 rounded-3 fw-bold" data-bs-dismiss="modal">Faham & Tutup</button>`;
+    }
+
+    const modal = new bootstrap.Modal(document.getElementById('infoModal'));
+    modal.show();
+  }
+
+  function renderComparisonTable(res) {
+    let bodyHtml = "";
+    for(let i = 1; i <= 10; i++) {
+      bodyHtml += `
+        <tr>
+          <td class="fw-bold">Q${i}</td>
+          <td><span class="badge ${res.preAns[i-1] === answersDB[i].ans ? 'bg-success':'bg-danger'}">${res.preAns[i-1] || '-'}</span></td>
+          <td><span class="badge ${res.postAns[i-1] === answersDB[i].ans ? 'bg-success':'bg-danger'}">${res.postAns[i-1] || '-'}</span></td>
+          <td class="fw-bold text-primary">${answersDB[i].ans}</td>
+        </tr>`;
+    }
+    document.getElementById('comparisonTableBody').innerHTML = bodyHtml;
+  }
+
+  function verifyAndStart() {
+    let rawCode = document.getElementById('codeNumber').value.trim();
+    let code = rawCode.replace(/[^0-9]/g, ""); 
+    const btn = document.getElementById('btnCheckId');
+
+    if(!code || code.length < 12) { 
+      showModal("Maklumat Tidak Sah", "Sila masukkan 12-digit Nombor Kad Pengenalan yang sah.", "warning"); 
+      return; 
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Menyemak Rekod MyKad...";
+
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "checkUserId", codeNumber: code })
+    })
+    .then(r => r.json())
+    .then(res => {
+      btn.disabled = false;
+      btn.innerText = "Sahkan IC & Mula Ujian Pos ➔";
+
+      if(res.status === "success") {
+        userData.codeNumber = code;
+
+        if(res.nextStep === "Completed") {
+          document.getElementById('progressTrack').style.display = "none";
+          showStep('resultArea');
+          document.getElementById('summaryCode').innerText = code;
+          
+          document.getElementById('scoreDisplayArea').innerHTML = `
+            <div class="row g-3 justify-content-center">
+              <div class="col-md-5">
+                <div class="p-3 bg-light rounded-4 border">
+                  <div class="text-muted fw-bold">Markah Ujian Pra</div>
+                  <div class="display-6 fw-bold text-secondary">${res.preScore}</div>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="p-3 bg-success bg-opacity-10 border border-success rounded-4">
+                  <div class="text-success fw-bold">Markah Ujian Pos</div>
+                  <div class="display-6 fw-bold text-success">${res.postScore}</div>
+                </div>
+              </div>
+            </div>`;
+
+          renderComparisonTable(res);
+
+        } else if(res.nextStep === "Post Test") {
+          userData.testType = "Post Test";
+          showStep(1);
+          updateProgress(1);
+        } else {
+          showModal("Rekod Tidak Dijumpai", `Nombor Kad Pengenalan (${code}) belum mendaftar. Sila selesaikan Ujian Pra (Pre-Test) terlebih dahulu sebelum mengambil Ujian Pos.`, "warning", true);
+        }
+      } else {
+        showModal("Ralat Semakan", res.message, "error");
+      }
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.innerText = "Sahkan IC & Mula Ujian Pos ➔";
+      showModal("Ralat Rangkaian", "Terjadi masalah capaian rangkaian. Sila cuba lagi.", "error");
+    });
+  }
+
+  function selectOption(element, qNum) {
+    if(stepState[qNum]) return; 
+    const boxes = document.querySelectorAll(`#step-${qNum} .option-card`);
+    boxes.forEach(box => box.classList.remove('selected'));
+    element.classList.add('selected');
+    element.querySelector('input[type="radio"]').checked = true;
+  }
+
+  function handleStep(qNum) {
+    const btn = document.getElementById(`btn-${qNum}`);
+    const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+    const feedbackBox = document.getElementById(`feedback-${qNum}`);
+
+    if (!stepState[qNum]) {
+      if (!selected) { 
+        showModal("Peringatan", "Sila pilih satu jawapan untuk meneruskan.", "warning"); 
+        return; 
+      }
+      
+      userData[`q${qNum}`] = selected.value;
+      const isCorrect = (selected.value === answersDB[qNum].ans);
+      
+      document.querySelectorAll(`#step-${qNum} .option-card`).forEach(box => {
+        box.style.pointerEvents = 'none';
+        if(box.querySelector('input').value !== answersDB[qNum].ans && box.classList.contains('selected')){
+            box.style.borderColor = '#ef4444'; 
+            box.style.background = '#fef2f2';
+        }
+      });
+      
+      feedbackBox.style.display = "block";
+      if(isCorrect) {
+        feedbackBox.className = "feedback-panel correct";
+        feedbackBox.innerHTML = "✅ Jawapan anda tepat!";
+      } else {
+        feedbackBox.className = "feedback-panel wrong";
+        feedbackBox.innerHTML = `❌ Jawapan anda kurang tepat.<br><small class="text-dark">Jawapan sebenar: <strong>${answersDB[qNum].text}</strong></small>`;
+      }
+
+      stepState[qNum] = "checked";
+      btn.innerText = (qNum === 10) ? "Hantar Ujian Pos ➔" : "Soalan Seterusnya ➔";
+
+    } else {
+      if (qNum < 10) {
+        showStep(qNum + 1);
+        updateProgress(qNum + 1);
+      } else {
+        submitFinalData();
+      }
+    }
+  }
+
+  function showStep(stepNum) {
+    document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+    document.getElementById(typeof stepNum === 'number' ? `step-${stepNum}` : stepNum).classList.add('active');
+  }
+
+  function updateProgress(stepNum) {
+    const percentage = ((stepNum - 1) / 10) * 100;
+    document.getElementById('progressBar').style.width = percentage + "%";
+  }
+
+  function submitFinalData() {
+    const btn = document.getElementById('btn-10');
+    btn.disabled = true;
+    btn.innerText = "Menyimpan Rekod...";
+
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "submitQuiz", data: userData })
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res.status === "success") {
+        document.getElementById('step-10').classList.remove('active');
+        document.getElementById('resultArea').classList.add('active');
+        document.getElementById('progressTrack').style.display = "none";
+        document.getElementById('summaryCode').innerText = userData.codeNumber;
+        
+        let scoreHtml = `
+          <div class="row g-3 justify-content-center mt-2">
+            <div class="col-md-5">
+              <div class="p-3 bg-light rounded-4 border">
+                <div class="text-muted fw-bold">Markah Ujian Pra</div>
+                <div class="display-6 fw-bold text-secondary">${res.preTestScore}</div>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="p-3 bg-success bg-opacity-10 border border-success rounded-4">
+                <div class="text-success fw-bold">Markah Ujian Pos</div>
+                <div class="display-6 fw-bold text-success">${res.score} / ${res.total}</div>
+              </div>
+            </div>
+          </div>`;
+          
+        document.getElementById('scoreDisplayArea').innerHTML = scoreHtml;
+        renderComparisonTable(res);
+      } else {
+        showModal("Ralat Penyerahan", res.message, "error");
+        btn.disabled = false;
+        btn.innerText = "Cuba Hantar Semula";
+      }
+    })
+    .catch(err => {
+      showModal("Ralat Rangkaian", "Terjadi ralat semasa menyimpan rekod. Sila cuba lagi.", "error");
+      btn.disabled = false;
+      btn.innerText = "Hantar Ujian Pos";
+    });
+  }
+</script>
+
+</body>
+</html>

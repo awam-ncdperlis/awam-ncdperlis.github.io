@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Bengkel Insight at Workplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: #f8fafc; color: #0f172a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px 15px; }
+    .card { background: #ffffff; width: 100%; max-width: 480px; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); overflow: hidden; border: 1px solid #e2e8f0; position: relative; }
+    .logo-container { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px 15px 25px; background: #ffffff; }
+    .logo-container img { height: 44px; width: auto; object-fit: contain; }
+    .banner-container { width: 100%; height: 150px; position: relative; overflow: hidden; }
+    .banner-container img { width: 100%; height: 100%; object-fit: cover; }
+    .banner-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.8) 100%); }
+    .banner-text { position: absolute; bottom: 15px; left: 20px; right: 20px; color: #ffffff; }
+    .banner-text h2 { font-size: 18px; font-weight: 700; }
+    .banner-text p { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+    
+    .page-section { display: none; padding: 25px; }
+    .page-section.active { display: block; }
+    
+    .welcome-intro { text-align: center; margin-bottom: 15px; }
+    .welcome-intro h3 { font-size: 16px; color: #1e293b; margin-bottom: 6px; }
+    .welcome-intro p { font-size: 13px; color: #64748b; line-height: 1.5; }
+    
+    .info-box { background-color: #f1f5f9; border-radius: 12px; padding: 12px 15px; margin-bottom: 20px; }
+    .info-item { display: flex; align-items: center; font-size: 13px; color: #334155; margin-bottom: 6px; }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-item span { font-weight: 600; margin-right: 8px; color: #2563eb; }
+
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; text-transform: uppercase; }
+    input, select { width: 100%; padding: 12px 14px; font-size: 14px; color: #0f172a; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; }
+    input:focus, select:focus { background-color: #ffffff; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+    .btn-primary { width: 100%; background-color: #2563eb; color: #ffffff; font-size: 15px; font-weight: 600; padding: 14px; border: none; border-radius: 10px; cursor: pointer; }
+    .btn-outline { width: 100%; background-color: #ffffff; color: #2563eb; font-size: 15px; font-weight: 600; padding: 13px; border: 2px solid #2563eb; border-radius: 10px; cursor: pointer; margin-top: 10px; }
+    .btn-secondary { width: 100%; background-color: transparent; color: #64748b; font-size: 13px; font-weight: 500; padding: 10px; border: none; margin-top: 8px; cursor: pointer; }
+
+    /* POPUP MODAL SUCCESS */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+    .modal-content { background: #ffffff; width: 100%; max-width: 400px; border-radius: 20px; padding: 30px 25px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); animation: modalSlideUp 0.3s ease-out forwards; }
+    @keyframes modalSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .success-icon { width: 60px; height: 60px; background: #dcfce7; color: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 15px auto; }
+    .group-display-box { background: #eff6ff; border: 2px dashed #bfdbfe; border-radius: 14px; padding: 15px; margin: 15px 0; }
+    .group-number { font-size: 34px; font-weight: 800; color: #1d4ed8; }
+    .error-msg { color: #dc2626; font-size: 13px; margin-top: 10px; display: none; text-align: center; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo-container">
+    <img src="../images/jata-malaysia.png" alt="Logo KKM">
+    <img src="../images/logo-jata-perlis.png" alt="Logo Jata Perlis">
+  </div>
+
+  <div class="banner-container">
+    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Banner">
+    <div class="banner-overlay"></div>
+    <div class="banner-text">
+      <h2>BENGKEL INSIGHT AT WORKPLACE</h2>
+      <p>Anjuran Jabatan Kesihatan Negeri Perlis (JKNPs) dengan kerjasama Pejabat Setiausaha Kerajaan Negeri Perlis</p>
+    </div>
+  </div>
+
+  <!-- PAGE 1: WELCOMING PAGE -->
+  <div id="welcomePage" class="page-section active">
+    <div class="welcome-intro">
+      <h3>Selamat Datang Peserta!</h3>
+      <p>Sila buat pendaftaran baru atau semak nombor meja kumpulan anda.</p>
+    </div>
+
+    <div class="info-box">
+      <div class="info-item"><span>Tarikh:</span> 15 September 2026</div>
+      <div class="info-item"><span>Masa:</span> 8:00 Pagi - 5:00 Petang</div>
+      <div class="info-item"><span>Lokasi:</span> Dewan Banquet, SUK Perlis</div>
+    </div>
+
+    <button class="btn-primary" onclick="showPage('formPage')">Mula Pendaftaran Baru</button>
+    <button class="btn-outline" onclick="showPage('searchPage')">Semak Kumpulan Saya</button>
+  </div>
+
+  <!-- PAGE 2: FORM PAGE -->
+  <div id="formPage" class="page-section">
+    <form id="regForm" onsubmit="handleFormSubmit(event)">
+      <div class="form-group">
+        <label>Nama Penuh</label>
+        <input type="text" id="nama" placeholder="Contoh: Ahmad bin Ali" required>
+      </div>
+      <div class="form-group">
+        <label>No. Kad Pengenalan</label>
+        <input type="text" id="ic" placeholder="Contoh: 900101025555 (tanpa -)" required>
+      </div>
+      <div class="form-group">
+        <label>Jawatan</label>
+        <input type="text" id="jawatan" placeholder="Contoh: Penolong Pegawai IT" required>
+      </div>
+      <div class="form-group">
+        <label>Gred</label>
+        <input type="text" id="gred" placeholder="Contoh: FA29 / N41" required>
+      </div>
+      <div class="form-group">
+        <label>Agensi / Jabatan / Unit</label>
+        <select id="agensi" required>
+          <option value="">-- Pilih Agensi --</option>
+          <option value="AADK">Agensi Antidadah Kebangsaan (AADK)</option>
+          <option value="AG">Jabatan Akauntan Negara Malaysia (AG)</option>
+          <option value="ATM">Angkatan Tentera Malaysia (ATM)</option>
+          <option value="BKP">Bahagian Khidmat Pengurusan (BKP)</option>
+          <option value="Bomba">Jabatan Bomba dan Penyelamat (Bomba)</option>
+          <option value="BPD">Bahagian Pentadbiran Daerah (BPD)</option>
+          <option value="BPPH">Bahagian Pengurusan Majlis & Protokol (BPPH)</option>
+          <option value="BPSM">Bahagian Pengurusan Sumber Manusia (BPSM)</option>
+          <option value="Imigresen">Jabatan Imigresen Malaysia (Imigresen)</option>
+          <option value="JAIPs">Jabatan Hal Ehwal Agama Islam (JAIPs)</option>
+          <option value="JKR">Jabatan Kerja Raya (JKR)</option>
+          <option value="JPJ">Jabatan Pengangkutan Jalan (JPJ)</option>
+          <option value="JPS">Jabatan Pengairan dan Saliran (JPS)</option>
+          <option value="JUPEM">Jabatan Ukur dan Pemetaan (JUPEM)</option>
+          <option value="Kastam">Jabatan Kastam Diraja Malaysia (Kastam)</option>
+          <option value="KPDNKK">KPDN / KPDNKK</option>
+          <option value="MARDI Arau">MARDI Arau</option>
+          <option value="Maritim">Agensi Penguatkuasaan Maritim (Maritim)</option>
+          <option value="MPK">Majlis Perbandaran Kangar (MPK)</option>
+          <option value="PERHILITAN">Jabatan PERHILITAN</option>
+          <option value="Pertanian">Jabatan Pertanian (Pertanian)</option>
+          <option value="PKN">Pejabat Pembangunan Negeri (PKN)</option>
+          <option value="PTG">Pejabat Pengarah Tanah & Galian (PTG)</option>
+          <option value="UKK">Unit Komunikasi Korporat (UKK)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>No. Telefon</label>
+        <input type="tel" id="noTel" placeholder="Contoh: 0123456789" required>
+      </div>
+
+      <button type="submit" id="btnSubmit" class="btn-primary">Hantar Pendaftaran</button>
+      <button type="button" class="btn-secondary" onclick="showPage('welcomePage')">← Kembali ke Utama</button>
+      <div id="errorMsg" class="error-msg"></div>
+    </form>
+  </div>
+
+  <!-- PAGE 3: SEARCH PAGE -->
+  <div id="searchPage" class="page-section">
+    <div class="welcome-intro">
+      <h3>Semak Kumpulan Anda</h3>
+      <p>Masukkan No. Kad Pengenalan yang telah didaftarkan.</p>
+    </div>
+    
+    <form onsubmit="handleSearchSubmit(event)">
+      <div class="form-group">
+        <label>No. Kad Pengenalan</label>
+        <input type="text" id="searchIcInput" placeholder="Contoh: 900101025555 (tanpa -)" required>
+      </div>
+      <button type="submit" id="btnSearch" class="btn-primary">Cari Rekod</button>
+      <button type="button" class="btn-secondary" onclick="showPage('welcomePage')">← Kembali ke Utama</button>
+      <div id="searchErrorMsg" class="error-msg"></div>
+    </form>
+  </div>
+
+</div>
+
+<!-- POPUP MODAL SUCCESS / SEARCH RESULT -->
+<div id="successModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="success-icon">✓</div>
+    <div class="modal-title" id="modalTitle">Pendaftaran Berjaya!</div>
+    <div class="modal-subtitle" id="userNameDisplay" style="color:#0f172a; font-weight:600; font-size:15px; margin-top:5px;">Nama Peserta</div>
+    
+    <div class="group-display-box">
+      <div style="font-size:12px; font-weight:600; color:#3b82f6; text-transform:uppercase;">Sila Duduk Di Meja</div>
+      <div class="group-number" id="groupNumberDisplay">KUMPULAN 0</div>
+    </div>
+
+    <button class="btn-primary" onclick="closeModal()">Selesai & Tutup</button>
+  </div>
+</div>
+
+<script>
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw2B6mhXCEnc4-sXL_3IodFnil1jtxsrdA2qGysb1Vlp0Uz7KzXBJ9RfcTrW-uOXNx5Yw/exec";
+
+  function showPage(pageId) {
+    document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    document.getElementById('errorMsg').style.display = "none";
+    document.getElementById('searchErrorMsg').style.display = "none";
+  }
+
+  // SUBMIT PENDAFTARAN
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+    const btn = document.getElementById('btnSubmit');
+    const errorMsg = document.getElementById('errorMsg');
+    
+    btn.disabled = true;
+    btn.innerText = "Memproses...";
+    errorMsg.style.display = "none";
+
+    const payload = {
+      nama: document.getElementById('nama').value,
+      ic: document.getElementById('ic').value,
+      jawatan: document.getElementById('jawatan').value,
+      gred: document.getElementById('gred').value,
+      agensi: document.getElementById('agensi').value,
+      noTel: document.getElementById('noTel').value
+    };
+
+    try {
+      const response = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+      const res = await response.json();
+      
+      btn.disabled = false;
+      btn.innerText = "Hantar Pendaftaran";
+
+      if (res.success) {
+        document.getElementById('modalTitle').innerText = "Pendaftaran Berjaya!";
+        document.getElementById('userNameDisplay').innerText = res.nama;
+        document.getElementById('groupNumberDisplay').innerText = "KUMPULAN " + res.kumpulan;
+        document.getElementById('successModal').style.display = "flex";
+        document.getElementById('regForm').reset();
+      } else {
+        errorMsg.style.display = "block";
+        errorMsg.innerText = "Gagal: " + res.message;
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerText = "Hantar Pendaftaran";
+      errorMsg.style.display = "block";
+      errorMsg.innerText = "Ralat sambungan rangkaian.";
+    }
+  }
+
+  // SUBMIT CARIAN NO. KP
+  async function handleSearchSubmit(event) {
+    event.preventDefault();
+    const btn = document.getElementById('btnSearch');
+    const searchErrorMsg = document.getElementById('searchErrorMsg');
+    
+    btn.disabled = true;
+    btn.innerText = "Mencari...";
+    searchErrorMsg.style.display = "none";
+
+    const payload = {
+      action: "search",
+      ic: document.getElementById('searchIcInput').value
+    };
+
+    try {
+      const response = await fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) });
+      const res = await response.json();
+      
+      btn.disabled = false;
+      btn.innerText = "Cari Rekod";
+
+      if (res.success && res.found) {
+        document.getElementById('modalTitle').innerText = "Rekod Dijumpai";
+        document.getElementById('userNameDisplay').innerText = res.nama;
+        document.getElementById('groupNumberDisplay').innerText = "KUMPULAN " + res.kumpulan;
+        document.getElementById('successModal').style.display = "flex";
+        document.getElementById('searchIcInput').value = "";
+      } else {
+        searchErrorMsg.style.display = "block";
+        searchErrorMsg.innerText = res.message || "Rekod tidak dijumpai.";
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerText = "Cari Rekod";
+      searchErrorMsg.style.display = "block";
+      searchErrorMsg.innerText = "Ralat sambungan rangkaian.";
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('successModal').style.display = "none";
+    showPage('welcomePage');
+  }
+</script>
+
+</body>
+</html>
