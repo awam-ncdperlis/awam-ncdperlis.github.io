@@ -3,200 +3,313 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pre-Test - Bengkel Insight at Workplace</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Pre-Test - Bengkel Insight at Workplace 2026</title>
+  <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
-    :root { 
-      --primary: #2563eb; 
-      --primary-hover: #1d4ed8;
-      --bg: #f1f5f9; 
-      --card-bg: #ffffff; 
-      --text-main: #0f172a; 
-      --text-sub: #64748b;
-      --border: #e2e8f0; 
-      --accent: #eff6ff;
+    :root {
+      --primary-black: #111827;        /* Dark Charcoal Text & Primary Buttons */
+      --accent-orange: #10b981;       /* DITUKAR: Hijau Kesihatan Mental (Emerald) */
+      --accent-orange-dark: #059669;  /* DITUKAR: Hijau Gelap (Dark Emerald) */
+      --accent-blue: #0284c7;         /* Soft Sky Blue (Kekal) */
+      --accent-yellow-light: #dcfce7; /* DITUKAR: Hijau Lembut Pastel */
+      --bg-body: #fafafa;             /* Soft Off-White Background */
+      --card-bg: #ffffff;             /* Pure White Card */
+      --border-color: #e5e7eb;        /* Subtle Gray Border */
+      --text-muted: #6b7280;          /* Muted Gray Text */
     }
-    
-    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-    body { 
-      background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
-      color: var(--text-main); 
-      margin: 0; 
-      padding: 20px 12px; 
-      display: flex; 
-      justify-content: center; 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--primary-black);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 12px;
     }
 
-    .main-card { 
-      width: 100%; 
-      max-width: 600px; 
-      background: var(--card-bg); 
-      border-radius: 20px; 
-      padding: 0 24px 24px 24px; 
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      height: fit-content;
+    .main-card {
+      width: 100%;
+      max-width: 650px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      padding: 30px;
+      margin-top: 10px;
       overflow: hidden;
     }
-    
-    /* LOGO & LETTERHEAD HEADER */
+
+    /* HEADER SECTION (OFFICIAL CREST LOGOS & AGENCY DETAILS) */
     .brand-header {
-      padding: 20px 0 16px 0;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 16px;
+      text-align: center;
+      padding-bottom: 18px;
+      border-bottom: 2px solid #f3f4f6;
+      margin-bottom: 20px;
     }
-    .logo-container {
+
+    .logo-group {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 30px;
+      gap: 20px;
       margin-bottom: 12px;
     }
-    .brand-logo { 
-      height: 52px; 
-      width: auto; 
-      object-fit: contain; 
+
+    .logo-group img {
+      height: 60px;
+      width: auto;
+      object-fit: contain;
     }
-    .header-text {
-      text-align: center;
-      color: var(--text-main);
-    }
-    .header-text .title-main {
-      font-size: 0.85rem;
+
+    .agency-text {
+      font-size: 0.82rem;
       font-weight: 700;
-      letter-spacing: 0.3px;
+      color: var(--text-muted);
       text-transform: uppercase;
-      color: #1e293b;
-      margin: 0;
+      letter-spacing: 0.8px;
+      line-height: 1.4;
+      text-align: center;
     }
-    .header-text .title-sub {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin: 2px 0;
-    }
-    .header-text .title-collab {
-      font-size: 0.73rem;
-      font-weight: 500;
-      color: var(--text-sub);
-      margin: 0;
-      font-style: italic;
+
+    .agency-text span {
+      color: var(--accent-orange-dark);
     }
 
     /* BANNER CONTAINER */
     .banner-wrapper {
       position: relative;
-      margin: 0 -24px 20px -24px;
-      width: calc(100% + 48px);
-      height: 100%;
+      margin: 0 -30px 20px -30px;
+      width: calc(100% + 60px);
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .banner-img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .title-workshop {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-black);
+      text-align: center;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .title-workshop::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background-color: var(--accent-orange);
+      border-radius: 2px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    /* PROGRESS BAR */
+    .progress-box {
+      margin-bottom: 24px;
+      display: none;
+      background: #fafafa;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary-black);
+      margin-bottom: 8px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      background: #e5e7eb;
+      border-radius: 10px;
+      height: 8px;
       overflow: hidden;
     }
-    .banner-img { 
-      width: 100%; 
-      height: 100%; 
-      max-height: 200px;
-      object-fit: cover; 
-      display: block; 
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-orange);
+      transition: width 0.4s ease;
+      border-radius: 10px;
     }
 
-    h2 { margin: 0 0 4px 0; color: var(--text-main); text-align: center; font-size: 1.25rem; font-weight: 700; }
-    .subtitle { text-align: center; color: var(--text-sub); font-size: 0.85rem; margin-bottom: 20px; font-weight: 500; }
-    
-    /* PROGRESS BAR */
-    .progress-box { margin-bottom: 24px; display: none; }
-    .progress-info { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; }
-    .progress-bar-container { width: 100%; background: #e2e8f0; border-radius: 10px; height: 8px; overflow: hidden; }
-    .progress-bar { height: 100%; width: 0%; background: var(--primary); transition: width 0.4s ease; border-radius: 10px; }
-
-    .page { display: none; } 
-    .page.active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.35s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     /* WELCOME SCREEN STYLING */
     .welcome-box { text-align: center; padding: 10px 0; }
-    .welcome-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
-    .welcome-desc { font-size: 0.92rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 20px; }
+    .welcome-title { font-size: 1.15rem; font-weight: 800; color: var(--primary-black); margin-bottom: 10px; }
+    .welcome-desc { font-size: 0.9rem; color: #374151; line-height: 1.6; margin-bottom: 20px; }
+    
     .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
-    .guide-card { background: var(--accent); border: 1px solid #bfdbfe; padding: 12px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; color: var(--primary-hover); }
+    .guide-card { 
+      background: var(--accent-yellow-light); 
+      border: 1px solid #fcd34d; 
+      padding: 12px 8px; 
+      border-radius: 12px; 
+      font-size: 0.78rem; 
+      font-weight: 700; 
+      color: var(--accent-orange-dark); 
+    }
 
     /* FORM ELEMENTS */
     .form-group { margin-bottom: 18px; }
-    label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.88rem; color: #334155; }
+    label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.85rem; color: var(--primary-black); }
+    
     input[type="text"], select { 
       width: 100%; 
-      padding: 12px 16px; 
-      border: 1.5px solid var(--border); 
+      padding: 12px 14px; 
+      border: 1.5px solid var(--border-color); 
       border-radius: 10px; 
-      font-size: 0.95rem; 
-      background: #f8fafc;
+      font-size: 0.9rem; 
+      background: #fafafa;
+      color: var(--primary-black);
       transition: all 0.2s;
     }
     input[type="text"]:focus, select:focus {
       outline: none;
-      border-color: var(--primary);
+      border-color: var(--accent-orange);
       background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
     }
 
     /* QUESTION STYLING */
-    .question-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 18px; line-height: 1.5; color: var(--text-main); }
+    .question-title { font-size: 1rem; font-weight: 700; margin-bottom: 16px; line-height: 1.5; color: var(--primary-black); }
+    
     .option-label { 
       display: flex; 
       align-items: center; 
-      padding: 14px 16px; 
-      border: 1.5px solid var(--border); 
+      padding: 12px 16px; 
+      border: 1.5px solid var(--border-color); 
       border-radius: 12px; 
-      margin-bottom: 12px; 
+      margin-bottom: 10px; 
       cursor: pointer; 
       transition: all 0.2s;
-      background: #ffffff;
-      font-size: 0.92rem;
+      background: #fafafa;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary-black);
     }
-    .option-label:hover { background: var(--accent); border-color: #bfdbfe; }
-    .option-label input { margin-right: 14px; accent-color: var(--primary); transform: scale(1.25); }
+    .option-label:hover { 
+      background: #ffffff; 
+      border-color: var(--accent-orange);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+    }
+    .option-label input { 
+      margin-right: 12px; 
+      accent-color: var(--accent-orange-dark); 
+      transform: scale(1.2); 
+    }
 
     /* BUTTONS */
-    .nav-buttons { display: flex; justify-content: space-between; margin-top: 28px; gap: 12px; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 25px; gap: 12px; }
+    
     button { 
-      background: var(--primary); 
+      background: var(--primary-black); 
       color: white; 
       border: none; 
-      padding: 15px 28px; 
-      border-radius: 12px; 
-      font-size: 1rem; 
+      padding: 12px 24px; 
+      border-radius: 10px; 
+      font-size: 0.9rem; 
       cursor: pointer; 
       font-weight: 700; 
       transition: all 0.2s;
       flex: 1;
       max-width: 200px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
     }
+    
     button.btn-full { 
       max-width: 100%; 
-      padding: 16px 28px; 
-      font-size: 1.05rem; 
+      padding: 14px 28px; 
+      font-size: 0.95rem; 
     }
+    
     button:hover { 
-      background: var(--primary-hover); 
+      background: var(--accent-orange-dark); 
       transform: translateY(-2px); 
-      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
     }
+    
     button.btn-secondary { 
-      background: #64748b; 
-      box-shadow: none; 
+      background: #ffffff; 
+      color: var(--primary-black);
+      border: 1px solid #d1d5db; 
     }
+    
     button.btn-secondary:hover { 
-      background: #475569; 
+      background: #f3f4f6; 
       box-shadow: none; 
+      transform: none;
     }
 
     /* MODAL */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
-    .modal-content { background: white; padding: 28px; border-radius: 16px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-    .modal-content h3 { margin-top: 0; color: #dc2626; font-size: 1.15rem; }
+    .modal-overlay { 
+      display: none; 
+      position: fixed; 
+      top: 0; left: 0; 
+      width: 100%; height: 100%; 
+      background: rgba(17, 24, 39, 0.6); 
+      backdrop-filter: blur(4px); 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 1000; 
+    }
+    
+    .modal-content { 
+      background: white; 
+      padding: 25px; 
+      border-radius: 16px; 
+      max-width: 420px; 
+      width: 90%; 
+      text-align: center; 
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
+    }
+    
+    .modal-content h3 { margin-top: 0; color: #dc2626; font-size: 1.1rem; font-weight: 800; }
     .modal-actions { margin-top: 20px; display: flex; justify-content: center; gap: 10px; }
+
+    @media (max-width: 600px) {
+      .main-card { padding: 20px; }
+      .banner-wrapper { margin: 0 -20px 20px -20px; width: calc(100% + 40px); }
+      .guide-grid { grid-template-columns: 1fr; }
+      .logo-group img { height: 50px; }
+    }
   </style>
 </head>
 <body>
@@ -204,24 +317,24 @@
 <div class="main-card">
   
   <!-- 1. HEADER LOGO & TEKS LETTERHEAD -->
-  <div class="brand-header">
-    <div class="logo-container">
-      <img src="../../images/jata-malaysia.png" alt="Jata Malaysia" class="brand-logo">
-      <img src="../../images/logo-jata-perlis.png" alt="Logo Negeri Perlis" class="brand-logo">
+  <header class="brand-header">
+    <div class="logo-group">
+      <img src="../../images/jata-malaysia.png" alt="Jata Malaysia">
+      <img src="../../images/logo-jata-perlis.png" alt="Logo Negeri Perlis">
     </div>
-    <div class="header-text">
-      <p class="title-main">Kementerian Kesihatan Malaysia</p>
-      <p class="title-sub">Jabatan Kesihatan Negeri Perlis</p>
-      <p class="title-collab">dengan kerjasama Pejabat Setiausaha Kerajaan Negeri Perlis</p>
-    </div>
-  </div>
+    <p class="agency-text">
+      KEMENTERIAN KESIHATAN MALAYSIA<br>
+      JABATAN KESIHATAN NEGERI PERLIS<br>
+      <span>DENGAN KERJASAMA PEJABAT SETIAUSAHA KERAJAAN NEGERI PERLIS</span>
+    </p>
+  </header>
 
   <!-- 2. BANNER RAPAT KAD -->
   <div class="banner-wrapper">
     <img src="../../images/banner-bengkel.png" alt="Banner Bengkel" class="banner-img">
   </div>
 
-  <h2>INSIGHT AT WORKPLACE</h2>
+  <h2 class="title-workshop">INSIGHT AT WORKPLACE</h2>
   <div class="subtitle">Bengkel Kesihatan Mental & Budaya Kerja (20 Soalan)</div>
 
   <!-- PROGRESS BAR -->
@@ -254,7 +367,7 @@
 
     <!-- PAGE 0: DEMOGRAFI -->
     <div class="page" id="page0">
-      <h3>Maklumat Peserta</h3>
+      <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: var(--primary-black);">Maklumat Peserta</h3>
       <div class="form-group">
         <label>No. Kad Pengenalan *</label>
         <input type="text" id="icNumber" placeholder="000000-00-0000" maxlength="14" oninput="formatIC(this)">
@@ -338,9 +451,9 @@
 
     <!-- REVIEW PAGE -->
     <div class="page" id="page21">
-      <h3>Pengesahan Hantaran</h3>
-      <p style="color: var(--text-sub); font-size: 0.9rem;">Sila semak semula maklumat anda sebelum menghantar.</p>
-      <div id="summaryReview" style="background: #f8fafc; padding: 16px; border-radius: 12px; margin-bottom: 20px;"></div>
+      <h3 style="font-size: 1.1rem; margin-bottom: 8px; color: var(--primary-black);">Pengesahan Hantaran</h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem;">Sila semak semula maklumat anda sebelum menghantar.</p>
+      <div id="summaryReview" style="background: #fafafa; padding: 16px; border-radius: 12px; margin: 16px 0; border: 1px solid var(--border-color);"></div>
       <div class="nav-buttons">
         <button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button>
         <button type="button" class="btn-full" onclick="submitForm()">Hantar Jawapan Pre-Test</button>
@@ -356,7 +469,7 @@
 <div class="modal-overlay" id="customModal">
   <div class="modal-content">
     <h3 id="modalTitle">Notifikasi</h3>
-    <div id="modalMessage" style="color: var(--text-sub); font-size: 0.95rem; line-height: 1.5;"></div>
+    <div id="modalMessage" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-top: 8px;"></div>
     <div class="modal-actions" id="modalActions"></div>
   </div>
 </div>
@@ -486,9 +599,9 @@
         document.getElementById('scoreHeader').innerHTML = `
           <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:24px; border-radius:16px; text-align:center;">
             <h3 style="color:#166534; margin-top:0;">Pre-Test Berjaya Dihantar!</h3>
-            <p style="color:#374151; font-size:0.95rem; margin:8px 0;">Terima kasih kerana melengkapkan ujian penilaian awal ini.</p>
-            <div style="font-size:2rem; font-weight:700; color:#15803d; margin:16px 0;">
-              ${res.score} / 20 <span style="font-size:1.1rem; font-weight:500;">(${res.percentage.toFixed(0)}%)</span>
+            <p style="color:#374151; font-size:0.9rem; margin:8px 0;">Terima kasih kerana melengkapkan ujian penilaian awal ini.</p>
+            <div style="font-size:2rem; font-weight:800; color:#15803d; margin:16px 0;">
+              ${res.score} / 20 <span style="font-size:1.1rem; font-weight:600;">(${res.percentage.toFixed(0)}%)</span>
             </div>
             <p style="color:#4b5563; font-size:0.85rem; line-height:1.5;">
               Sila ikuti keseluruhan slot bengkel dengan teliti. Skema jawapan lengkap dan perbandingan prestasi akan dipaparkan selepas anda menyempurnakan <strong>Post-Test</strong> di akhir bengkel nanti.

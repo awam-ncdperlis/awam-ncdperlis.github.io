@@ -3,67 +3,306 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pendaftaran Bengkel Insight at Workplace</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Pendaftaran Bengkel Insight at Workplace 2026</title>
+  <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px 15px; }
-    .card { background: #ffffff; width: 100%; max-width: 480px; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); overflow: hidden; border: 1px solid #e2e8f0; position: relative; }
-    .logo-container { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px 15px 25px; background: #ffffff; }
-    .logo-container img { height: 44px; width: auto; object-fit: contain; }
-    .banner-container { width: 100%; height: 150px; position: relative; overflow: hidden; }
-    .banner-container img { width: 100%; height: 100%; object-fit: cover; }
-    .banner-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.8) 100%); }
-    .banner-text { position: absolute; bottom: 15px; left: 20px; right: 20px; color: #ffffff; }
-    .banner-text h2 { font-size: 18px; font-weight: 700; }
-    .banner-text p { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+    :root {
+      --primary-black: #111827;        /* Dark Charcoal Text & Primary Buttons */
+      --accent-orange: #10b981;       /* DITUKAR: Hijau Kesihatan Mental (Emerald) */
+      --accent-orange-dark: #059669;  /* DITUKAR: Hijau Gelap (Dark Emerald) */
+      --accent-blue: #0284c7;         /* Soft Sky Blue (Kekal) */
+      --accent-yellow-light: #dcfce7; /* DITUKAR: Hijau Lembut Pastel */
+      --bg-body: #fafafa;             /* Soft Off-White Background */
+      --card-bg: #ffffff;             /* Pure White Card */
+      --border-color: #e5e7eb;        /* Subtle Gray Border */
+      --text-muted: #6b7280;          /* Muted Gray Text */
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+    }
+
+    body { 
+      background-color: var(--bg-body); 
+      color: var(--primary-black); 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      padding: 30px 12px; 
+    }
+
+    .card { 
+      background: var(--card-bg); 
+      width: 100%; 
+      max-width: 520px; 
+      border-radius: 20px; 
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); 
+      overflow: hidden; 
+      border: 1px solid var(--border-color); 
+      position: relative; 
+    }
+
+    /* HEADER SECTION (OFFICIAL CREST LOGOS & AGENCY DETAILS) */
+    .brand-header {
+      text-align: center;
+      padding: 24px 20px 18px 20px;
+      border-bottom: 2px solid #f3f4f6;
+      background: #ffffff;
+    }
+
+    .logo-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 12px;
+    }
+
+    .logo-group img {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .agency-text {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .agency-text span {
+      color: var(--accent-orange-dark);
+    }
+
+    /* BANNER CONTAINER (BERSIH TANPA TEKS) */
+    .banner-wrapper {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
     
-    .page-section { display: none; padding: 25px; }
-    .page-section.active { display: block; }
+    .page-section { 
+      display: none; 
+      padding: 25px; 
+    }
     
-    .welcome-intro { text-align: center; margin-bottom: 15px; }
-    .welcome-intro h3 { font-size: 16px; color: #1e293b; margin-bottom: 6px; }
-    .welcome-intro p { font-size: 13px; color: #64748b; line-height: 1.5; }
+    .page-section.active { 
+      display: block; 
+      animation: fadeIn 0.35s ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     
-    .info-box { background-color: #f1f5f9; border-radius: 12px; padding: 12px 15px; margin-bottom: 20px; }
-    .info-item { display: flex; align-items: center; font-size: 13px; color: #334155; margin-bottom: 6px; }
+    .welcome-intro { text-align: center; margin-bottom: 18px; }
+    .welcome-intro h3 { font-size: 1.15rem; font-weight: 800; color: var(--primary-black); margin-bottom: 6px; }
+    .welcome-intro p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+    
+    .info-box { 
+      background-color: #fafafa; 
+      border: 1px solid var(--border-color);
+      border-radius: 14px; 
+      padding: 16px; 
+      margin-bottom: 22px; 
+    }
+
+    .info-item { 
+      display: flex; 
+      align-items: center; 
+      font-size: 0.88rem; 
+      color: var(--primary-black); 
+      margin-bottom: 8px; 
+      font-weight: 600;
+    }
+
     .info-item:last-child { margin-bottom: 0; }
-    .info-item span { font-weight: 600; margin-right: 8px; color: #2563eb; }
+    .info-item span { font-weight: 700; margin-right: 8px; color: var(--accent-orange-dark); min-width: 60px; }
 
-    .form-group { margin-bottom: 16px; }
-    label { display: block; font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 6px; text-transform: uppercase; }
-    input, select { width: 100%; padding: 12px 14px; font-size: 14px; color: #0f172a; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; }
-    input:focus, select:focus { background-color: #ffffff; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+    /* FORM ELEMENTS */
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.82rem; color: var(--primary-black); text-transform: uppercase; letter-spacing: 0.5px; }
+    
+    input, select { 
+      width: 100%; 
+      padding: 12px 14px; 
+      font-size: 0.9rem; 
+      color: var(--primary-black); 
+      background-color: #fafafa; 
+      border: 1.5px solid var(--border-color); 
+      border-radius: 10px; 
+      outline: none; 
+      transition: all 0.2s;
+    }
 
-    .btn-primary { width: 100%; background-color: #2563eb; color: #ffffff; font-size: 15px; font-weight: 600; padding: 14px; border: none; border-radius: 10px; cursor: pointer; }
-    .btn-outline { width: 100%; background-color: #ffffff; color: #2563eb; font-size: 15px; font-weight: 600; padding: 13px; border: 2px solid #2563eb; border-radius: 10px; cursor: pointer; margin-top: 10px; }
-    .btn-secondary { width: 100%; background-color: transparent; color: #64748b; font-size: 13px; font-weight: 500; padding: 10px; border: none; margin-top: 8px; cursor: pointer; }
+    input:focus, select:focus { 
+      background-color: #ffffff; 
+      border-color: var(--accent-orange); 
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15); 
+    }
+
+    /* BUTTONS */
+    .btn-primary { 
+      width: 100%; 
+      background-color: var(--primary-black); 
+      color: #ffffff; 
+      font-size: 0.92rem; 
+      font-weight: 700; 
+      padding: 14px; 
+      border: none; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-orange-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+    }
+
+    .btn-outline { 
+      width: 100%; 
+      background-color: #ffffff; 
+      color: var(--primary-black); 
+      font-size: 0.92rem; 
+      font-weight: 700; 
+      padding: 13px; 
+      border: 1.5px solid #d1d5db; 
+      border-radius: 10px; 
+      cursor: pointer; 
+      margin-top: 10px; 
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background-color: #f3f4f6;
+    }
+
+    .btn-secondary { 
+      width: 100%; 
+      background-color: transparent; 
+      color: var(--text-muted); 
+      font-size: 0.85rem; 
+      font-weight: 600; 
+      padding: 10px; 
+      border: none; 
+      margin-top: 10px; 
+      cursor: pointer; 
+    }
+
+    .btn-secondary:hover {
+      color: var(--primary-black);
+    }
 
     /* POPUP MODAL SUCCESS */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
-    .modal-content { background: #ffffff; width: 100%; max-width: 400px; border-radius: 20px; padding: 30px 25px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); animation: modalSlideUp 0.3s ease-out forwards; }
-    @keyframes modalSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .success-icon { width: 60px; height: 60px; background: #dcfce7; color: #16a34a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 15px auto; }
-    .group-display-box { background: #eff6ff; border: 2px dashed #bfdbfe; border-radius: 14px; padding: 15px; margin: 15px 0; }
-    .group-number { font-size: 34px; font-weight: 800; color: #1d4ed8; }
-    .error-msg { color: #dc2626; font-size: 13px; margin-top: 10px; display: none; text-align: center; }
+    .modal-overlay { 
+      position: fixed; 
+      top: 0; left: 0; 
+      width: 100%; height: 100%; 
+      background: rgba(17, 24, 39, 0.6); 
+      backdrop-filter: blur(4px); 
+      display: none; 
+      justify-content: center; 
+      align-items: center; 
+      z-index: 1000; 
+      padding: 20px; 
+    }
+
+    .modal-content { 
+      background: #ffffff; 
+      width: 100%; 
+      max-width: 400px; 
+      border-radius: 20px; 
+      padding: 30px 25px; 
+      text-align: center; 
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
+      animation: modalSlideUp 0.3s ease-out forwards; 
+    }
+
+    @keyframes modalSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .success-icon { 
+      width: 60px; height: 60px; 
+      background: #fef3c7; 
+      color: var(--accent-orange-dark); 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 28px; 
+      margin: 0 auto 15px auto; 
+    }
+
+    .group-display-box { 
+      background: #fafafa; 
+      border: 2px dashed #fcd34d; 
+      border-radius: 14px; 
+      padding: 16px; 
+      margin: 18px 0; 
+    }
+
+    .group-number { 
+      font-size: 1.8rem; 
+      font-weight: 800; 
+      color: var(--accent-orange-dark); 
+    }
+
+    .error-msg { 
+      color: #dc2626; 
+      font-size: 0.82rem; 
+      font-weight: 600;
+      margin-top: 10px; 
+      display: none; 
+      text-align: center; 
+    }
+
+    @media (max-width: 600px) {
+      .logo-group img { height: 45px; }
+      .page-section { padding: 20px; }
+    }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <div class="logo-container">
-    <img src="../../images/jata-malaysia.png" alt="Logo KKM">
-    <img src="../../images/logo-jata-perlis.png" alt="Logo Jata Perlis">
-  </div>
-
-  <div class="banner-container">
-    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Banner">
-    <div class="banner-overlay"></div>
-    <div class="banner-text">
-      <h2>BENGKEL INSIGHT AT WORKPLACE</h2>
-      <p>Anjuran Jabatan Kesihatan Negeri Perlis (JKNPs) dengan kerjasama Pejabat Setiausaha Kerajaan Negeri Perlis</p>
+  
+  <!-- 1. HEADER LOGO & TEKS LETTERHEAD -->
+  <header class="brand-header">
+    <div class="logo-group">
+      <img src="../../images/jata-malaysia.png" alt="Logo KKM">
+      <img src="../../images/logo-jata-perlis.png" alt="Logo Jata Perlis">
     </div>
+    <p class="agency-text">
+      KEMENTERIAN KESIHATAN MALAYSIA<br>
+      JABATAN KESIHATAN NEGERI PERLIS<br>
+      <span>DENGAN KERJASAMA PEJABAT SETIAUSAHA KERAJAAN NEGERI PERLIS</span>
+    </p>
+  </header>
+
+  <!-- 2. BANNER RAPAT KAD (BERSIH TANPA TEKS OVERLAY) -->
+  <div class="banner-wrapper">
+    <img src="../../images/banner-bengkel.png" alt="Banner Bengkel" class="banner-img">
   </div>
 
   <!-- PAGE 1: WELCOMING PAGE -->
@@ -87,23 +326,23 @@
   <div id="formPage" class="page-section">
     <form id="regForm" onsubmit="handleFormSubmit(event)">
       <div class="form-group">
-        <label>Nama Penuh</label>
+        <label>Nama Penuh *</label>
         <input type="text" id="nama" placeholder="Contoh: Ahmad bin Ali" required>
       </div>
       <div class="form-group">
-        <label>No. Kad Pengenalan</label>
+        <label>No. Kad Pengenalan *</label>
         <input type="text" id="ic" placeholder="Contoh: 900101025555 (tanpa -)" required>
       </div>
       <div class="form-group">
-        <label>Jawatan</label>
+        <label>Jawatan *</label>
         <input type="text" id="jawatan" placeholder="Contoh: Penolong Pegawai IT" required>
       </div>
       <div class="form-group">
-        <label>Gred</label>
+        <label>Gred *</label>
         <input type="text" id="gred" placeholder="Contoh: FA29 / N41" required>
       </div>
       <div class="form-group">
-        <label>Agensi / Jabatan / Unit</label>
+        <label>Agensi / Jabatan / Unit *</label>
         <select id="agensi" required>
           <option value="">-- Pilih Agensi --</option>
           <option value="AADK">Agensi Antidadah Kebangsaan (AADK)</option>
@@ -133,7 +372,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label>No. Telefon</label>
+        <label>No. Telefon *</label>
         <input type="tel" id="noTel" placeholder="Contoh: 0123456789" required>
       </div>
 
@@ -152,7 +391,7 @@
     
     <form onsubmit="handleSearchSubmit(event)">
       <div class="form-group">
-        <label>No. Kad Pengenalan</label>
+        <label>No. Kad Pengenalan *</label>
         <input type="text" id="searchIcInput" placeholder="Contoh: 900101025555 (tanpa -)" required>
       </div>
       <button type="submit" id="btnSearch" class="btn-primary">Cari Rekod</button>
@@ -166,12 +405,12 @@
 <!-- POPUP MODAL SUCCESS / SEARCH RESULT -->
 <div id="successModal" class="modal-overlay">
   <div class="modal-content">
-    <div class="success-icon">✓</div>
-    <div class="modal-title" id="modalTitle">Pendaftaran Berjaya!</div>
-    <div class="modal-subtitle" id="userNameDisplay" style="color:#0f172a; font-weight:600; font-size:15px; margin-top:5px;">Nama Peserta</div>
+    <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+    <div class="modal-title" id="modalTitle" style="font-size: 1.15rem; font-weight: 800; color: var(--primary-black);">Pendaftaran Berjaya!</div>
+    <div class="modal-subtitle" id="userNameDisplay" style="color: var(--primary-black); font-weight: 700; font-size: 0.95rem; margin-top: 6px;">Nama Peserta</div>
     
     <div class="group-display-box">
-      <div style="font-size:12px; font-weight:600; color:#3b82f6; text-transform:uppercase;">Sila Duduk Di Meja</div>
+      <div style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Sila Duduk Di Meja</div>
       <div class="group-number" id="groupNumberDisplay">KUMPULAN 0</div>
     </div>
 

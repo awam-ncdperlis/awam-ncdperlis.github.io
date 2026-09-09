@@ -12,15 +12,15 @@
   
   <style>
     :root {
-      --primary-black: #111827;     /* Dark Charcoal Text */
-      --accent-orange: #f59e0b;    /* Orange/Amber */
-      --accent-orange-dark: #ea580c;
-      --accent-blue: #0284c7;      /* Soft Sky Blue */
-      --accent-yellow-light: #fef9c3;
-      --bg-body: #fafafa;          /* Soft Off-White Background */
-      --card-bg: #ffffff;          /* Pure White Card */
-      --border-color: #e5e7eb;     /* Subtle Gray Border */
-      --text-muted: #6b7280;       /* Muted Gray Text */
+      --primary-black: #111827;        /* Dark Charcoal Text & Primary Buttons */
+      --accent-green: #10b981;        /* Hijau Kesihatan Mental (Emerald) */
+      --accent-green-dark: #059669;   /* Hijau Gelap (Dark Emerald) */
+      --accent-blue: #0284c7;         /* Soft Sky Blue */
+      --accent-green-light: #dcfce7;  /* Hijau Lembut Pastel / Light Sage */
+      --bg-body: #fafafa;             /* Soft Off-White Background */
+      --card-bg: #ffffff;             /* Pure White Card */
+      --border-color: #e5e7eb;        /* Subtle Gray Border */
+      --text-muted: #6b7280;          /* Muted Gray Text */
     }
 
     * {
@@ -79,7 +79,7 @@
     }
 
     .agency-text span {
-      color: var(--accent-orange-dark);
+      color: var(--accent-green-dark);
     }
 
     /* Main Content Wrapper - Dynamic Full Height Container */
@@ -132,12 +132,12 @@
     }
 
     .step-item.active {
-      background-color: #fef3c7; /* Soft Amber Highlight */
-      color: var(--accent-orange-dark);
+      background-color: var(--accent-green-light);
+      color: var(--accent-green-dark);
     }
 
     .step-item.active i {
-      color: var(--accent-orange-dark);
+      color: var(--accent-green-dark);
     }
 
     .step-item.completed {
@@ -145,7 +145,7 @@
     }
 
     .step-item.completed i {
-      color: #10b981;
+      color: var(--accent-green);
     }
 
     /* Interactive Slide Container - Full Height Fill */
@@ -175,14 +175,8 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .section-title {
@@ -201,61 +195,121 @@
       display: inline-block;
       width: 5px;
       height: 22px;
-      background-color: var(--accent-orange);
+      background-color: var(--accent-green);
       border-radius: 3px;
     }
 
-    /* Slide 1: Grid Info */
+    /* Slide 1: Grid Info & Registration Banner Box */
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      flex: 1;
-      align-content: center;
+      gap: 12px;
+      margin-bottom: 15px;
     }
 
     .info-card {
       background: #fafafa;
       border: 1px solid var(--border-color);
       border-radius: 14px;
-      padding: 18px;
+      padding: 14px 16px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       transition: all 0.3s ease;
     }
 
     .info-card:hover {
-      border-color: #fcd34d;
+      border-color: #a7f3d0;
       background: #ffffff;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
     }
 
     .info-icon {
-      background: #fef3c7;
-      color: var(--accent-orange-dark);
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      background: var(--accent-green-light);
+      color: var(--accent-green-dark);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       flex-shrink: 0;
     }
 
     .info-content h4 {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .info-content p {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--primary-black);
+    }
+
+    /* Reg Call-to-Action Box (Slide 1) */
+    .registration-banner-box {
+      background: #fafafa;
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: auto;
+    }
+
+    .reg-box-text {
+      flex: 1;
+    }
+
+    .reg-box-text h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--primary-black);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .reg-box-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .btn-register {
+      background-color: var(--accent-green);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-register:hover:not(.disabled) {
+      background-color: var(--accent-green-dark);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+    }
+
+    .btn-register.disabled {
+      background-color: #e5e7eb !important;
+      color: #9ca3af !important;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     /* Slide 2: About Text */
@@ -305,13 +359,13 @@
     }
 
     .obj-item:hover {
-      border-color: #fcd34d;
+      border-color: #a7f3d0;
       background: #ffffff;
       transform: translateX(5px);
     }
 
     .obj-item i {
-      color: var(--accent-orange);
+      color: var(--accent-green);
       font-size: 1.1rem;
     }
 
@@ -321,7 +375,7 @@
       font-weight: 600;
     }
 
-    /* Slide 4: Schedule List - Scrollable Inside Card Only */
+    /* Slide 4: Schedule List */
     .agenda-list {
       display: flex;
       flex-direction: column;
@@ -331,21 +385,10 @@
       padding-right: 8px;
     }
 
-    /* Custom Scrollbar for Agenda */
-    .agenda-list::-webkit-scrollbar {
-      width: 5px;
-    }
-    .agenda-list::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 4px;
-    }
-    .agenda-list::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
-    }
-    .agenda-list::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
+    .agenda-list::-webkit-scrollbar { width: 5px; }
+    .agenda-list::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+    .agenda-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .agenda-list::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
     .agenda-item {
       display: flex;
@@ -361,8 +404,8 @@
     .agenda-time {
       font-size: 0.82rem;
       font-weight: 800;
-      color: var(--accent-orange-dark);
-      background: #fef3c7;
+      color: var(--accent-green-dark);
+      background: var(--accent-green-light);
       padding: 6px 12px;
       border-radius: 8px;
       min-width: 85px;
@@ -406,16 +449,16 @@
     }
 
     .test-card:hover {
-      border-color: var(--accent-orange);
-      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.12);
+      border-color: var(--accent-green);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.12);
       transform: translateY(-4px);
     }
 
     .test-icon {
       width: 46px;
       height: 46px;
-      background: #fef3c7;
-      color: var(--accent-orange-dark);
+      background: var(--accent-green-light);
+      color: var(--accent-green-dark);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -462,12 +505,12 @@
     }
 
     .btn-posttest {
-      background-color: var(--accent-orange);
+      background-color: var(--accent-green);
       color: #ffffff;
     }
 
     .btn-posttest:hover {
-      background-color: var(--accent-orange-dark);
+      background-color: var(--accent-green-dark);
     }
 
     .btn-eval {
@@ -479,7 +522,6 @@
       background-color: #0369a1;
     }
 
-    /* Locked Disabled State for Timed Buttons */
     .test-btn.disabled {
       background-color: #e5e7eb !important;
       color: #9ca3af !important;
@@ -498,7 +540,6 @@
       gap: 4px;
     }
 
-    /* Navigation Buttons */
     .nav-buttons {
       display: flex;
       justify-content: space-between;
@@ -537,8 +578,8 @@
     }
 
     .btn-next:hover {
-      background: var(--accent-orange-dark);
-      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+      background: var(--accent-green-dark);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
     }
 
     .btn:disabled {
@@ -547,45 +588,25 @@
     }
 
     @media (max-width: 768px) {
-      html, body {
-        overflow: auto;
-        height: auto;
-      }
-      body {
-        padding: 20px 0;
-      }
-      .main-wrapper {
-        height: auto;
-        max-height: none;
-        padding: 20px 15px;
-      }
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-      .test-grid {
-        grid-template-columns: 1fr;
-      }
-      .step-item span {
-        display: none;
-      }
-      .agenda-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-      }
-      .logo-group img {
-        height: 50px;
-      }
+      html, body { overflow: auto; height: auto; }
+      body { padding: 20px 0; }
+      .main-wrapper { height: auto; max-height: none; padding: 20px 15px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .registration-banner-box { flex-direction: column; text-align: center; }
+      .test-grid { grid-template-columns: 1fr; }
+      .step-item span { display: none; }
+      .agenda-item { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .logo-group img { height: 50px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header Section: Official Crest Logos & Agency Details -->
+  <!-- Header Section: Logo Perlis (Kiri) -> Logo Malaysia (Kanan) -->
   <header class="header-container">
     <div class="logo-group">
-      <img src="../images/jata-malaysia.png" alt="Jata Negara Malaysia">
       <img src="../images/logo-jata-perlis.png" alt="Jata Negeri Perlis">
+      <img src="../images/jata-malaysia.png" alt="Jata Negara Malaysia">
     </div>
     <p class="agency-text">
       KEMENTERIAN KESIHATAN MALAYSIA<br>
@@ -597,7 +618,6 @@
   <!-- Main Card Container -->
   <main class="main-wrapper">
     
-    <!-- Top Step Tabs Indicator -->
     <nav class="step-indicator">
       <div class="step-item active" onclick="goToSlide(0)">
         <i class="fa-solid fa-house"></i>
@@ -621,12 +641,12 @@
       </div>
     </nav>
 
-    <!-- Slide Content Sections -->
     <div class="slide-container">
       
-      <!-- Slide 1: Maklumat Utama -->
+      <!-- Slide 1: Maklumat Utama + Registration Box -->
       <section class="slide active">
         <h2 class="section-title">Maklumat Ringkas Program</h2>
+        
         <div class="info-grid">
           <div class="info-card">
             <div class="info-icon"><i class="fa-regular fa-calendar"></i></div>
@@ -646,7 +666,7 @@
             <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
             <div class="info-content">
               <h4>Lokasi</h4>
-              <p>Dewan Bankuet, Kompleks Pentadbiran Perlis</p>
+              <p>Dewan Bankuet, SUK Perlis</p>
             </div>
           </div>
           <div class="info-card">
@@ -657,6 +677,18 @@
             </div>
           </div>
         </div>
+
+        <!-- Registration Call-to-Action Box -->
+        <div class="registration-banner-box">
+          <div class="reg-box-text">
+            <h3><i class="fa-solid fa-id-card-clip" style="color: var(--accent-green);"></i> Pendaftaran Peserta Bengkel</h3>
+            <p id="regNoticeText">Sudahkah anda membuat pendaftaran? Sekiranya belum, sila tekan butang untuk mendaftar. Jika sudah, terima kasih & selamat mengikuti bengkel!</p>
+          </div>
+          <a href="pendaftaran" target="_blank" id="registerBtn" class="btn-register">
+            <i class="fa-solid fa-pen-to-square" id="regBtnIcon"></i> <span id="regBtnText">Daftar Sekarang</span>
+          </a>
+        </div>
+
       </section>
 
       <!-- Slide 2: Pengenalan -->
@@ -664,14 +696,14 @@
         <h2 class="section-title">Pengenalan Bengkel</h2>
         <div class="about-wrapper">
           <p class="about-text">
-            Tempat kerja yang sihat bergantung pada kesedaran kendiri, komunikasi, kepercayaan, integriti, dan keupayaan anggota memahami peranan masing-masing.
+            Tempat kerja yang sihat bergantung pada kesedaran kendiri, komunikasi, kepercayaan, integriti, dan keupayaan anggota memahami peranan masing-masing[cite: 1].
           </p>
           <p class="about-text">
-            Bengkel "Insight at Workplace" dirangka sebagai program pembelajaran berasaskan pengalaman yang menggabungkan slot perkongsian serta Latihan Dalam Kumpulan (LDK) secara interaktif.
+            Bengkel "Insight at Workplace" dirangka sebagai program pembelajaran berasaskan pengalaman yang menggabungkan slot perkongsian serta Latihan Dalam Kumpulan (LDK) secara interaktif[cite: 1].
           </p>
           <div class="highlight-box">
             <i class="fa-solid fa-circle-info" style="margin-right: 8px;"></i>
-            Fokus utama adalah memupuk budaya kerja positif, memperluas perkongsian pengalaman, serta membina jaringan kerjasama rentas agensi di Negeri Perlis.
+            Fokus utama adalah memupuk budaya kerja positif, memperluas perkongsian pengalaman, serta membina jaringan kerjasama rentas agensi di Negeri Perlis[cite: 1].
           </div>
         </div>
       </section>
@@ -682,28 +714,28 @@
         <div class="obj-list">
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Meningkatkan kesedaran kesihatan mental dalam kalangan penjawat awam.</span>
+            <span>Meningkatkan kesedaran kesihatan mental dalam kalangan penjawat awam[cite: 1].</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Mengurangkan stigma berkaitan kesihatan mental di persekitaran kerja.</span>
+            <span>Mengurangkan stigma berkaitan kesihatan mental di persekitaran kerja[cite: 1].</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Membentuk persekitaran kerja yang sihat, harmoni, dan produktif.</span>
+            <span>Membentuk persekitaran kerja yang sihat, harmoni, dan produktif[cite: 1].</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Meningkatkan pengetahuan berkaitan perkhidmatan rawatan kesihatan mental.</span>
+            <span>Meningkatkan pengetahuan berkaitan perkhidmatan rawatan kesihatan mental[cite: 1].</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Memahami peranan, tanggungjawab, dan sumbangan kepada organisasi.</span>
+            <span>Memahami peranan, tanggungjawab, dan sumbangan kepada organisasi[cite: 1].</span>
           </div>
         </div>
       </section>
 
-      <!-- Slide 4: Atur Cara (Only Section Scrollable Inside) -->
+      <!-- Slide 4: Atur Cara -->
       <section class="slide">
         <h2 class="section-title">Atur Cara Program</h2>
         <div class="agenda-list">
@@ -711,67 +743,66 @@
             <span class="agenda-time">08.00 AM</span>
             <div class="agenda-desc">
               <h4>Pendaftaran & Sarapan</h4>
-              <p>Pendaftaran peserta dan ujian pretest</p>
+              <p>Pendaftaran peserta dan ujian pretest[cite: 1]</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">09.00 AM</span>
             <div class="agenda-desc">
               <h4>Slot Insight: "Jiwa Kuat, Perkhidmatan Hebat"</h4>
-              <p>Oleh YBrs. Dr. Izwana binti Hamzah (JKN Perlis)</p>
+              <p>Oleh YBrs. Dr. Izwana binti Hamzah (JKN Perlis)[cite: 1]</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">10.10 AM</span>
             <div class="agenda-desc">
               <h4>LDK 1: "Organizational Puzzle"</h4>
-              <p>Kerjasama dan penyelesaian masalah berpasukan</p>
+              <p>Kerjasama dan penyelesaian masalah berpasukan[cite: 1]</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">11.10 AM</span>
             <div class="agenda-desc">
               <h4>LDK 2: "I Love My Job"</h4>
-              <p>Refleksi kendiri dan ekspresi peranan tugas</p>
+              <p>Refleksi kendiri dan ekspresi peranan tugas[cite: 1]</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">12.00 PM</span>
             <div class="agenda-desc">
               <h4>LDK 3: "Bina Bangunan, Bukan Tembok"</h4>
-              <p>Membina komunikasi dan hubungan interaktif</p>
+              <p>Membina komunikasi dan hubungan interaktif[cite: 1]</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">01.00 PM</span>
             <div class="agenda-desc">
               <h4>Rehat & Makan Tengah Hari</h4>
-              <p>Masa rehat dan solat</p>
+              <p>Masa rehat dan solat[cite: 1]</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">02.30 PM</span>
             <div class="agenda-desc">
               <h4>LDK 4: "Cabaran Benang Kejujuran"</h4>
-              <p>Nilai integriti dan kepercayaan organisasi</p>
+              <p>Nilai integriti dan kepercayaan organisasi[cite: 1]</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">04.00 PM</span>
             <div class="agenda-desc">
               <h4>Sokongan Perkhidmatan Psikologi Kaunseling</h4>
-              <p>Sesi sokongan dan penutup</p>
+              <p>Sesi sokongan dan penutup[cite: 1]</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Slide 5: Penilaian (Pre, Post & Evaluation Form) -->
+      <!-- Slide 5: Penilaian -->
       <section class="slide">
         <h2 class="section-title">Penilaian & Maklum Balas</h2>
         <div class="test-grid">
           
-          <!-- Card 1: Pre-Test -->
           <div class="test-card">
             <div>
               <div class="test-icon">
@@ -785,7 +816,6 @@
             </a>
           </div>
 
-          <!-- Card 2: Post-Test -->
           <div class="test-card">
             <div>
               <div class="test-icon">
@@ -802,7 +832,6 @@
             </div>
           </div>
 
-          <!-- Card 3: Penilaian Kursus -->
           <div class="test-card">
             <div>
               <div class="test-icon">
@@ -824,7 +853,6 @@
 
     </div>
 
-    <!-- Navigation Buttons -->
     <div class="nav-buttons">
       <button class="btn btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>
         <i class="fa-solid fa-chevron-left"></i> Kembali
@@ -844,22 +872,33 @@
     const nextBtn = document.getElementById('nextBtn');
 
     /* ========================================================
-       TETAPAN MASA & UJIAN
-       Tukar 'ENABLE_TEST_MODE = true' jika nak test buka butang sekarang!
+       TETAPAN MASA & LOCK
        ======================================================== */
-    const ENABLE_TEST_MODE = false; // Set 'false' untuk mod sebenar
+    const ENABLE_TEST_MODE = false; // Set 'true' jika mahu uji buka butang secara manual
 
     function checkTimeLock() {
       const now = new Date();
       
-      // Tarikh SASARAN: 15 September 2026, 3:00 PM (15:00:00)
       const targetYear = 2026;
-      const targetMonth = 8; // Bulan dalam JS: 0=Jan, 8=Sept
+      const targetMonth = 8; // Bulan JS: 0=Jan, 8=Sept
       const targetDay = 15;
-      const targetHour = 15; // 15:00 = 3:00 PM
 
-      const targetTime = new Date(targetYear, targetMonth, targetDay, targetHour, 0, 0);
+      // 1. KUNCI PENDAFTARAN (Tutup Selepas 10:00 AM)
+      const regCutoffTime = new Date(targetYear, targetMonth, targetDay, 10, 0, 0); // 10:00 AM
+      const registerBtn = document.getElementById('registerBtn');
+      const regBtnIcon = document.getElementById('regBtnIcon');
+      const regBtnText = document.getElementById('regBtnText');
+      const regNoticeText = document.getElementById('regNoticeText');
 
+      if (!ENABLE_TEST_MODE && now >= regCutoffTime) {
+        registerBtn.classList.add('disabled');
+        regBtnIcon.className = 'fa-solid fa-lock';
+        regBtnText.innerText = 'Pendaftaran Ditutup';
+        regNoticeText.innerText = 'Pendaftaran telah ditutup pada jam 10:00 AM. Sekiranya anda telah mendaftar, selamat mengikuti bengkel!';
+      }
+
+      // 2. BUKA POST-TEST & PENILAIAN KURSUS (Buka Selepas 3:00 PM)
+      const testUnlockTime = new Date(targetYear, targetMonth, targetDay, 15, 0, 0); // 3:00 PM
       const postTestBtn = document.getElementById('postTestBtn');
       const postTestIcon = document.getElementById('postTestIcon');
       const postTestText = document.getElementById('postTestText');
@@ -870,14 +909,12 @@
       const evalText = document.getElementById('evalText');
       const evalNotice = document.getElementById('evalNotice');
 
-      if (ENABLE_TEST_MODE || now >= targetTime) {
-        // Unlock Post Test
+      if (ENABLE_TEST_MODE || now >= testUnlockTime) {
         postTestBtn.classList.remove('disabled');
         postTestIcon.className = 'fa-solid fa-arrow-up-right-from-square';
         postTestText.innerText = 'Isi Post-Test';
         if (postTestNotice) postTestNotice.style.display = 'none';
 
-        // Unlock Penilaian Kursus
         evalBtn.classList.remove('disabled');
         evalIcon.className = 'fa-solid fa-arrow-up-right-from-square';
         evalText.innerText = 'Isi Penilaian';
@@ -889,7 +926,6 @@
       slides.forEach((slide, index) => {
         slide.classList.remove('active');
         stepItems[index].classList.remove('active', 'completed');
-        
         if (index < currentSlide) {
           stepItems[index].classList.add('completed');
         }
@@ -899,7 +935,7 @@
       stepItems[currentSlide].classList.add('active');
 
       prevBtn.disabled = currentSlide === 0;
-      
+
       if (currentSlide === slides.length - 1) {
         nextBtn.innerHTML = 'Mula Semula <i class="fa-solid fa-rotate-right"></i>';
       } else {
@@ -909,12 +945,8 @@
 
     function changeSlide(direction) {
       currentSlide += direction;
-      if (currentSlide >= slides.length) {
-        currentSlide = 0;
-      }
-      if (currentSlide < 0) {
-        currentSlide = 0;
-      }
+      if (currentSlide >= slides.length) { currentSlide = 0; }
+      if (currentSlide < 0) { currentSlide = 0; }
       updateSlide();
     }
 
