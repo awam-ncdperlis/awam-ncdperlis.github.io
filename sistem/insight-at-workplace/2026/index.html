@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bengkel Insight at Workplace 2026</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-black: #111827;     /* Dark Charcoal Text */
+      --accent-orange: #f59e0b;    /* Orange/Amber */
+      --accent-orange-dark: #ea580c;
+      --accent-blue: #0284c7;      /* Soft Sky Blue */
+      --accent-yellow-light: #fef9c3;
+      --bg-body: #fafafa;          /* Soft Off-White Background */
+      --card-bg: #ffffff;          /* Pure White Card */
+      --border-color: #e5e7eb;     /* Subtle Gray Border */
+      --text-muted: #6b7280;       /* Muted Gray Text */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Disable Outer Scroll for App-Like Full-Height Layout */
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--primary-black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    /* Header Section: Official Crest Logos & Agency Details */
+    .header-container {
+      width: 90%;
+      max-width: 900px;
+      text-align: center;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    .logo-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      margin-bottom: 12px;
+    }
+
+    .logo-group img {
+      height: 65px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .agency-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      line-height: 1.4;
+    }
+
+    .agency-text span {
+      color: var(--accent-orange-dark);
+    }
+
+    /* Main Content Wrapper - Dynamic Full Height Container */
+    .main-wrapper {
+      width: 90%;
+      max-width: 900px;
+      height: calc(100vh - 180px);
+      max-height: 620px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      padding: 30px 35px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Navigation Tabs / Step Indicator */
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      position: relative;
+      border-bottom: 2px solid #f3f4f6;
+      padding-bottom: 12px;
+      flex-wrap: nowrap;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .step-item i {
+      font-size: 1rem;
+      color: #9ca3af;
+    }
+
+    .step-item.active {
+      background-color: #fef3c7; /* Soft Amber Highlight */
+      color: var(--accent-orange-dark);
+    }
+
+    .step-item.active i {
+      color: var(--accent-orange-dark);
+    }
+
+    .step-item.completed {
+      color: var(--primary-black);
+    }
+
+    .step-item.completed i {
+      color: #10b981;
+    }
+
+    /* Interactive Slide Container - Full Height Fill */
+    .slide-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      opacity: 0;
+      height: 100%;
+      flex-direction: column;
+      justify-content: flex-start;
+      transform: translateY(12px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary-black);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 22px;
+      background-color: var(--accent-orange);
+      border-radius: 3px;
+    }
+
+    /* Slide 1: Grid Info */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      flex: 1;
+      align-content: center;
+    }
+
+    .info-card {
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+      border-color: #fcd34d;
+      background: #ffffff;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.08);
+    }
+
+    .info-icon {
+      background: #fef3c7;
+      color: var(--accent-orange-dark);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .info-content h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .info-content p {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-black);
+    }
+
+    /* Slide 2: About Text */
+    .about-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .about-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #374151;
+      margin-bottom: 14px;
+    }
+
+    .highlight-box {
+      background-color: #f0f9ff;
+      border-left: 4px solid var(--accent-blue);
+      padding: 16px 18px;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.95rem;
+      color: #0369a1;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    /* Slide 3: Objectives */
+    .obj-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      flex: 1;
+      gap: 8px;
+    }
+
+    .obj-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      padding: 14px 18px;
+      border-radius: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .obj-item:hover {
+      border-color: #fcd34d;
+      background: #ffffff;
+      transform: translateX(5px);
+    }
+
+    .obj-item i {
+      color: var(--accent-orange);
+      font-size: 1.1rem;
+    }
+
+    .obj-item span {
+      font-size: 0.92rem;
+      color: var(--primary-black);
+      font-weight: 600;
+    }
+
+    /* Slide 4: Schedule List - Scrollable Inside Card Only */
+    .agenda-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    /* Custom Scrollbar for Agenda */
+    .agenda-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .agenda-list::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    .agenda-list::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .agenda-list::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .agenda-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 16px;
+      background: #fafafa;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .agenda-time {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--accent-orange-dark);
+      background: #fef3c7;
+      padding: 6px 12px;
+      border-radius: 8px;
+      min-width: 85px;
+      text-align: center;
+    }
+
+    .agenda-desc h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--primary-black);
+    }
+
+    .agenda-desc p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Slide 5: Section Pre, Post Test & Course Evaluation */
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      flex: 1;
+      align-items: center;
+    }
+
+    .test-card {
+      background: #ffffff;
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      max-height: 280px;
+    }
+
+    .test-card:hover {
+      border-color: var(--accent-orange);
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.12);
+      transform: translateY(-4px);
+    }
+
+    .test-icon {
+      width: 46px;
+      height: 46px;
+      background: #fef3c7;
+      color: var(--accent-orange-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .test-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary-black);
+      margin-bottom: 6px;
+    }
+
+    .test-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.35;
+    }
+
+    .test-btn {
+      width: 100%;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-pretest {
+      background-color: var(--primary-black);
+      color: #ffffff;
+    }
+
+    .btn-pretest:hover {
+      background-color: #1f2937;
+    }
+
+    .btn-posttest {
+      background-color: var(--accent-orange);
+      color: #ffffff;
+    }
+
+    .btn-posttest:hover {
+      background-color: var(--accent-orange-dark);
+    }
+
+    .btn-eval {
+      background-color: var(--accent-blue);
+      color: #ffffff;
+    }
+
+    .btn-eval:hover {
+      background-color: #0369a1;
+    }
+
+    /* Locked Disabled State for Timed Buttons */
+    .test-btn.disabled {
+      background-color: #e5e7eb !important;
+      color: #9ca3af !important;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .time-notice {
+      font-size: 0.72rem;
+      color: #ef4444;
+      font-weight: 600;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-prev {
+      background: #ffffff;
+      border-color: #d1d5db;
+      color: var(--primary-black);
+    }
+
+    .btn-prev:hover:not(:disabled) {
+      background: #f3f4f6;
+    }
+
+    .btn-next {
+      background: var(--primary-black);
+      color: #ffffff;
+    }
+
+    .btn-next:hover {
+      background: var(--accent-orange-dark);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+    }
+
+    .btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      html, body {
+        overflow: auto;
+        height: auto;
+      }
+      body {
+        padding: 20px 0;
+      }
+      .main-wrapper {
+        height: auto;
+        max-height: none;
+        padding: 20px 15px;
+      }
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+      .test-grid {
+        grid-template-columns: 1fr;
+      }
+      .step-item span {
+        display: none;
+      }
+      .agenda-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .logo-group img {
+        height: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section: Official Crest Logos & Agency Details -->
+  <header class="header-container">
+    <div class="logo-group">
+      <img src="../images/jata-malaysia.png" alt="Jata Negara Malaysia">
+      <img src="../images/logo-jata-perlis.png" alt="Jata Negeri Perlis">
+    </div>
+    <p class="agency-text">
+      KEMENTERIAN KESIHATAN MALAYSIA<br>
+      JABATAN KESIHATAN NEGERI PERLIS<br>
+      <span>DENGAN KERJASAMA PEJABAT SETIAUSAHA KERAJAAN NEGERI PERLIS</span>
+    </p>
+  </header>
+
+  <!-- Main Card Container -->
+  <main class="main-wrapper">
+    
+    <!-- Top Step Tabs Indicator -->
+    <nav class="step-indicator">
+      <div class="step-item active" onclick="goToSlide(0)">
+        <i class="fa-solid fa-house"></i>
+        <span>Utama</span>
+      </div>
+      <div class="step-item" onclick="goToSlide(1)">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Pengenalan</span>
+      </div>
+      <div class="step-item" onclick="goToSlide(2)">
+        <i class="fa-solid fa-lightbulb"></i>
+        <span>Objektif</span>
+      </div>
+      <div class="step-item" onclick="goToSlide(3)">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Atur Cara</span>
+      </div>
+      <div class="step-item" onclick="goToSlide(4)">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Penilaian</span>
+      </div>
+    </nav>
+
+    <!-- Slide Content Sections -->
+    <div class="slide-container">
+      
+      <!-- Slide 1: Maklumat Utama -->
+      <section class="slide active">
+        <h2 class="section-title">Maklumat Ringkas Program</h2>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon"><i class="fa-regular fa-calendar"></i></div>
+            <div class="info-content">
+              <h4>Tarikh Program</h4>
+              <p>15 September 2026</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
+            <div class="info-content">
+              <h4>Masa Pelaksanaan</h4>
+              <p>8.00 AM - 5.00 PM</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="info-content">
+              <h4>Lokasi</h4>
+              <p>Dewan Bankuet, Kompleks Pentadbiran Perlis</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="info-content">
+              <h4>Sasaran Peserta</h4>
+              <p>100 Penjawat Awam</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Pengenalan -->
+      <section class="slide">
+        <h2 class="section-title">Pengenalan Bengkel</h2>
+        <div class="about-wrapper">
+          <p class="about-text">
+            Tempat kerja yang sihat bergantung pada kesedaran kendiri, komunikasi, kepercayaan, integriti, dan keupayaan anggota memahami peranan masing-masing.
+          </p>
+          <p class="about-text">
+            Bengkel "Insight at Workplace" dirangka sebagai program pembelajaran berasaskan pengalaman yang menggabungkan slot perkongsian serta Latihan Dalam Kumpulan (LDK) secara interaktif.
+          </p>
+          <div class="highlight-box">
+            <i class="fa-solid fa-circle-info" style="margin-right: 8px;"></i>
+            Fokus utama adalah memupuk budaya kerja positif, memperluas perkongsian pengalaman, serta membina jaringan kerjasama rentas agensi di Negeri Perlis.
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Objektif -->
+      <section class="slide">
+        <h2 class="section-title">Objektif Program</h2>
+        <div class="obj-list">
+          <div class="obj-item">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Meningkatkan kesedaran kesihatan mental dalam kalangan penjawat awam.</span>
+          </div>
+          <div class="obj-item">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Mengurangkan stigma berkaitan kesihatan mental di persekitaran kerja.</span>
+          </div>
+          <div class="obj-item">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Membentuk persekitaran kerja yang sihat, harmoni, dan produktif.</span>
+          </div>
+          <div class="obj-item">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Meningkatkan pengetahuan berkaitan perkhidmatan rawatan kesihatan mental.</span>
+          </div>
+          <div class="obj-item">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span>Memahami peranan, tanggungjawab, dan sumbangan kepada organisasi.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Atur Cara (Only Section Scrollable Inside) -->
+      <section class="slide">
+        <h2 class="section-title">Atur Cara Program</h2>
+        <div class="agenda-list">
+          <div class="agenda-item">
+            <span class="agenda-time">08.00 AM</span>
+            <div class="agenda-desc">
+              <h4>Pendaftaran & Sarapan</h4>
+              <p>Pendaftaran peserta dan ujian pretest</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-time">09.00 AM</span>
+            <div class="agenda-desc">
+              <h4>Slot Insight: "Jiwa Kuat, Perkhidmatan Hebat"</h4>
+              <p>Oleh YBrs. Dr. Izwana binti Hamzah (JKN Perlis)</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-time">10.10 AM</span>
+            <div class="agenda-desc">
+              <h4>LDK 1: "Organizational Puzzle"</h4>
+              <p>Kerjasama dan penyelesaian masalah berpasukan</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-time">11.10 AM</span>
+            <div class="agenda-desc">
+              <h4>LDK 2: "I Love My Job"</h4>
+              <p>Refleksi kendiri dan ekspresi peranan tugas</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-time">12.00 PM</span>
+            <div class="agenda-desc">
+              <h4>LDK 3: "Bina Bangunan, Bukan Tembok"</h4>
+              <p>Membina komunikasi dan hubungan interaktif</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-time">01.00 PM</span>
+            <div class="agenda-desc">
+              <h4>Rehat & Makan Tengah Hari</h4>
+              <p>Masa rehat dan solat</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-time">02.30 PM</span>
+            <div class="agenda-desc">
+              <h4>LDK 4: "Cabaran Benang Kejujuran"</h4>
+              <p>Nilai integriti dan kepercayaan organisasi</p>
+            </div>
+          </div>
+          <div class="agenda-item">
+            <span class="agenda-time">04.00 PM</span>
+            <div class="agenda-desc">
+              <h4>Sokongan Perkhidmatan Psikologi Kaunseling</h4>
+              <p>Sesi sokongan dan penutup</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Penilaian (Pre, Post & Evaluation Form) -->
+      <section class="slide">
+        <h2 class="section-title">Penilaian & Maklum Balas</h2>
+        <div class="test-grid">
+          
+          <!-- Card 1: Pre-Test -->
+          <div class="test-card">
+            <div>
+              <div class="test-icon">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </div>
+              <h3>Ujian Pra (Pre-Test)</h3>
+              <p>Wajib diisi oleh semua peserta sebelum sesi bengkel bermula.</p>
+            </div>
+            <a href="https://forms.google.com" target="_blank" class="test-btn btn-pretest">
+              Isi Pre-Test <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+
+          <!-- Card 2: Post-Test -->
+          <div class="test-card">
+            <div>
+              <div class="test-icon">
+                <i class="fa-solid fa-square-check"></i>
+              </div>
+              <h3>Ujian Pasca (Post-Test)</h3>
+              <p>Dilengkapkan selepas mengikut keseluruhan modul latihan.</p>
+            </div>
+            <div style="width: 100%;">
+              <a href="https://forms.google.com" target="_blank" id="postTestBtn" class="test-btn btn-posttest disabled">
+                <i class="fa-solid fa-lock" id="postTestIcon"></i> <span id="postTestText">Post-Test Terkunci</span>
+              </a>
+              <p id="postTestNotice" class="time-notice"><i class="fa-solid fa-clock"></i> Buka 15 Sept, 3:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Card 3: Penilaian Kursus -->
+          <div class="test-card">
+            <div>
+              <div class="test-icon">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <h3>Penilaian Kursus</h3>
+              <p>Borang maklum balas kepuasan & keberkesanan penganjuran bengkel.</p>
+            </div>
+            <div style="width: 100%;">
+              <a href="https://forms.google.com" target="_blank" id="evalBtn" class="test-btn btn-eval disabled">
+                <i class="fa-solid fa-lock" id="evalIcon"></i> <span id="evalText">Borang Terkunci</span>
+              </a>
+              <p id="evalNotice" class="time-notice"><i class="fa-solid fa-clock"></i> Buka 15 Sept, 3:00 PM</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+      <button class="btn btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>
+        <i class="fa-solid fa-chevron-left"></i> Kembali
+      </button>
+      <button class="btn btn-next" id="nextBtn" onclick="changeSlide(1)">
+        Seterusnya <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+  </main>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const stepItems = document.querySelectorAll('.step-item');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    /* ========================================================
+       TETAPAN MASA & UJIAN
+       Tukar 'ENABLE_TEST_MODE = true' jika nak test buka butang sekarang!
+       ======================================================== */
+    const ENABLE_TEST_MODE = false; // Set 'false' untuk mod sebenar
+
+    function checkTimeLock() {
+      const now = new Date();
+      
+      // Tarikh SASARAN: 15 September 2026, 3:00 PM (15:00:00)
+      const targetYear = 2026;
+      const targetMonth = 8; // Bulan dalam JS: 0=Jan, 8=Sept
+      const targetDay = 15;
+      const targetHour = 15; // 15:00 = 3:00 PM
+
+      const targetTime = new Date(targetYear, targetMonth, targetDay, targetHour, 0, 0);
+
+      const postTestBtn = document.getElementById('postTestBtn');
+      const postTestIcon = document.getElementById('postTestIcon');
+      const postTestText = document.getElementById('postTestText');
+      const postTestNotice = document.getElementById('postTestNotice');
+
+      const evalBtn = document.getElementById('evalBtn');
+      const evalIcon = document.getElementById('evalIcon');
+      const evalText = document.getElementById('evalText');
+      const evalNotice = document.getElementById('evalNotice');
+
+      if (ENABLE_TEST_MODE || now >= targetTime) {
+        // Unlock Post Test
+        postTestBtn.classList.remove('disabled');
+        postTestIcon.className = 'fa-solid fa-arrow-up-right-from-square';
+        postTestText.innerText = 'Isi Post-Test';
+        if (postTestNotice) postTestNotice.style.display = 'none';
+
+        // Unlock Penilaian Kursus
+        evalBtn.classList.remove('disabled');
+        evalIcon.className = 'fa-solid fa-arrow-up-right-from-square';
+        evalText.innerText = 'Isi Penilaian';
+        if (evalNotice) evalNotice.style.display = 'none';
+      }
+    }
+
+    function updateSlide() {
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active');
+        stepItems[index].classList.remove('active', 'completed');
+        
+        if (index < currentSlide) {
+          stepItems[index].classList.add('completed');
+        }
+      });
+
+      slides[currentSlide].classList.add('active');
+      stepItems[currentSlide].classList.add('active');
+
+      prevBtn.disabled = currentSlide === 0;
+      
+      if (currentSlide === slides.length - 1) {
+        nextBtn.innerHTML = 'Mula Semula <i class="fa-solid fa-rotate-right"></i>';
+      } else {
+        nextBtn.innerHTML = 'Seterusnya <i class="fa-solid fa-chevron-right"></i>';
+      }
+    }
+
+    function changeSlide(direction) {
+      currentSlide += direction;
+      if (currentSlide >= slides.length) {
+        currentSlide = 0;
+      }
+      if (currentSlide < 0) {
+        currentSlide = 0;
+      }
+      updateSlide();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlide();
+    }
+
+    window.onload = function() {
+      checkTimeLock();
+    };
+  </script>
+</body>
+</html>

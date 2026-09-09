@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post-Test - Bengkel Insight at Workplace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { 
+      --primary: #2563eb; 
+      --primary-hover: #1d4ed8;
+      --bg: #f1f5f9; 
+      --card-bg: #ffffff; 
+      --text-main: #0f172a; 
+      --text-sub: #64748b;
+      --border: #e2e8f0; 
+      --accent: #eff6ff;
+    }
+    
+    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    body { 
+      background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 100%);
+      color: var(--text-main); 
+      margin: 0; 
+      padding: 20px 12px; 
+      display: flex; 
+      justify-content: center; 
+      min-height: 100vh;
+    }
+
+    .main-card { 
+      width: 100%; 
+      max-width: 600px; 
+      background: var(--card-bg); 
+      border-radius: 20px; 
+      padding: 0 24px 24px 24px; 
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      height: fit-content;
+      overflow: hidden;
+    }
+    
+    /* LOGO & LETTERHEAD HEADER */
+    .brand-header {
+      padding: 20px 0 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 12px;
+    }
+    .brand-logo { 
+      height: 52px; 
+      width: auto; 
+      object-fit: contain; 
+    }
+    .header-text {
+      text-align: center;
+      color: var(--text-main);
+    }
+    .header-text .title-main {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: #1e293b;
+      margin: 0;
+    }
+    .header-text .title-sub {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 2px 0;
+    }
+    .header-text .title-collab {
+      font-size: 0.73rem;
+      font-weight: 500;
+      color: var(--text-sub);
+      margin: 0;
+      font-style: italic;
+    }
+
+    /* BANNER CONTAINER */
+    .banner-wrapper {
+      position: relative;
+      margin: 0 -24px 20px -24px;
+      width: calc(100% + 48px);
+      height: 100%;
+      overflow: hidden;
+    }
+    .banner-img { 
+      width: 100%; 
+      height: 100%; 
+      max-height: 200px;
+      object-fit: cover; 
+      display: block; 
+    }
+
+    h2 { margin: 0 0 4px 0; color: var(--text-main); text-align: center; font-size: 1.25rem; font-weight: 700; }
+    .subtitle { text-align: center; color: var(--text-sub); font-size: 0.85rem; margin-bottom: 20px; font-weight: 500; }
+    
+    /* PROGRESS BAR */
+    .progress-box { margin-bottom: 24px; }
+    .progress-info { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; }
+    .progress-bar-container { width: 100%; background: #e2e8f0; border-radius: 10px; height: 8px; overflow: hidden; }
+    .progress-bar { height: 100%; width: 0%; background: var(--primary); transition: width 0.4s ease; border-radius: 10px; }
+
+    .page { display: none; } 
+    .page.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* FORM ELEMENTS */
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.88rem; color: #334155; }
+    input[type="text"] { 
+      width: 100%; 
+      padding: 12px 16px; 
+      border: 1.5px solid var(--border); 
+      border-radius: 10px; 
+      font-size: 0.95rem; 
+      background: #f8fafc;
+      transition: all 0.2s;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    /* QUESTION STYLING */
+    .question-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 18px; line-height: 1.5; color: var(--text-main); }
+    .option-label { 
+      display: flex; 
+      align-items: center; 
+      padding: 14px 16px; 
+      border: 1.5px solid var(--border); 
+      border-radius: 12px; 
+      margin-bottom: 12px; 
+      cursor: pointer; 
+      transition: all 0.2s;
+      background: #ffffff;
+      font-size: 0.92rem;
+    }
+    .option-label:hover { background: var(--accent); border-color: #bfdbfe; }
+    .option-label input { margin-right: 14px; accent-color: var(--primary); transform: scale(1.25); }
+
+    /* BUTTONS */
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 28px; gap: 12px; }
+    button { 
+      background: var(--primary); 
+      color: white; 
+      border: none; 
+      padding: 15px 28px; 
+      border-radius: 12px; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      font-weight: 700; 
+      transition: all 0.2s;
+      flex: 1;
+      max-width: 200px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    button.btn-full { 
+      max-width: 100%; 
+      padding: 16px 28px; 
+      font-size: 1.05rem; 
+    }
+    button:hover { 
+      background: var(--primary-hover); 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    }
+    button.btn-secondary { 
+      background: #64748b; 
+      box-shadow: none; 
+    }
+    button.btn-secondary:hover { 
+      background: #475569; 
+      box-shadow: none; 
+    }
+
+    /* RESULT & MODAL */
+    .result-box { border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 10px; background: #f8fafc; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-weight: 700; color: white; font-size: 0.75rem; }
+    .badge-correct { background: #10b981; } 
+    .badge-wrong { background: #ef4444; }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: white; padding: 28px; border-radius: 16px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    .modal-content h3 { margin-top: 0; color: var(--primary); font-size: 1.15rem; }
+    .modal-actions { margin-top: 20px; display: flex; justify-content: center; gap: 10px; }
+    .dashboard-card { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 18px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<div class="main-card">
+  
+  <!-- 1. HEADER LOGO & TEKS LETTERHEAD -->
+  <div class="brand-header">
+    <div class="logo-container">
+      <img src="../../images/jata-malaysia.png" alt="Jata Malaysia" class="brand-logo">
+      <img src="../../images/logo-jata-perlis.png" alt="Logo Negeri Perlis" class="brand-logo">
+    </div>
+    <div class="header-text">
+      <p class="title-main">Kementerian Kesihatan Malaysia</p>
+      <p class="title-sub">Jabatan Kesihatan Negeri Perlis</p>
+      <p class="title-collab">dengan kerjasama Pejabat Setiausaha Kerajaan Negeri Perlis</p>
+    </div>
+  </div>
+
+  <!-- 2. BANNER RAPAT KAD -->
+  <div class="banner-wrapper">
+    <img src="../../images/banner-bengkel.png" alt="Banner Bengkel" class="banner-img">
+  </div>
+
+  <h2>INSIGHT AT WORKPLACE</h2>
+  <div class="subtitle">Bengkel Kesihatan Mental & Budaya Kerja (20 Soalan)</div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-box">
+    <div class="progress-info">
+      <span>Kemajuan Ujian</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+
+  <form id="testForm">
+    <!-- PAGE 0: IC CHECK -->
+    <div class="page active" id="page0">
+      <h3>Pengesahan Peserta</h3>
+      <div class="form-group">
+        <label>Masukkan No. Kad Pengenalan *</label>
+        <input type="text" id="icNumber" placeholder="000000-00-0000" maxlength="14" oninput="formatIC(this)">
+      </div>
+      <div class="nav-buttons" style="justify-content: flex-end;">
+        <button type="button" class="btn-full" onclick="verifyIC()">Sahkan & Mula Post-Test</button>
+      </div>
+    </div>
+
+    <!-- SOALAN 1 - 20 -->
+    <div class="page" id="page1"><div class="question-title">1. Apakah kepentingan kesihatan mental di tempat kerja?</div><label class="option-label"><input type="radio" name="q1" value="A"> A. Mengurangkan waktu bekerja</label><label class="option-label"><input type="radio" name="q1" value="B"> B. Membantu kesejahteraan dan fungsi kerja</label><label class="option-label"><input type="radio" name="q1" value="C"> C. Menghapuskan semua masalah</label><label class="option-label"><input type="radio" name="q1" value="D"> D. Menggantikan peraturan organisasi</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page2"><div class="question-title">2. Yang manakah merupakan contoh stigma terhadap masalah kesihatan mental?</div><label class="option-label"><input type="radio" name="q2" value="A"> A. Mendengar tanpa menghakimi</label><label class="option-label"><input type="radio" name="q2" value="B"> B. Menjaga kerahsiaan rakan</label><label class="option-label"><input type="radio" name="q2" value="C"> C. Menggalakkan rakan mendapatkan bantuan</label><label class="option-label"><input type="radio" name="q2" value="D"> D. Menganggap individu tersebut lemah</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page3"><div class="question-title">3. Apakah tindakan awal yang sesuai apabila rakan sekerja kelihatan tertekan?</div><label class="option-label"><input type="radio" name="q3" value="A"> A. Mendengar dengan empati</label><label class="option-label"><input type="radio" name="q3" value="B"> B. Memaksa rakan bercerita</label><label class="option-label"><input type="radio" name="q3" value="C"> C. Menyebarkan masalahnya</label><label class="option-label"><input type="radio" name="q3" value="D"> D. Mengabaikan keadaan tersebut</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page4"><div class="question-title">4. Di manakah bantuan boleh diperoleh jika tekanan mengganggu kehidupan atau pekerjaan?</div><label class="option-label"><input type="radio" name="q4" value="A"> A. Media sosial sahaja</label><label class="option-label"><input type="radio" name="q4" value="B"> B. Rakan yang tidak dikenali</label><label class="option-label"><input type="radio" name="q4" value="C"> C. Perkhidmatan psikologi, kaunseling atau kesihatan</label><label class="option-label"><input type="radio" name="q4" value="D"> D. Tiada bantuan perlu dicari</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page5"><div class="question-title">5. Apakah manfaat mendapatkan bantuan lebih awal?</div><label class="option-label"><input type="radio" name="q5" value="A"> A. Membolehkan penilaian dan sokongan diberikan</label><label class="option-label"><input type="radio" name="q5" value="B"> B. Menjamin semua masalah terus hilang</label><label class="option-label"><input type="radio" name="q5" value="C"> C. Membolehkan tanggungjawab dielakkan</label><label class="option-label"><input type="radio" name="q5" value="D"> D. Menggantikan sokongan di tempat kerja</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page6"><div class="question-title">6. Yang manakah menggambarkan persekitaran kerja yang sihat?</div><label class="option-label"><input type="radio" name="q6" value="A"> A. Semua pekerja mesti sentiasa bersetuju</label><label class="option-label"><input type="radio" name="q6" value="B"> B. Kesilapan tidak boleh dibincangkan</label><label class="option-label"><input type="radio" name="q6" value="C"> C. Hanya pencapaian kerja diberi perhatian</label><label class="option-label"><input type="radio" name="q6" value="D"> D. Wujud rasa hormat, sokongan dan kerjasama</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page7"><div class="question-title">7. Mengapakah setiap anggota perlu memahami fungsi dan skop tugas masing-masing?</div><label class="option-label"><input type="radio" name="q7" value="A"> A. Supaya boleh bekerja tanpa orang lain</label><label class="option-label"><input type="radio" name="q7" value="B"> B. Supaya tugas dapat dilaksanakan dengan jelas</label><label class="option-label"><input type="radio" name="q7" value="C"> C. Supaya tidak perlu berkomunikasi</label><label class="option-label"><input type="radio" name="q7" value="D"> D. Supaya hanya satu bahagian membuat keputusan</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page8"><div class="question-title">8. Apakah tujuan menggunakan simbol untuk menggambarkan pekerjaan sendiri?</div><label class="option-label"><input type="radio" name="q8" value="A"> A. Menilai hasil seni peserta</label><label class="option-label"><input type="radio" name="q8" value="B"> B. Membandingkan jawatan peserta</label><label class="option-label"><input type="radio" name="q8" value="C"> C. Menghuraikan peranan dan kepentingan tugas secara kreatif</label><label class="option-label"><input type="radio" name="q8" value="D"> D. Menentukan jawatan paling penting</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page9"><div class="question-title">9. Apakah manfaat berkongsi perasaan dan pengalaman tentang pekerjaan?</div><label class="option-label"><input type="radio" name="q9" value="A"> A. Menentukan siapa paling berjaya</label><label class="option-label"><input type="radio" name="q9" value="B"> B. Mengelakkan perbincangan kumpulan</label><label class="option-label"><input type="radio" name="q9" value="C"> C. Menilai kelemahan rakan sekerja</label><label class="option-label"><input type="radio" name="q9" value="D"> D. Membantu proses refleksi kendiri</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page10"><div class="question-title">10. Apakah manfaat aktiviti berkumpulan yang melibatkan peserta daripada pelbagai agensi?</div><label class="option-label"><input type="radio" name="q10" value="A"> A. Mewujudkan persaingan antara agensi</label><label class="option-label"><input type="radio" name="q10" value="B"> B. Meningkatkan kejelekitan dan hubungan ahli</label><label class="option-label"><input type="radio" name="q10" value="C"> C. Mengasingkan peserta mengikut jawatan</label><label class="option-label"><input type="radio" name="q10" value="D"> D. Mengurangkan perkongsian pandangan</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page11"><div class="question-title">11. Komunikasi yang manakah paling berkesan semasa aktiviti kumpulan?</div><label class="option-label"><input type="radio" name="q11" value="A"> A. Mendengar dan memberi maklum balas dengan hormat</label><label class="option-label"><input type="radio" name="q11" value="B"> B. Bercakap tanpa memberi ruang kepada orang lain</label><label class="option-label"><input type="radio" name="q11" value="C"> C. Menggunakan andaian sendiri</label><label class="option-label"><input type="radio" name="q11" value="D"> D. Mengelakkan semua perbincangan</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page12"><div class="question-title">12. Apakah tujuan sumbangsaran atau brainstorming?</div><label class="option-label"><input type="radio" name="q12" value="A"> A. Memilih seorang sahaja untuk bercakap</label><label class="option-label"><input type="radio" name="q12" value="B"> B. Membuktikan idea sendiri paling baik</label><label class="option-label"><input type="radio" name="q12" value="C"> C. Menghasilkan pelbagai idea bersama-sama</label><label class="option-label"><input type="radio" name="q12" value="D"> D. Mengelakkan pandangan yang berbeza</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page13"><div class="question-title">13. Apakah pengajaran utama daripada aktiviti menyusun puzzle carta organisasi?</div><label class="option-label"><input type="radio" name="q13" value="A"> A. Setiap bahagian boleh bekerja sendirian</label><label class="option-label"><input type="radio" name="q13" value="B"> B. Carta organisasi hanya untuk pihak pengurusan</label><label class="option-label"><input type="radio" name="q13" value="C"> C. Bahagian tertentu lebih penting daripada yang lain</label><label class="option-label"><input type="radio" name="q13" value="D"> D. Kerjasama dan kebergantungan diperlukan untuk melengkapkan organisasi</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page14"><div class="question-title">14. Apakah pengajaran utama daripada blok yang membentuk sebuah bangunan?</div><label class="option-label"><input type="radio" name="q14" value="A"> A. Semua unit perlu menjalankan tugas yang sama</label><label class="option-label"><input type="radio" name="q14" value="B"> B. Setiap bahagian saling berkait dan menyumbang kepada prestasi</label><label class="option-label"><input type="radio" name="q14" value="C"> C. Hanya bahagian terbesar mempengaruhi organisasi</label><label class="option-label"><input type="radio" name="q14" value="D"> D. Satu unit boleh menggantikan semua unit lain</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page15"><div class="question-title">15. Apakah tindakan terbaik untuk memastikan susunan blok kekal stabil?</div><label class="option-label"><input type="radio" name="q15" value="A"> A. Menyerahkan tugas kepada seorang ahli</label><label class="option-label"><input type="radio" name="q15" value="B"> B. Menarik blok tanpa berbincang</label><label class="option-label"><input type="radio" name="q15" value="C"> C. Berbincang dan merancang bersama-sama</label><label class="option-label"><input type="radio" name="q15" value="D"> D. Mengabaikan pandangan ahli lain</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page16"><div class="question-title">16. Apakah hasil kerjasama dan komunikasi yang baik dalam pasukan?</div><label class="option-label"><input type="radio" name="q16" value="A"> A. Matlamat lebih mudah dicapai bersama</label><label class="option-label"><input type="radio" name="q16" value="B"> B. Tugas menjadi tanggungjawab seorang</label><label class="option-label"><input type="radio" name="q16" value="C"> C. Peranan ahli menjadi tidak penting</label><label class="option-label"><input type="radio" name="q16" value="D"> D. Komunikasi tidak lagi diperlukan</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page17"><div class="question-title">17. Apakah yang dilambangkan oleh jaringan benang dalam aktiviti LDK 4?</div><label class="option-label"><input type="radio" name="q17" value="A"> A. Persaingan antara ahli</label><label class="option-label"><input type="radio" name="q17" value="B"> B. Kebergantungan, kepercayaan dan hubungan ahli</label><label class="option-label"><input type="radio" name="q17" value="C"> C. Pembahagian pangkat dalam kumpulan</label><label class="option-label"><input type="radio" name="q17" value="D"> D. Tugas individu yang tidak berkaitan</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page18"><div class="question-title">18. Apakah yang diperlukan untuk menerima lontaran benang dengan baik?</div><label class="option-label"><input type="radio" name="q18" value="A"> A. Bercakap lebih kuat daripada ahli lain</label><label class="option-label"><input type="radio" name="q18" value="B"> B. Mengelakkan pandangan ahli kumpulan</label><label class="option-label"><input type="radio" name="q18" value="C"> C. Menunggu arahan daripada peserta lain</label><label class="option-label"><input type="radio" name="q18" value="D"> D. Fokus dan peka terhadap pergerakan kumpulan</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page19"><div class="question-title">19. Yang manakah merupakan contoh tingkah laku berintegriti?</div><label class="option-label"><input type="radio" name="q19" value="A"> A. Menyembunyikan kesilapan</label><label class="option-label"><input type="radio" name="q19" value="B"> B. Mengubah data untuk nampak baik</label><label class="option-label"><input type="radio" name="q19" value="C"> C. Melaporkan maklumat dengan jujur</label><label class="option-label"><input type="radio" name="q19" value="D"> D. Memberi keutamaan kepada kenalan</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+    <div class="page" id="page20"><div class="question-title">20. Apakah yang paling membantu membina kepercayaan dan suasana kerja yang positif?</div><label class="option-label"><input type="radio" name="q20" value="A"> A. Bersikap jujur, konsisten dan saling menghormati</label><label class="option-label"><input type="radio" name="q20" value="B"> B. Menyimpan semua maklumat daripada pasukan</label><label class="option-label"><input type="radio" name="q20" value="C"> C. Mengelakkan tanggungjawab apabila tersilap</label><label class="option-label"><input type="radio" name="q20" value="D"> D. Memberi janji tanpa melaksanakannya</label><div class="nav-buttons"><button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button><button type="button" onclick="nextPage()">Seterusnya</button></div></div>
+
+    <!-- REVIEW PAGE -->
+    <div class="page" id="page21">
+      <h3>Pengesahan Hantaran</h3>
+      <p style="color: var(--text-sub); font-size: 0.9rem;">Sila semak semula maklumat anda sebelum menghantar.</p>
+      <div id="summaryReview" style="background: #f8fafc; padding: 16px; border-radius: 12px; margin-bottom: 20px;"></div>
+      <div class="nav-buttons">
+        <button type="button" class="btn-secondary" onclick="prevPage()">Kembali</button>
+        <button type="button" class="btn-full" onclick="submitForm()">Hantar Jawapan Post-Test</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="page" id="resultPage">
+    <h3 style="text-align: center; color: var(--primary);">Post-Test Selesai</h3>
+    <div id="scoreHeader" style="text-align:center; margin-bottom: 20px;"></div>
+    <div id="detailedResults"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="customModal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Notifikasi</h3>
+    <div id="modalMessage" style="color: var(--text-sub); font-size: 0.95rem; line-height: 1.5;"></div>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZWAaTNKmzkO3L8ebCW5JWcSmPtgi9Mt0EGd9733cWZB9jMRCHXSyNgj2uQxhlU1yP/exec';
+
+  var currentPage = 0; 
+  var totalPages = 21; 
+  var participantData = null;
+
+  function formatIC(input) {
+    var val = input.value.replace(/\D/g, '');
+    if (val.length > 6 && val.length <= 8) val = val.substring(0, 6) + '-' + val.substring(6);
+    else if (val.length > 8) val = val.substring(0, 6) + '-' + val.substring(6, 8) + '-' + val.substring(8, 12);
+    input.value = val;
+  }
+
+  function showModal(title, msgHtml, actionsHtml) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalMessage').innerHTML = msgHtml;
+    document.getElementById('modalActions').innerHTML = actionsHtml;
+    document.getElementById('customModal').style.display = 'flex';
+  }
+
+  function closeModal() { document.getElementById('customModal').style.display = 'none'; }
+
+  async function verifyIC() {
+    var icClean = document.getElementById('icNumber').value.replace(/-/g, '');
+    if (!icClean || icClean.length < 12) {
+      showModal('Perhatian', 'Sila masukkan No. IC 12 digit yang sah.', '<button onclick="closeModal()">Tutup</button>');
+      return;
+    }
+
+    showModal('Memeriksa Rekod', 'Mencari maklumat IC anda...', '');
+    try {
+      let response = await fetch(`${SCRIPT_URL}?action=checkIC&ic=${icClean}`);
+      let res = await response.json();
+      closeModal();
+
+      if (!res.hasPre) {
+        showModal('Rekod Pre-Test Tiada', 'No. IC anda tiada dalam sistem. Sila jawab Pre-Test terlebih dahulu.', `<button onclick="window.location.href='../pre-test/'">Pergi ke Pre-Test</button>`);
+      } else if (res.hasPre && res.hasPost) {
+        var diff = res.postData.score - res.preData.score;
+        var diffText = diff >= 0 ? `+${diff} Markah 🚀` : `${diff} Markah 📉`;
+        var diffBg = diff >= 0 ? '#f0fdf4' : '#fef2f2';
+        var diffColor = diff >= 0 ? '#15803d' : '#b91c1c';
+        var diffBorder = diff >= 0 ? '#bbf7d0' : '#fecaca';
+
+        var modalContentHtml = `
+          <div style="text-align:left; margin-top:10px;">
+            <p style="text-align:center; color:var(--text-sub); font-size:0.88rem; margin-bottom:16px;">
+              Anda telah melengkapkan kedua-dua ujian penilaian bagi bengkel ini.
+            </p>
+            
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="color:#1e293b; font-size:0.92rem;">Pre-Test</strong><br>
+                <small style="color:#64748b; font-size:0.75rem;">📅 ${res.preData.tarikh || '-'}</small>
+              </div>
+              <span style="font-size:1.1rem; font-weight:700; color:#2563eb;">${res.preData.score} / 20</span>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="color:#1e293b; font-size:0.92rem;">Post-Test</strong><br>
+                <small style="color:#64748b; font-size:0.75rem;">📅 ${res.postData.tarikh || '-'}</small>
+              </div>
+              <span style="font-size:1.1rem; font-weight:700; color:#2563eb;">${res.postData.score} / 20</span>
+            </div>
+
+            <div style="background:${diffBg}; border:1.5px solid ${diffBorder}; border-radius:12px; padding:14px; text-align:center;">
+              <small style="color:${diffColor}; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Peningkatan Prestasi</small>
+              <div style="font-size:1.4rem; font-weight:800; color:${diffColor}; margin-top:2px;">
+                ${diffText}
+              </div>
+            </div>
+          </div>
+        `;
+
+        showModal('Ujian Telah Selesai', modalContentHtml, `<button class="btn-full" onclick="closeModal()">Faham</button>`);
+      } else if (res.hasPre && !res.hasPost) {
+        participantData = res.preData;
+        currentPage = 1; 
+        showPage(currentPage);
+      }
+    } catch (e) {
+      closeModal();
+      showModal('Ralat', 'Gagal berhubung dengan pelayan.', '<button onclick="closeModal()">Tutup</button>');
+    }
+  }
+
+  function showPage(index) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page' + index).classList.add('active');
+    
+    var pct = Math.round((currentPage / totalPages) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressPercent').innerText = pct + '%';
+    window.scrollTo(0, 0);
+  }
+
+  function nextPage() {
+    if (currentPage >= 1 && currentPage <= 20 && !document.querySelector(`input[name="q${currentPage}"]:checked`)) {
+      showModal('Perhatian', 'Sila pilih satu jawapan sebelum meneruskan.', '<button onclick="closeModal()">Tutup</button>');
+      return;
+    }
+    if (currentPage < totalPages) {
+      currentPage++;
+      if (currentPage === 21) renderReview();
+      showPage(currentPage);
+    }
+  }
+
+  function prevPage() { if (currentPage > 0) { currentPage--; showPage(currentPage); } }
+
+  function renderReview() {
+    document.getElementById('summaryReview').innerHTML = `<p style="margin:4px 0;"><strong>Nama:</strong> ${participantData.nama}</p><p style="margin:4px 0;"><strong>No. IC:</strong> ${participantData.ic}</p>`;
+  }
+
+  async function submitForm() {
+    showModal('Hantaran Ujian', 'Menghantar jawapan Post-Test anda...', '');
+    var payload = {
+      nama: participantData.nama, 
+      icNumber: participantData.ic,
+      jabatan: participantData.jabatan, 
+      kumpulan: participantData.kumpulan,
+      jenisUjian: 'POST-TEST'
+    };
+    for (var i = 1; i <= 20; i++) {
+      var sel = document.querySelector(`input[name="q${i}"]:checked`);
+      payload['q' + i] = sel ? sel.value : '';
+    }
+
+    try {
+      let response = await fetch(`${SCRIPT_URL}?action=submitTest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      let res = await response.json();
+      closeModal();
+
+      if (res.status === 'SUCCESS') {
+        document.getElementById('testForm').style.display = 'none';
+        document.getElementById('resultPage').classList.add('active');
+
+        var diff = res.score - participantData.score;
+        var badgeGain = diff >= 0 ? `<span style="color:#10b981;">(+${diff} Markah) 🎉</span>` : `<span style="color:#ef4444;">(${diff} Markah)</span>`;
+
+        document.getElementById('scoreHeader').innerHTML = `
+          <div class="dashboard-card">
+            <h4 style="margin-top:0;">Analisis Prestasi Bengkel</h4>
+            <p style="margin:4px 0;">Skor Pre-Test: <strong>${participantData.score} / 20</strong></p>
+            <p style="margin:4px 0;">Skor Post-Test: <strong>${res.score} / 20</strong></p>
+            <h3 style="margin-bottom:0;">Perubahan Skor: ${badgeGain}</h3>
+          </div>
+        `;
+
+        var detailsHtml = '<h4>Skema Jawapan & Keputusan Perincian:</h4>';
+        for (var i = 1; i <= 20; i++) {
+          var item = res.itemResults['q' + i];
+          var badge = item.isCorrect ? '<span class="badge badge-correct">BETUL</span>' : '<span class="badge badge-wrong">SALAH</span>';
+          detailsHtml += `<div class="result-box"><strong>Soalan ${i}:</strong> ${badge}<br>Jawapan Anda: <strong>${item.userAnswer}</strong><br>Jawapan Tepat: <strong style="color:#10b981;">${item.correctAnswer}</strong></div>`;
+        }
+        document.getElementById('detailedResults').innerHTML = detailsHtml;
+      } else {
+        showModal('Ralat', res.message || 'Gagal menghantar jawapan.', '<button onclick="closeModal()">Tutup</button>');
+      }
+    } catch (e) {
+      closeModal();
+      showModal('Ralat', 'Gagal berhubung dengan pelayan.', '<button onclick="closeModal()">Tutup</button>');
+    }
+  }
+</script>
+</body>
+</html>
