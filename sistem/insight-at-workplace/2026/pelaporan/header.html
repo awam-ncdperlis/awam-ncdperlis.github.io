@@ -13,6 +13,11 @@
     <a href="dashboard.html" class="nav-link" id="nav-dashboard">Dashboard</a>
     <a href="linelisting.html" class="nav-link" id="nav-linelisting">Linelisting</a>
     <a href="analisis-soalan.html" class="nav-link" id="nav-analisis">Analisis Soalan</a>
+    
+    <!-- PAUTAN PANTAS GOOGLE SHEET INDUK -->
+    <a href="https://docs.google.com/spreadsheets/d/1PPq6z6GvdevoG5SFGXzOvJVl1EQTHY_BJnNyjEDOjeA/edit" target="_blank" class="nav-link btn-sheet">
+      <i class="fa-solid fa-file-excel"></i> Google Sheet Induk
+    </a>
   </div>
   <button class="btn-logout" onclick="logout()">Log Keluar</button>
 </nav>
@@ -35,7 +40,7 @@
   .nav-title-group { display: flex; flex-direction: column; }
   .nav-title { font-weight: 700; font-size: 0.95rem; color: #0f172a; }
   .nav-subtitle { font-size: 0.75rem; color: #64748b; font-weight: 500; }
-  .nav-menu { display: flex; gap: 8px; }
+  .nav-menu { display: flex; gap: 8px; align-items: center; }
   .nav-link {
     text-decoration: none;
     color: #64748b;
@@ -46,6 +51,21 @@
     transition: all 0.2s;
   }
   .nav-link:hover, .nav-link.active { background: #eff6ff; color: #2563eb; }
+  
+  /* STYLES KHAS UNTUK BUTANG GOOGLE SHEET */
+  .btn-sheet {
+    background: #dcfce7 !important;
+    color: #15803d !important;
+    border: 1px solid #bbf7d0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-sheet:hover {
+    background: #bbf7d0 !important;
+    color: #166534 !important;
+  }
+
   .btn-logout {
     background: #ef4444;
     color: white;
@@ -55,6 +75,7 @@
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    border-radius: 8px;
+    transition: background 0.2s;
   }
+  .btn-logout:hover { background: #dc2626; }
 </style>
