@@ -1,0 +1,60 @@
+<!-- pelaporan/header.html -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <img src="../../images/logo-jata-perlis.png" alt="Jata Negeri Perlis" class="nav-logo">
+    <img src="../../images/jata-malaysia.png" alt="Jata Malaysia" class="nav-logo">
+    <img src="../../images/logo-insight.png" alt="Logo Bengkel Insight at Workplace" class="nav-logo">
+    <div class="nav-title-group">
+      <span class="nav-title">Pelaporan Bengkel Insight at Workplace</span>
+      <span class="nav-subtitle">Unit NCD, Jabatan Kesihatan Negeri Perlis</span>
+    </div>
+  </div>
+  <div class="nav-menu">
+    <a href="dashboard.html" class="nav-link" id="nav-dashboard">Dashboard</a>
+    <a href="linelisting.html" class="nav-link" id="nav-linelisting">Linelisting</a>
+    <a href="analisis-soalan.html" class="nav-link" id="nav-analisis">Analisis Soalan</a>
+  </div>
+  <button class="btn-logout" onclick="logout()">Log Keluar</button>
+</nav>
+
+<style>
+  .navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .nav-logo { height: 38px; width: auto; object-fit: contain; }
+  .nav-title-group { display: flex; flex-direction: column; }
+  .nav-title { font-weight: 700; font-size: 0.95rem; color: #0f172a; }
+  .nav-subtitle { font-size: 0.75rem; color: #64748b; font-weight: 500; }
+  .nav-menu { display: flex; gap: 8px; }
+  .nav-link {
+    text-decoration: none;
+    color: #64748b;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .nav-link:hover, .nav-link.active { background: #eff6ff; color: #2563eb; }
+  .btn-logout {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+</style>

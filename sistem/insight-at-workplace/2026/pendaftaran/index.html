@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pendaftaran Bengkel Insight at Workplace 2026</title>
-  <link rel="icon" href="../favicon/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../../favicon/favicon.ico" type="image/x-icon">
 
   <!-- Google Fonts & Font Awesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -342,33 +342,46 @@
         <input type="text" id="gred" placeholder="Contoh: FA29 / N41" required>
       </div>
       <div class="form-group">
-        <label>Agensi / Jabatan / Unit *</label>
+        <label>Agensi / Jabatan / Bahagian *</label>
         <select id="agensi" required>
-          <option value="">-- Pilih Agensi --</option>
-          <option value="AADK">Agensi Antidadah Kebangsaan (AADK)</option>
-          <option value="AG">Jabatan Akauntan Negara Malaysia (AG)</option>
-          <option value="ATM">Angkatan Tentera Malaysia (ATM)</option>
-          <option value="BKP">Bahagian Khidmat Pengurusan (BKP)</option>
-          <option value="Bomba">Jabatan Bomba dan Penyelamat (Bomba)</option>
-          <option value="BPD">Bahagian Pentadbiran Daerah (BPD)</option>
-          <option value="BPPH">Bahagian Pengurusan Majlis & Protokol (BPPH)</option>
-          <option value="BPSM">Bahagian Pengurusan Sumber Manusia (BPSM)</option>
-          <option value="Imigresen">Jabatan Imigresen Malaysia (Imigresen)</option>
-          <option value="JAIPs">Jabatan Hal Ehwal Agama Islam (JAIPs)</option>
-          <option value="JKR">Jabatan Kerja Raya (JKR)</option>
-          <option value="JPJ">Jabatan Pengangkutan Jalan (JPJ)</option>
-          <option value="JPS">Jabatan Pengairan dan Saliran (JPS)</option>
-          <option value="JUPEM">Jabatan Ukur dan Pemetaan (JUPEM)</option>
-          <option value="Kastam">Jabatan Kastam Diraja Malaysia (Kastam)</option>
-          <option value="KPDNKK">KPDN / KPDNKK</option>
-          <option value="MARDI Arau">MARDI Arau</option>
-          <option value="Maritim">Agensi Penguatkuasaan Maritim (Maritim)</option>
-          <option value="MPK">Majlis Perbandaran Kangar (MPK)</option>
-          <option value="PERHILITAN">Jabatan PERHILITAN</option>
-          <option value="Pertanian">Jabatan Pertanian (Pertanian)</option>
-          <option value="PKN">Pejabat Pembangunan Negeri (PKN)</option>
-          <option value="PTG">Pejabat Pengarah Tanah & Galian (PTG)</option>
-          <option value="UKK">Unit Komunikasi Korporat (UKK)</option>
+          <option value="">-- Pilih Agensi / Jabatan --</option>
+
+          <!-- 1. JABATAN / AGENSI PERSEKUTUAN -->
+          <optgroup label="Jabatan / Agensi Persekutuan">
+            <option value="AADK">Agensi Antidadah Kebangsaan Negeri Perlis (AADK)</option>
+            <option value="Maritim">Agensi Penguatkuasaan Maritim Malaysia - Zon Maritim Kuala Perlis (Maritim)</option>
+            <option value="ATM">Angkatan Tentera Malaysia (ATM - 30 Infantri / 504 Wataniah / 4 Renjer)</option>
+            <option value="MARDI Arau">Institut Penyelidikan Dan Kemajuan Pertanian Malaysia (MARDI Arau)</option>
+            <option value="AG">Jabatan Akauntan Negara Malaysia Negeri Perlis (AG)</option>
+            <option value="Bomba">Jabatan Bomba dan Penyelamat Malaysia Negeri Perlis (Bomba)</option>
+            <option value="Imigresen">Jabatan Imigresen Malaysia Negeri Perlis (Imigresen)</option>
+            <option value="Kastam">Jabatan Kastam Diraja Malaysia Negeri Perlis (Kastam)</option>
+            <option value="JPJ">Jabatan Pengangkutan Jalan Negeri Perlis (JPJ)</option>
+            <option value="PERHILITAN">Jabatan PERHILITAN Negeri Perlis (PERHILITAN)</option>
+            <option value="JUPEM">Jabatan Ukur dan Pemetaan Negeri Perlis (JUPEM)</option>
+            <option value="KPDNKK">Kementerian Perdagangan Dalam Negeri Dan Kos Sara Hidup Negeri Perlis (KPDNKK)</option>
+            <option value="PKN">Pejabat Pembangunan Negeri (PKN)</option>
+          </optgroup>
+
+          <!-- 2. JABATAN / AGENSI NEGERI -->
+          <optgroup label="Jabatan / Agensi Negeri">
+            <option value="JAIPs">Jabatan Hal Ehwal Agama Islam Perlis (JAIPs)</option>
+            <option value="JKR">Jabatan Kerja Raya Negeri Perlis (JKR)</option>
+            <option value="JPS">Jabatan Pengairan dan Saliran Negeri Perlis (JPS)</option>
+            <option value="Pertanian">Jabatan Pertanian Negeri Perlis (Pertanian)</option>
+            <option value="MPK">Majlis Perbandaran Negeri Perlis (MPK)</option>
+            <option value="PTG">Pejabat Pengarah Tanah dan Galian Negeri Perlis (PTG)</option>
+            <option value="AG">Pejabat Perbendaharaan Negeri Perlis (AG)</option>
+          </optgroup>
+
+          <!-- 3. BAHAGIAN (SUK PERLIS) -->
+          <optgroup label="Bahagian (SUK Perlis)">
+            <option value="BKP">Bahagian Khidmat Pengurusan (BKP)</option>
+            <option value="BPD">Bahagian Pentadbiran Daerah (BPD)</option>
+            <option value="BPPH">Bahagian Pengurusan dan Pembangunan Hartanah (BPPH)</option>
+            <option value="BPSM">Bahagian Pengurusan Sumber Manusia (BPSM)</option>
+            <option value="UKK">Unit Komunikasi Korporat (UKK)</option>
+          </optgroup>
         </select>
       </div>
       <div class="form-group">

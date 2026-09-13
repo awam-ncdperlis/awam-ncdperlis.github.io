@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linelisting Peserta - Pelaporan Bengkel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="include.js"></script>
+  <style>
+    :root { --primary: #2563eb; --bg: #f8fafc; --card-bg: #ffffff; --text-main: #0f172a; --text-sub: #64748b; --border: #e2e8f0; }
+    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg); color: var(--text-main); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1200px; margin: 24px auto; padding: 0 16px; flex: 1; }
+    .action-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 16px 20px; margin-bottom: 24px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .search-box { padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.9rem; width: 300px; background: #f8fafc; outline: none; }
+    .search-box:focus { border-color: var(--primary); background: #ffffff; }
+    .btn-export { background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 10px; font-size: 0.88rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .btn-export:hover { background: #059669; }
+    .group-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow-x: auto; }
+    .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f1f5f9; }
+    .group-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin: 0; }
+    .group-count { font-size: 0.82rem; font-weight: 600; color: var(--text-sub); background: #eff6ff; padding: 4px 12px; border-radius: 20px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+    th { background: #f8fafc; padding: 12px 14px; font-weight: 700; color: #334155; border-bottom: 2px solid var(--border); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text-main); }
+    .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+    .badge-success { background: #dcfce7; color: #15803d; }
+    .badge-warning { background: #fef9c3; color: #a16207; }
+    .badge-danger { background: #fee2e2; color: #b91c1c; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: white; padding: 24px; border-radius: 16px; max-width: 360px; width: 90%; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <div class="container">
+    <div class="action-card">
+      <input type="text" id="searchBox" class="search-box" placeholder="🔍 Cari Nama, IC atau Jabatan..." onkeyup="filterData()">
+      <button class="btn-export" onclick="exportByGroupToExcel()">📊 Muat Turun Senarai Kumpulan (Excel)</button>
+    </div>
+
+    <div id="groupsContainer">
+      <div style="text-align:center; padding: 40px; color: var(--text-sub);">Memuatkan data senarai kumpulan...</div>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="modal-overlay" id="loadingModal">
+    <div class="modal-content">
+      <h3 style="margin:0 0 8px 0;">Memuatkan Data</h3>
+      <div style="color: var(--text-sub); font-size: 0.88rem;">Sila tunggu sebentar...</div>
+    </div>
+  </div>
+
+<script>
+  const REPORTING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqcLMFHHPHYoB1P_TvTQLg1HMjKDGxM1RJlZIp2RdlOSaZMOOKgFga8wFyAZMQsOyDgg/exec';
+  var allParticipants = [];
+
+  window.onload = function() {
+    if (sessionStorage.getItem('isLoggedIn') !== 'true') { window.location.href = 'index.html'; return; }
+    loadComponent('header-placeholder', 'header.html', 'nav-linelisting');
+    loadComponent('footer-placeholder', 'footer.html');
+    fetchParticipantsData();
+  };
+
+  function showLoading(show) { document.getElementById('loadingModal').style.display = show ? 'flex' : 'none'; }
+
+  async function fetchParticipantsData() {
+    showLoading(true);
+    try {
+      let response = await fetch(`${REPORTING_SCRIPT_URL}?action=getDashboardData`);
+      let res = await response.json();
+      showLoading(false);
+      if (res.status === 'SUCCESS') {
+        allParticipants = res.participants;
+        renderGroupTables(allParticipants);
+      }
+    } catch (e) { showLoading(false); console.error(e); }
+  }
+
+  function renderGroupTables(data) {
+    var container = document.getElementById('groupsContainer');
+    container.innerHTML = '';
+    if (data.length === 0) { container.innerHTML = '<div style="text-align:center; padding:40px;">Tiada rekod.</div>'; return; }
+
+    var groupedByNum = {};
+    data.forEach(p => {
+      var kumpulVal = p.kumpulan ? p.kumpulan.toString().trim() : 'Tanpa Kumpulan';
+      if (!isNaN(kumpulVal) && kumpulVal !== '') kumpulVal = "Kumpulan " + kumpulVal;
+      if (!groupedByNum[kumpulVal]) groupedByNum[kumpulVal] = [];
+      groupedByNum[kumpulVal].push(p);
+    });
+
+    var sortedKeys = Object.keys(groupedByNum).sort((a, b) => (parseInt(a.replace(/\D/g, '')) || 999) - (parseInt(b.replace(/\D/g, '')) || 999));
+
+    sortedKeys.forEach(grpName => {
+      var cardDiv = document.createElement('div');
+      cardDiv.className = 'group-card';
+      var rowsHtml = '';
+      groupedByNum[grpName].forEach((p, idx) => {
+        var statusBadge = '<span class="badge badge-danger">Belum Ujian</span>';
+        if (p.status === 'Lengkap (Pre & Post)') statusBadge = '<span class="badge badge-success">Lengkap</span>';
+        else if (p.status === 'Pre-Test Sahaja') statusBadge = '<span class="badge badge-warning">Pre-Test Sahaja</span>';
+
+        rowsHtml += `
+          <tr>
+            <td>${idx + 1}</td>
+            <td><strong>${toCapital(p.nama)}</strong></td>
+            <td>${p.ic}</td>
+            <td>${toTitleCase(p.jabatan)}</td>
+            <td>${p.preScore !== null ? p.preScore : '-'}</td>
+            <td>${p.postScore !== null ? p.postScore : '-'}</td>
+            <td>${statusBadge}</td>
+          </tr>
+        `;
+      });
+
+      cardDiv.innerHTML = `
+        <div class="group-header">
+          <h3 class="group-title">📌 ${grpName.toUpperCase()}</h3>
+          <span class="group-count">${groupedByNum[grpName].length} Peserta</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 50px;">Bil</th>
+              <th>Nama Peserta</th>
+              <th style="width: 140px;">No. IC</th>
+              <th>Jabatan / Agensi</th>
+              <th style="width: 90px;">Pre-Test</th>
+              <th style="width: 90px;">Post-Test</th>
+              <th style="width: 120px;">Status</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      `;
+      container.appendChild(cardDiv);
+    });
+  }
+
+  function filterData() {
+    var query = document.getElementById('searchBox').value.toLowerCase();
+    var filtered = allParticipants.filter(p => 
+      (p.nama && p.nama.toLowerCase().includes(query)) ||
+      (p.ic && p.ic.includes(query)) ||
+      (p.jabatan && p.jabatan.toLowerCase().includes(query)) ||
+      (p.kumpulan && p.kumpulan.toString().toLowerCase().includes(query))
+    );
+    renderGroupTables(filtered);
+  }
+
+  function toCapital(str) { return str ? str.toString().toUpperCase().trim() : ''; }
+  function toTitleCase(str) { return str ? str.toString().toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : ''; }
+
+  function exportByGroupToExcel() {
+    if (allParticipants.length === 0) return alert('Tiada data!');
+    var groupedByNum = {};
+    allParticipants.forEach(p => {
+      var kumpulVal = p.kumpulan ? p.kumpulan.toString().trim() : 'Tanpa Kumpulan';
+      if (!isNaN(kumpulVal) && kumpulVal !== '') kumpulVal = "Kumpulan " + kumpulVal;
+      if (!groupedByNum[kumpulVal]) groupedByNum[kumpulVal] = [];
+      groupedByNum[kumpulVal].push(p);
+    });
+
+    var wb = XLSX.utils.book_new();
+    var sortedKeys = Object.keys(groupedByNum).sort((a, b) => (parseInt(a.replace(/\D/g, '')) || 999) - (parseInt(b.replace(/\D/g, '')) || 999));
+
+    sortedKeys.forEach(grp => {
+      var sheetData = [
+        ["SENARAI PESERTA - " + grp.toUpperCase()], [],
+        ["Bil", "Nama Peserta", "Jabatan / Agensi"]
+      ];
+      groupedByNum[grp].forEach((person, index) => {
+        sheetData.push([index + 1, toCapital(person.nama), toTitleCase(person.jabatan)]);
+      });
+      var ws = XLSX.utils.aoa_to_sheet(sheetData);
+      ws['!cols'] = [{ wch: 6 }, { wch: 45 }, { wch: 50 }];
+      XLSX.utils.book_append_sheet(wb, ws, grp);
+    });
+    XLSX.writeFile(wb, "Senarai_Peserta_Mengikut_Kumpulan_JKNPs.xlsx");
+  }
+</script>
+</body>
+</html>

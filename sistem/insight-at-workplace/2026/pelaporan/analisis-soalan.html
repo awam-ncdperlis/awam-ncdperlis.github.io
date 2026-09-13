@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisis Soalan - Pelaporan Bengkel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="include.js"></script>
+  <style>
+    :root { --primary: #2563eb; --bg: #f8fafc; --card-bg: #ffffff; --text-main: #0f172a; --text-sub: #64748b; --border: #e2e8f0; }
+    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg); color: var(--text-main); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1100px; margin: 24px auto; padding: 0 16px; flex: 1; }
+    .section-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); overflow-x: auto; }
+    .section-title { font-size: 1.1rem; font-weight: 700; margin-top: 0; margin-bottom: 8px; }
+    .section-sub { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+    th { background: #f8fafc; padding: 12px 14px; font-weight: 700; color: #334155; border-bottom: 2px solid var(--border); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text-main); }
+    .progress-bg { background: #e2e8f0; border-radius: 6px; height: 10px; width: 100%; overflow: hidden; margin-top: 4px; }
+    .progress-fill-pre { background: #64748b; height: 100%; border-radius: 6px; }
+    .progress-fill-post { background: #10b981; height: 100%; border-radius: 6px; }
+    .badge-gain { padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; }
+    .gain-pos { background: #dcfce7; color: #15803d; }
+    .gain-neg { background: #fee2e2; color: #b91c1c; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: white; padding: 24px; border-radius: 16px; max-width: 360px; width: 90%; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div id="header-placeholder"></div>
+
+  <div class="container">
+    <div class="section-card">
+      <h3 class="section-title">Analisis Item Soalan (Pre vs Post-Test)</h3>
+      <div class="section-sub">Perbandingan kadar jawapan betul bagi setiap soalan (Soalan 1 hingga Soalan 20) untuk mengukur tahap kefahaman peserta.</div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 80px;">No. Soalan</th>
+            <th style="width: 220px;">Kadar Betul Pre-Test</th>
+            <th style="width: 220px;">Kadar Betul Post-Test</th>
+            <th style="width: 130px; text-align: center;">Perubahan (%)</th>
+          </tr>
+        </thead>
+        <tbody id="itemAnalysisBody">
+          <tr><td colspan="4" style="text-align:center;">Memuatkan analisis soalan...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <div class="modal-overlay" id="loadingModal">
+    <div class="modal-content">
+      <h3 style="margin:0 0 8px 0;">Memuatkan Data</h3>
+      <div style="color: var(--text-sub); font-size: 0.88rem;">Sila tunggu sebentar...</div>
+    </div>
+  </div>
+
+<script>
+  const REPORTING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqcLMFHHPHYoB1P_TvTQLg1HMjKDGxM1RJlZIp2RdlOSaZMOOKgFga8wFyAZMQsOyDgg/exec';
+
+  window.onload = function() {
+    if (sessionStorage.getItem('isLoggedIn') !== 'true') { window.location.href = 'index.html'; return; }
+    loadComponent('header-placeholder', 'header.html', 'nav-analisis');
+    loadComponent('footer-placeholder', 'footer.html');
+    fetchItemAnalysis();
+  };
+
+  function showLoading(show) { document.getElementById('loadingModal').style.display = show ? 'flex' : 'none'; }
+
+  async function fetchItemAnalysis() {
+    showLoading(true);
+    try {
+      let response = await fetch(`${REPORTING_SCRIPT_URL}?action=getItemAnalysis`);
+      let res = await response.json();
+      showLoading(false);
+      if (res.status === 'SUCCESS') renderAnalysisTable(res.itemStats);
+    } catch (e) { showLoading(false); console.error(e); }
+  }
+
+  function renderAnalysisTable(stats) {
+    var tbody = document.getElementById('itemAnalysisBody');
+    tbody.innerHTML = '';
+    for (var i = 1; i <= 20; i++) {
+      var qKey = 'q' + i;
+      var qData = stats[qKey];
+      var prePct = qData.preTotal > 0 ? ((qData.preCorrect / qData.preTotal) * 100).toFixed(1) : "0.0";
+      var postPct = qData.postTotal > 0 ? ((qData.postCorrect / qData.postTotal) * 100).toFixed(1) : "0.0";
+      var diff = (parseFloat(postPct) - parseFloat(prePct)).toFixed(1);
+
+      var tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>Soalan ${i}</strong></td>
+        <td>
+          <div>${prePct}% (${qData.preCorrect}/${qData.preTotal})</div>
+          <div class="progress-bg"><div class="progress-fill-pre" style="width: ${prePct}%;"></div></div>
+        </td>
+        <td>
+          <div>${postPct}% (${qData.postCorrect}/${qData.postTotal})</div>
+          <div class="progress-bg"><div class="progress-fill-post" style="width: ${postPct}%;"></div></div>
+        </td>
+        <td style="text-align: center;">
+          <span class="badge-gain ${diff >= 0 ? 'gain-pos' : 'gain-neg'}">${diff >= 0 ? '+' : ''}${diff}%</span>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+</script>
+</body>
+</html>
