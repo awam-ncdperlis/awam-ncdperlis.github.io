@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Linelisting Peserta - Pelaporan Bengkel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="include.js"></script>
   <style>
@@ -28,8 +29,15 @@
     .badge-success { background: #dcfce7; color: #15803d; }
     .badge-warning { background: #fef9c3; color: #a16207; }
     .badge-danger { background: #fee2e2; color: #b91c1c; }
+    
+    /* BUTANG ADMIN TUKAR MEJA */
+    .btn-edit { background: #0f172a; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-edit:hover { background: #2563eb; }
+
+    /* MODAL OVERLAY */
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
-    .modal-content { background: white; padding: 24px; border-radius: 16px; max-width: 360px; width: 90%; text-align: center; }
+    .modal-content { background: white; padding: 24px; border-radius: 16px; max-width: 380px; width: 90%; text-align: center; }
+    .modal-content select { width: 100%; padding: 10px; margin: 14px 0; border-radius: 8px; border: 1px solid var(--border); font-size: 0.9rem; }
   </style>
 </head>
 <body>
@@ -49,10 +57,40 @@
 
   <div id="footer-placeholder"></div>
 
+  <!-- MODAL LOADING -->
   <div class="modal-overlay" id="loadingModal">
     <div class="modal-content">
       <h3 style="margin:0 0 8px 0;">Memuatkan Data</h3>
       <div style="color: var(--text-sub); font-size: 0.88rem;">Sila tunggu sebentar...</div>
+    </div>
+  </div>
+
+  <!-- MODAL ADMIN TUKAR KUMPULAN -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-content">
+      <h3 style="margin-top:0; font-size: 1.1rem; color: var(--text-main);">Tukar Meja / Kumpulan</h3>
+      <p id="modalNama" style="font-weight: 700; color: #2563eb; margin-top: 6px; font-size: 0.95rem;"></p>
+      <p id="modalAgensi" style="color: var(--text-sub); font-size: 0.8rem; margin-bottom: 12px;"></p>
+      <input type="hidden" id="modalIc">
+      
+      <label style="font-size: 0.85rem; font-weight: 700; display:block; text-align:left;">Pilih Kumpulan Baharu:</label>
+      <select id="selectKumpulan">
+        <option value="1">Kumpulan 1</option>
+        <option value="2">Kumpulan 2</option>
+        <option value="3">Kumpulan 3</option>
+        <option value="4">Kumpulan 4</option>
+        <option value="5">Kumpulan 5</option>
+        <option value="6">Kumpulan 6</option>
+        <option value="7">Kumpulan 7</option>
+        <option value="8">Kumpulan 8</option>
+        <option value="9">Kumpulan 9</option>
+        <option value="10">Kumpulan 10</option>
+      </select>
+
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button class="btn-edit" style="flex:1; background: #e2e8f0; color: #334155;" onclick="closeEditModal()">Batal</button>
+        <button class="btn-edit" style="flex:1; background: #2563eb;" onclick="saveKumpulanChange()">Simpan</button>
+      </div>
     </div>
   </div>
 
@@ -115,6 +153,11 @@
             <td>${p.preScore !== null ? p.preScore : '-'}</td>
             <td>${p.postScore !== null ? p.postScore : '-'}</td>
             <td>${statusBadge}</td>
+            <td>
+              <button class="btn-edit" onclick="openEditModal('${escapeJs(p.nama)}', '${p.ic}', '${escapeJs(p.jabatan)}', '${grpName}')">
+                <i class="fa-solid fa-pen-to-square"></i> Tukar
+              </button>
+            </td>
           </tr>
         `;
       });
@@ -129,11 +172,12 @@
             <tr>
               <th style="width: 50px;">Bil</th>
               <th>Nama Peserta</th>
-              <th style="width: 140px;">No. IC</th>
+              <th style="width: 130px;">No. IC</th>
               <th>Jabatan / Agensi</th>
-              <th style="width: 90px;">Pre-Test</th>
-              <th style="width: 90px;">Post-Test</th>
+              <th style="width: 80px;">Pre</th>
+              <th style="width: 80px;">Post</th>
               <th style="width: 120px;">Status</th>
+              <th style="width: 90px;">Tindakan</th>
             </tr>
           </thead>
           <tbody>${rowsHtml}</tbody>
@@ -141,6 +185,52 @@
       `;
       container.appendChild(cardDiv);
     });
+  }
+
+  function escapeJs(str) {
+    return String(str || '').replace(/'/g, "\\'").replace(/"/g, "&quot;");
+  }
+
+  function openEditModal(nama, ic, agensi, kumpulanCurrent) {
+    document.getElementById('modalNama').innerText = toCapital(nama);
+    document.getElementById('modalAgensi').innerText = toTitleCase(agensi);
+    document.getElementById('modalIc').value = ic;
+    
+    var kNo = kumpulanCurrent.replace(/[^0-9]/g, '');
+    document.getElementById('selectKumpulan').value = kNo || '1';
+    document.getElementById('editModal').style.display = 'flex';
+  }
+
+  function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+  }
+
+  async function saveKumpulanChange() {
+    var ic = document.getElementById('modalIc').value;
+    var newKumpulan = document.getElementById('selectKumpulan').value;
+    
+    closeEditModal();
+    showLoading(true);
+
+    try {
+      let response = await fetch(REPORTING_SCRIPT_URL, {
+        method: "POST",
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: "updateKumpulan", ic: ic, newKumpulan: newKumpulan })
+      });
+      let result = await response.json();
+      showLoading(false);
+
+      if (result.status === 'SUCCESS') {
+        alert(result.message);
+        fetchParticipantsData(); // Refresh data jadual
+      } else {
+        alert(result.message || "Gagal mengemaskini kumpulan.");
+      }
+    } catch (e) {
+      showLoading(false);
+      alert("Ralat sambungan semasa mengemaskini kumpulan.");
+    }
   }
 
   function filterData() {
