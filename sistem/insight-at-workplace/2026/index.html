@@ -237,6 +237,10 @@
       flex-shrink: 0;
     }
 
+    .info-content {
+      flex: 1;
+    }
+
     .info-content h4 {
       font-size: 0.72rem;
       text-transform: uppercase;
@@ -587,6 +591,64 @@
       cursor: not-allowed;
     }
 
+    /* MODAL POPUP SENARAI AGENSI */
+    .agency-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .agency-modal-card {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 20px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .agency-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid var(--border-color);
+      margin-bottom: 14px;
+    }
+    .agency-modal-body {
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 6px;
+    }
+    .agency-cat-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--accent-green-dark);
+      text-transform: uppercase;
+      margin: 14px 0 8px 0;
+    }
+    .agency-tags-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 8px;
+    }
+    .agency-tag {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary-black);
+    }
+
     @media (max-width: 768px) {
       html, body { overflow: auto; height: auto; }
       body { padding: 20px 0; }
@@ -669,11 +731,13 @@
               <p>Dewan Bankuet, SUK Perlis</p>
             </div>
           </div>
-          <div class="info-card">
-            <div class="info-icon"><i class="fa-solid fa-users"></i></div>
+
+          <!-- KAD WIDGET BARU: SASARAN & SENARAI AGENSI -->
+          <div class="info-card" style="cursor: pointer;" onclick="openAgencyModal()">
+            <div class="info-icon"><i class="fa-solid fa-building-user"></i></div>
             <div class="info-content">
               <h4>Sasaran Peserta</h4>
-              <p>100 Penjawat Awam</p>
+              <p>100 Orang <span style="font-size: 0.75rem; color: var(--accent-green-dark); font-weight: 700;">(24 Agensi <i class="fa-solid fa-circle-chevron-right"></i>)</span></p>
             </div>
           </div>
         </div>
@@ -696,14 +760,14 @@
         <h2 class="section-title">Pengenalan Bengkel</h2>
         <div class="about-wrapper">
           <p class="about-text">
-            Tempat kerja yang sihat bergantung pada kesedaran kendiri, komunikasi, kepercayaan, integriti, dan keupayaan anggota memahami peranan masing-masing[cite: 1].
+            Tempat kerja yang sihat bergantung pada kesedaran kendiri, komunikasi, kepercayaan, integriti, dan keupayaan anggota memahami peranan masing-masing.
           </p>
           <p class="about-text">
-            Bengkel "Insight at Workplace" dirangka sebagai program pembelajaran berasaskan pengalaman yang menggabungkan slot perkongsian serta Latihan Dalam Kumpulan (LDK) secara interaktif[cite: 1].
+            Bengkel "Insight at Workplace" dirangka sebagai program pembelajaran berasaskan pengalaman yang menggabungkan slot perkongsian serta Latihan Dalam Kumpulan (LDK) secara interaktif.
           </p>
           <div class="highlight-box">
             <i class="fa-solid fa-circle-info" style="margin-right: 8px;"></i>
-            Fokus utama adalah memupuk budaya kerja positif, memperluas perkongsian pengalaman, serta membina jaringan kerjasama rentas agensi di Negeri Perlis[cite: 1].
+            Fokus utama adalah memupuk budaya kerja positif, memperluas perkongsian pengalaman, serta membina jaringan kerjasama rentas agensi di Negeri Perlis.
           </div>
         </div>
       </section>
@@ -714,23 +778,23 @@
         <div class="obj-list">
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Meningkatkan kesedaran kesihatan mental dalam kalangan penjawat awam[cite: 1].</span>
+            <span>Meningkatkan kesedaran kesihatan mental dalam kalangan penjawat awam.</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Mengurangkan stigma berkaitan kesihatan mental di persekitaran kerja[cite: 1].</span>
+            <span>Mengurangkan stigma berkaitan kesihatan mental di persekitaran kerja.</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Membentuk persekitaran kerja yang sihat, harmoni, dan produktif[cite: 1].</span>
+            <span>Membentuk persekitaran kerja yang sihat, harmoni, dan produktif.</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Meningkatkan pengetahuan berkaitan perkhidmatan rawatan kesihatan mental[cite: 1].</span>
+            <span>Meningkatkan pengetahuan berkaitan perkhidmatan rawatan kesihatan mental.</span>
           </div>
           <div class="obj-item">
             <i class="fa-solid fa-lightbulb"></i>
-            <span>Memahami peranan, tanggungjawab, dan sumbangan kepada organisasi[cite: 1].</span>
+            <span>Memahami peranan, tanggungjawab, dan sumbangan kepada organisasi.</span>
           </div>
         </div>
       </section>
@@ -743,56 +807,56 @@
             <span class="agenda-time">08.00 AM</span>
             <div class="agenda-desc">
               <h4>Pendaftaran & Sarapan</h4>
-              <p>Pendaftaran peserta dan ujian pretest[cite: 1]</p>
+              <p>Pendaftaran peserta dan ujian pretest</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">09.00 AM</span>
             <div class="agenda-desc">
               <h4>Slot Insight: "Jiwa Kuat, Perkhidmatan Hebat"</h4>
-              <p>Oleh YBrs. Dr. Izwana binti Hamzah (JKN Perlis)[cite: 1]</p>
+              <p>Oleh YBrs. Dr. Izwana binti Hamzah (JKN Perlis)</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">10.10 AM</span>
             <div class="agenda-desc">
               <h4>LDK 1: "Organizational Puzzle"</h4>
-              <p>Kerjasama dan penyelesaian masalah berpasukan[cite: 1]</p>
+              <p>Kerjasama dan penyelesaian masalah berpasukan</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">11.10 AM</span>
             <div class="agenda-desc">
               <h4>LDK 2: "I Love My Job"</h4>
-              <p>Refleksi kendiri dan ekspresi peranan tugas[cite: 1]</p>
+              <p>Refleksi kendiri dan ekspresi peranan tugas</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">12.00 PM</span>
             <div class="agenda-desc">
               <h4>LDK 3: "Bina Bangunan, Bukan Tembok"</h4>
-              <p>Membina komunikasi dan hubungan interaktif[cite: 1]</p>
+              <p>Membina komunikasi dan hubungan interaktif</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">01.00 PM</span>
             <div class="agenda-desc">
               <h4>Rehat & Makan Tengah Hari</h4>
-              <p>Masa rehat dan solat[cite: 1]</p>
+              <p>Masa rehat dan solat</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">02.30 PM</span>
             <div class="agenda-desc">
               <h4>LDK 4: "Cabaran Benang Kejujuran"</h4>
-              <p>Nilai integriti dan kepercayaan organisasi[cite: 1]</p>
+              <p>Nilai integriti dan kepercayaan organisasi</p>
             </div>
           </div>
           <div class="agenda-item">
             <span class="agenda-time">04.00 PM</span>
             <div class="agenda-desc">
               <h4>Sokongan Perkhidmatan Psikologi Kaunseling</h4>
-              <p>Sesi sokongan dan penutup[cite: 1]</p>
+              <p>Sesi sokongan dan penutup</p>
             </div>
           </div>
         </div>
@@ -863,6 +927,55 @@
     </div>
 
   </main>
+
+  <!-- MODAL POPUP SENARAI AGENSI -->
+  <div class="agency-modal-overlay" id="agencyModal">
+    <div class="agency-modal-card">
+      <div class="agency-modal-header">
+        <h3 style="margin:0; font-size:1.05rem; color:var(--primary-black);"><i class="fa-solid fa-building-user" style="color:var(--accent-green);"></i> Senarai 24 Agensi Terlibat</h3>
+        <button onclick="closeAgencyModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="agency-modal-body">
+        
+        <div class="agency-cat-title">Agensi Persekutuan (16)</div>
+        <div class="agency-tags-grid">
+          <div class="agency-tag"><strong>AADK</strong> – Agensi Antidadah Kebangsaan</div>
+          <div class="agency-tag"><strong>Bomba</strong> – Jabatan Bomba & Penyelamat</div>
+          <div class="agency-tag"><strong>JPJ</strong> – Jabatan Pengangkutan Jalan</div>
+          <div class="agency-tag"><strong>Kastam</strong> – Jabatan Kastam Diraja Malaysia</div>
+          <div class="agency-tag"><strong>AG</strong> – Jabatan Peguam Negara</div>
+          <div class="agency-tag"><strong>KPDNKK</strong> – Kementerian Perdagangan Dalam Negeri</div>
+          <div class="agency-tag"><strong>Maritim</strong> – Agensi Penguatkuasaan Maritim</div>
+          <div class="agency-tag"><strong>PTG</strong> – Pejabat Tanah dan Galian</div>
+          <div class="agency-tag"><strong>Pertanian</strong> – Jabatan Pertanian Malaysia</div>
+          <div class="agency-tag"><strong>ATM</strong> – Angkatan Tentera Malaysia</div>
+          <div class="agency-tag"><strong>PERHILITAN</strong> – Jabatan PERHILITAN</div>
+          <div class="agency-tag"><strong>JPS</strong> – Jabatan Pengairan dan Saliran</div>
+          <div class="agency-tag"><strong>Imigresen</strong> – Jabatan Imigresen Malaysia</div>
+          <div class="agency-tag"><strong>JKR</strong> – Jabatan Kerja Raya</div>
+          <div class="agency-tag"><strong>JUPEM</strong> – Jabatan Ukur & Pemetaan</div>
+          <div class="agency-tag"><strong>MARDI Arau</strong> – MARDI Stesen Arau</div>
+        </div>
+
+        <div class="agency-cat-title">Agensi Negeri (2)</div>
+        <div class="agency-tags-grid">
+          <div class="agency-tag"><strong>MPK</strong> – Majlis Perbandaran Kangar</div>
+          <div class="agency-tag"><strong>JAIPs</strong> – Jabatan Agama Islam Perlis</div>
+        </div>
+
+        <div class="agency-cat-title">Bahagian / Jabatan SUK Perlis (6)</div>
+        <div class="agency-tags-grid">
+          <div class="agency-tag"><strong>BKP</strong> – Bahagian Khidmat Pengurusan</div>
+          <div class="agency-tag"><strong>BPD</strong> – Bahagian Pembangunan Daerah</div>
+          <div class="agency-tag"><strong>BPSM</strong> – Bahagian Pengurusan Sumber Manusia</div>
+          <div class="agency-tag"><strong>BPPH</strong> – Bahagian Pengurusan DUN & MMK</div>
+          <div class="agency-tag"><strong>PKN</strong> – Pejabat Kewangan Negeri</div>
+          <div class="agency-tag"><strong>UKK</strong> – Unit Komunikasi Korporat</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <script>
     let currentSlide = 0;
@@ -953,6 +1066,15 @@
     function goToSlide(index) {
       currentSlide = index;
       updateSlide();
+    }
+
+    /* FUNGSI MODAL AGENSI */
+    function openAgencyModal() {
+      document.getElementById('agencyModal').style.display = 'flex';
+    }
+
+    function closeAgencyModal() {
+      document.getElementById('agencyModal').style.display = 'none';
     }
 
     window.onload = function() {
