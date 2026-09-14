@@ -366,77 +366,23 @@
     </div>
 
     <!-- PAGE 0: DEMOGRAFI -->
+    <!-- PAGE 0: DEMOGRAFI RINGKAS -->
     <div class="page" id="page0">
-      <h3 style="font-size: 1.1rem; margin-bottom: 15px; color: var(--primary-black);">Maklumat Peserta</h3>
+      <h3 style="font-size: 1.1rem; margin-bottom: 6px; color: var(--primary-black);">Pengesahan Peserta</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 18px;">Masukkan No. Kad Pengenalan anda yang telah didaftarkan.</p>
+      
       <div class="form-group">
         <label>No. Kad Pengenalan *</label>
-        <input type="text" id="icNumber" placeholder="000000-00-0000" maxlength="14" oninput="formatIC(this)">
+        <input type="text" id="icNumber" placeholder="Contoh: 900101025555 (tanpa -)" maxlength="14" oninput="formatIC(this)">
       </div>
-      <div class="form-group">
-        <label>Nama Peserta *</label>
-        <input type="text" id="nama" placeholder="Nama Penuh Mengikut IC">
-      </div>
-      <div class="form-group">
-        <label>Jabatan / Agensi *</label>
-        <select id="jabatan" required>
-          <option value="">-- Pilih Jabatan / Agensi --</option>
 
-          <!-- 1. JABATAN / AGENSI PERSEKUTUAN -->
-          <optgroup label="Jabatan / Agensi Persekutuan">
-            <option value="AADK">Agensi Antidadah Kebangsaan Negeri Perlis (AADK)</option>
-            <option value="Maritim">Agensi Penguatkuasaan Maritim Malaysia - Zon Maritim Kuala Perlis (Maritim)</option>
-            <option value="ATM">Angkatan Tentera Malaysia (ATM - 30 Infantri / 504 Wataniah / 4 Renjer)</option>
-            <option value="MARDI Arau">Institut Penyelidikan Dan Kemajuan Pertanian Malaysia (MARDI Arau)</option>
-            <option value="AG">Jabatan Akauntan Negara Malaysia Negeri Perlis (AG)</option>
-            <option value="Bomba">Jabatan Bomba dan Penyelamat Malaysia Negeri Perlis (Bomba)</option>
-            <option value="Imigresen">Jabatan Imigresen Malaysia Negeri Perlis (Imigresen)</option>
-            <option value="Kastam">Jabatan Kastam Diraja Malaysia Negeri Perlis (Kastam)</option>
-            <option value="JPJ">Jabatan Pengangkutan Jalan Negeri Perlis (JPJ)</option>
-            <option value="PERHILITAN">Jabatan PERHILITAN Negeri Perlis (PERHILITAN)</option>
-            <option value="JUPEM">Jabatan Ukur dan Pemetaan Negeri Perlis (JUPEM)</option>
-            <option value="KPDNKK">Kementerian Perdagangan Dalam Negeri Dan Kos Sara Hidup Negeri Perlis (KPDNKK)</option>
-            <option value="PKN">Pejabat Pembangunan Negeri (PKN)</option>
-          </optgroup>
+      <!-- TEMPAT PAPARAN AUTO-PROFILE -->
+      <input type="hidden" id="nama">
+      <input type="hidden" id="jabatan">
+      <input type="hidden" id="kumpulan">
 
-          <!-- 2. JABATAN / AGENSI NEGERI -->
-          <optgroup label="Jabatan / Agensi Negeri">
-            <option value="JAIPs">Jabatan Hal Ehwal Agama Islam Perlis (JAIPs)</option>
-            <option value="JKR">Jabatan Kerja Raya Negeri Perlis (JKR)</option>
-            <option value="JPS">Jabatan Pengairan dan Saliran Negeri Perlis (JPS)</option>
-            <option value="Pertanian">Jabatan Pertanian Negeri Perlis (Pertanian)</option>
-            <option value="MPK">Majlis Perbandaran Negeri Perlis (MPK)</option>
-            <option value="PTG">Pejabat Pengarah Tanah dan Galian Negeri Perlis (PTG)</option>
-            <option value="AG">Pejabat Perbendaharaan Negeri Perlis (AG)</option>
-          </optgroup>
-
-          <!-- 3. BAHAGIAN (SUK PERLIS) -->
-          <optgroup label="Bahagian (SUK Perlis)">
-            <option value="BKP">Bahagian Khidmat Pengurusan (BKP)</option>
-            <option value="BPD">Bahagian Pentadbiran Daerah (BPD)</option>
-            <option value="BPPH">Bahagian Pengurusan dan Pembangunan Hartanah (BPPH)</option>
-            <option value="BPSM">Bahagian Pengurusan Sumber Manusia (BPSM)</option>
-            <option value="UKK">Unit Komunikasi Korporat (UKK)</option>
-          </optgroup>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Kumpulan *</label>
-        <select id="kumpulan">
-          <option value="">-- Pilih Kumpulan --</option>
-          <option value="Kumpulan 1">Kumpulan 1</option>
-          <option value="Kumpulan 2">Kumpulan 2</option>
-          <option value="Kumpulan 3">Kumpulan 3</option>
-          <option value="Kumpulan 4">Kumpulan 4</option>
-          <option value="Kumpulan 5">Kumpulan 5</option>
-          <option value="Kumpulan 6">Kumpulan 6</option>
-          <option value="Kumpulan 7">Kumpulan 7</option>
-          <option value="Kumpulan 8">Kumpulan 8</option>
-          <option value="Kumpulan 9">Kumpulan 9</option>
-          <option value="Kumpulan 10">Kumpulan 10</option>
-        </select>
-      </div>
       <div class="nav-buttons" style="justify-content: flex-end;">
-        <button type="button" class="btn-full" onclick="validateAndStart()">Sahkan & Mula Soalan</button>
+        <button type="button" class="btn-full" onclick="validateAndStart()">Sahkan IC & Mula Ujian</button>
       </div>
     </div>
 
@@ -517,30 +463,51 @@
 
   async function validateAndStart() {
     var icClean = document.getElementById('icNumber').value.replace(/-/g, '');
-    var nama = document.getElementById('nama').value;
-    var jabatan = document.getElementById('jabatan').value;
-    var kumpulan = document.getElementById('kumpulan').value;
 
-    if (!icClean || icClean.length < 12 || !nama || !jabatan || !kumpulan) {
-      showModal('Maklumat Tidak Lengkap', 'Sila isi semua maklumat demografi dengan betul.', '<button onclick="closeModal()">Tutup</button>');
+    if (!icClean || icClean.length < 12) {
+      showModal('Maklumat Tidak Lengkap', 'Sila masukkan No. Kad Pengenalan 12-digit yang betul.', '<button onclick="closeModal()">Tutup</button>');
       return;
     }
 
-    showModal('Semakan Rekod', 'Memeriksa maklumat IC anda...', '');
+    showModal('Carian Rekod', '<i class="fa-solid fa-circle-notch fa-spin" style="font-size:2rem; color:var(--accent-orange);"></i><br><br>Menyemak pendaftaran IC anda...', '');
+
+    // Fungsi fetch dengan sokongan Auto-Retry (Cuba sehingga 3 kali)
+    async function fetchWithRetry(url, retries = 3) {
+      for (let i = 0; i < retries; i++) {
+        try {
+          let response = await fetch(url);
+          if (response.ok) return await response.json();
+        } catch (err) {
+          if (i === retries - 1) throw err;
+          await new Promise(res => setTimeout(res, 1000)); // Tunggu 1 saat sebelum cuba semula
+        }
+      }
+    }
+
     try {
-      let response = await fetch(`${SCRIPT_URL}?action=checkIC&ic=${icClean}`);
-      let res = await response.json();
+      let res = await fetchWithRetry(`${SCRIPT_URL}?action=checkIC&ic=${icClean}`);
       closeModal();
 
-      if (res.hasPre) {
-        showModal('Pre-Test Sudah Dijawab', `Rekod menunjukkan ${res.preData.nama} telah pun menjawab Pre-Test. Sila teruskan ke Post-Test.`, `<button onclick="window.location.href='../post-test/'">Pergi ke Post-Test</button>`);
-      } else {
-        currentPage = 1; 
-        showPage(currentPage);
+      if (res.status === 'NOT_REGISTERED') {
+        showModal('Belum Berdaftar', res.message, `<button onclick="window.location.href='../pendaftaran/'">Pergi Borang Pendaftaran</button>`);
+      } 
+      else if (res.hasPre) {
+        showModal('Pre-Test Sudah Dijawab', `Rekod menunjukkan <strong>${res.participant.nama}</strong> telah pun melengkapkan Pre-Test. Sila jawab Post-Test di akhir sesi bengkel.`, `<button onclick="closeModal()">Tutup</button>`);
+      } 
+      else if (res.status === 'SUCCESS') {
+        document.getElementById('nama').value = res.participant.nama;
+        document.getElementById('jabatan').value = res.participant.jabatan;
+        document.getElementById('kumpulan').value = res.participant.kumpulan;
+
+        showModal(
+          'Selamat Datang!', 
+          `Sistem mengesahkan maklumat anda:<br><br><strong>${res.participant.nama}</strong><br>${res.participant.jabatan}<br><span style="color:var(--accent-orange-dark); font-weight:800;">${res.participant.kumpulan}</span>`, 
+          `<button onclick="closeModal(); currentPage=1; showPage(currentPage);">Mula Soalan 1 →</button>`
+        );
       }
     } catch (err) {
       closeModal();
-      showModal('Ralat', 'Gagal berhubung dengan pelayan.', '<button onclick="closeModal()">Tutup</button>');
+      showModal('Ralat Sambungan', 'Rangkaian kurang stabil. Sila tekan butang di bawah untuk cuba sekali lagi.', '<button onclick="validateAndStart()">Cuba Semula</button>');
     }
   }
 

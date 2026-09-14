@@ -13,10 +13,10 @@
   <style>
     :root {
       --primary-black: #111827;        /* Dark Charcoal Text & Primary Buttons */
-      --accent-orange: #10b981;       /* DITUKAR: Hijau Kesihatan Mental (Emerald) */
-      --accent-orange-dark: #059669;  /* DITUKAR: Hijau Gelap (Dark Emerald) */
-      --accent-blue: #0284c7;         /* Soft Sky Blue (Kekal) */
-      --accent-yellow-light: #dcfce7; /* DITUKAR: Hijau Lembut Pastel */
+      --accent-orange: #10b981;       /* Hijau Kesihatan Mental (Emerald) */
+      --accent-orange-dark: #059669;  /* Hijau Gelap (Dark Emerald) */
+      --accent-blue: #0284c7;         /* Soft Sky Blue */
+      --accent-yellow-light: #dcfce7; /* Hijau Lembut Pastel */
       --bg-body: #fafafa;             /* Soft Off-White Background */
       --card-bg: #ffffff;             /* Pure White Card */
       --border-color: #e5e7eb;        /* Subtle Gray Border */
@@ -87,7 +87,7 @@
       color: var(--accent-orange-dark);
     }
 
-    /* BANNER CONTAINER (BERSIH TANPA TEKS) */
+    /* BANNER CONTAINER */
     .banner-wrapper {
       position: relative;
       width: 100%;
@@ -158,7 +158,7 @@
     input:focus, select:focus { 
       background-color: #ffffff; 
       border-color: var(--accent-orange); 
-      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15); 
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15); 
     }
 
     /* BUTTONS */
@@ -178,7 +178,7 @@
     .btn-primary:hover {
       background-color: var(--accent-orange-dark);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
     }
 
     .btn-outline { 
@@ -244,7 +244,7 @@
 
     .success-icon { 
       width: 60px; height: 60px; 
-      background: #fef3c7; 
+      background: var(--accent-yellow-light); 
       color: var(--accent-orange-dark); 
       border-radius: 50%; 
       display: flex; 
@@ -256,7 +256,7 @@
 
     .group-display-box { 
       background: #fafafa; 
-      border: 2px dashed #fcd34d; 
+      border: 2px dashed #a7f3d0; 
       border-radius: 14px; 
       padding: 16px; 
       margin: 18px 0; 
@@ -300,7 +300,7 @@
     </p>
   </header>
 
-  <!-- 2. BANNER RAPAT KAD (BERSIH TANPA TEKS OVERLAY) -->
+  <!-- 2. BANNER RAPAT KAD -->
   <div class="banner-wrapper">
     <img src="../../images/banner-bengkel.png" alt="Banner Bengkel" class="banner-img">
   </div>
@@ -341,49 +341,51 @@
         <label>Gred *</label>
         <input type="text" id="gred" placeholder="Contoh: FA29 / N41" required>
       </div>
+      
+      <!-- DROPDOWN AGENSI (SEPERTI SURAT JEMPUTAN RASMI) -->
       <div class="form-group">
         <label>Agensi / Jabatan / Bahagian *</label>
         <select id="agensi" required>
           <option value="">-- Pilih Agensi / Jabatan --</option>
 
-          <!-- 1. JABATAN / AGENSI PERSEKUTUAN -->
-          <optgroup label="Jabatan / Agensi Persekutuan">
-            <option value="AADK">Agensi Antidadah Kebangsaan Negeri Perlis (AADK)</option>
-            <option value="Maritim">Agensi Penguatkuasaan Maritim Malaysia - Zon Maritim Kuala Perlis (Maritim)</option>
-            <option value="ATM">Angkatan Tentera Malaysia (ATM - 30 Infantri / 504 Wataniah / 4 Renjer)</option>
-            <option value="MARDI Arau">Institut Penyelidikan Dan Kemajuan Pertanian Malaysia (MARDI Arau)</option>
-            <option value="AG">Jabatan Akauntan Negara Malaysia Negeri Perlis (AG)</option>
-            <option value="Bomba">Jabatan Bomba dan Penyelamat Malaysia Negeri Perlis (Bomba)</option>
-            <option value="Imigresen">Jabatan Imigresen Malaysia Negeri Perlis (Imigresen)</option>
-            <option value="Kastam">Jabatan Kastam Diraja Malaysia Negeri Perlis (Kastam)</option>
-            <option value="JPJ">Jabatan Pengangkutan Jalan Negeri Perlis (JPJ)</option>
-            <option value="PERHILITAN">Jabatan PERHILITAN Negeri Perlis (PERHILITAN)</option>
-            <option value="JUPEM">Jabatan Ukur dan Pemetaan Negeri Perlis (JUPEM)</option>
-            <option value="KPDNKK">Kementerian Perdagangan Dalam Negeri Dan Kos Sara Hidup Negeri Perlis (KPDNKK)</option>
-            <option value="PKN">Pejabat Pembangunan Negeri (PKN)</option>
-          </optgroup>
-
-          <!-- 2. JABATAN / AGENSI NEGERI -->
-          <optgroup label="Jabatan / Agensi Negeri">
-            <option value="JAIPs">Jabatan Hal Ehwal Agama Islam Perlis (JAIPs)</option>
+          <!-- 1. JABATAN / AGENSI NEGERI & PBT -->
+          <optgroup label="Jabatan / Agensi Negeri & PBT">
+            <option value="PKN">Pejabat Perbendaharaan Negeri Perlis (PKN)</option>
             <option value="JKR">Jabatan Kerja Raya Negeri Perlis (JKR)</option>
+            <option value="JAIPs">Jabatan Hal Ehwal Agama Islam Perlis (JAIPs)</option>
             <option value="JPS">Jabatan Pengairan dan Saliran Negeri Perlis (JPS)</option>
             <option value="Pertanian">Jabatan Pertanian Negeri Perlis (Pertanian)</option>
-            <option value="MPK">Majlis Perbandaran Negeri Perlis (MPK)</option>
             <option value="PTG">Pejabat Pengarah Tanah dan Galian Negeri Perlis (PTG)</option>
-            <option value="AG">Pejabat Perbendaharaan Negeri Perlis (AG)</option>
+            <option value="MPK">Majlis Perbandaran Negeri Perlis (MPK)</option>
           </optgroup>
 
-          <!-- 3. BAHAGIAN (SUK PERLIS) -->
+          <!-- 2. BAHAGIAN (SUK PERLIS) -->
           <optgroup label="Bahagian (SUK Perlis)">
-            <option value="BKP">Bahagian Khidmat Pengurusan (BKP)</option>
-            <option value="BPD">Bahagian Pentadbiran Daerah (BPD)</option>
-            <option value="BPPH">Bahagian Pengurusan dan Pembangunan Hartanah (BPPH)</option>
             <option value="BPSM">Bahagian Pengurusan Sumber Manusia (BPSM)</option>
+            <option value="BKP">Bahagian Khidmat Pengurusan (BKP)</option>
             <option value="UKK">Unit Komunikasi Korporat (UKK)</option>
+            <option value="BPPH">Bahagian Pengurusan dan Pembangunan Hartanah (BPPH)</option>
+            <option value="BPD">Bahagian Pentadbiran Daerah (BPD)</option>
+          </optgroup>
+
+          <!-- 3. JABATAN / AGENSI PERSEKUTUAN -->
+          <optgroup label="Jabatan / Agensi Persekutuan">
+            <option value="PERHILITAN">Jabatan PERHILITAN Negeri Perlis (PERHILITAN)</option>
+            <option value="KPDNKK">Kementerian Perdagangan Dalam Negeri Dan Kos Sara Hidup Negeri Perlis (KPDNKK)</option>
+            <option value="AADK">Agensi Antidadah Kebangsaan Negeri Perlis (AADK)</option>
+            <option value="JPJ">Jabatan Pengangkutan Jalan Negeri Perlis (JPJ)</option>
+            <option value="Bomba">Jabatan Bomba dan Penyelamat Malaysia Negeri Perlis (Bomba)</option>
+            <option value="Kastam">Jabatan Kastam Diraja Malaysia Negeri Perlis (Kastam)</option>
+            <option value="Maritim">Agensi Penguatkuasaan Maritim Malaysia (Zon Maritim Kuala Perlis)</option>
+            <option value="Imigresen">Jabatan Imigresen Malaysia Negeri Perlis (Imigresen)</option>
+            <option value="ATM">Angkatan Tentera Malaysia (ATM - 30 Infantri / 504 Wataniah / 4 Renjer)</option>
+            <option value="JUPEM">Jabatan Ukur dan Pemetaan Negeri Perlis (JUPEM)</option>
+            <option value="AG">Jabatan Akauntan Negara Malaysia Negeri Perlis (AG)</option>
+            <option value="MARDI Arau">Institut Penyelidikan Dan Kemajuan Pertanian Malaysia (MARDI Arau)</option>
           </optgroup>
         </select>
       </div>
+
       <div class="form-group">
         <label>No. Telefon *</label>
         <input type="tel" id="noTel" placeholder="Contoh: 0123456789" required>
