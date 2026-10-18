@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>Poster Sambutan Hari Kesihatan Mental Perlis 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Tetapan Saiz Standard A4 (210mm x 297mm) */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    body {
+      background-color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* Page Container A4 */
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      background: #ffffff;
+      padding: 12mm 15mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      overflow: hidden;
+      border: 1px solid #cbd5e1;
+    }
+
+    /* Decorative Accent Top & Bottom */
+    .a4-page::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 8mm;
+      background: linear-gradient(90deg, #0d9488 0%, #0284c7 100%);
+    }
+
+    /* Header 2 Logo: Perlis Left, Malaysia Right (Tanpa Border) */
+    .brand-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-top: 4mm;
+      padding-bottom: 4mm;
+    }
+
+    .brand-logo { height: 55px; width: auto; object-fit: contain; }
+
+    /* Title Box */
+    .title-box {
+      text-align: center;
+      margin-bottom: 4mm;
+    }
+
+    .tag-banner {
+      display: inline-block;
+      background: #f0fdf4;
+      color: #166534;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 99px;
+      border: 1px solid #bbf7d0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .main-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .sub-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      margin-top: 4px;
+    }
+
+    /* Visual Grid: Perasmi & Penceramah */
+    .vip-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 3mm 0;
+    }
+
+    .vip-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .vip-img {
+      width: 100px;
+      height: 125px;
+      object-fit: cover;
+      object-position: top center;
+      background: #cbd5e1;
+    }
+
+    .vip-details {
+      padding: 10px;
+      flex: 1;
+    }
+
+    .vip-badge {
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #0d9488;
+      background: #f0fdf4;
+      padding: 2px 8px;
+      border-radius: 99px;
+      border: 1px solid #bbf7d0;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .vip-name { font-size: 0.88rem; font-weight: 800; color: #0f172a; line-height: 1.25; }
+    .vip-role { font-size: 0.72rem; color: #64748b; margin-top: 3px; font-weight: 600; }
+
+    /* Highlight Sesi Penceramah */
+    .speaker-feature {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 10px 14px;
+      text-align: center;
+      margin: 2mm 0;
+    }
+
+    .speaker-theme-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: #0369a1; letter-spacing: 0.05em; }
+    .speaker-theme-quote { font-size: 0.82rem; font-style: italic; font-weight: 600; color: #1e293b; margin-top: 2px; }
+
+    /* Info Event Box */
+    .event-info-box {
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      text-align: center;
+      margin: 3mm 0;
+    }
+
+    .info-item { border-right: 1px solid #334155; padding: 0 4px; }
+    .info-item:last-child { border-right: none; }
+    .info-label { font-size: 0.65rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+    .info-val { font-size: 0.82rem; font-weight: 700; margin-top: 2px; color: #ffffff; }
+
+    /* Atur Cara Ringkas & Pempamer Row */
+    .middle-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 12px;
+      margin: 2mm 0;
+    }
+
+    .section-block {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .block-title { font-size: 0.75rem; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 6px; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; }
+    
+    .agenda-list { list-style: none; font-size: 0.72rem; color: #334155; }
+    .agenda-list li { margin-bottom: 4px; display: flex; gap: 8px; }
+    .agenda-time { font-weight: 800; color: #0d9488; min-width: 55px; }
+
+    .pills-wrap { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .pill { background: #ffffff; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; color: #1e293b; }
+
+    /* Call to Action Box */
+    .cta-box {
+      border: 2px dashed #0d9488;
+      background: #f0fdf4;
+      border-radius: 12px;
+      padding: 8px;
+      text-align: center;
+      margin: 2mm 0;
+    }
+
+    .cta-text { font-size: 0.82rem; font-weight: 800; color: #166534; }
+    .cta-sub { font-size: 0.7rem; color: #15803d; }
+
+    /* Structured Footer Logos (2 Tingkat) */
+    .footer-partners {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 3mm;
+      text-align: center;
+    }
+
+    .footer-title { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; margin-bottom: 4px; }
+
+    .footer-logos-primary { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 6px; }
+    .partner-img-primary { height: 26px; width: auto; object-fit: contain; }
+
+    .footer-logos-campaigns { display: flex; justify-content: center; align-items: center; gap: 16px; }
+    .partner-img-campaign { height: 22px; width: auto; object-fit: contain; }
+
+    /* Print Style Optimization */
+    @media print {
+      body { background: none; padding: 0; }
+      .a4-page { box-shadow: none; border: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="a4-page">
+
+    <div>
+      <!-- 1. HEADER LOGO UTAMA -->
+      <header class="brand-header">
+        <img src="images/logo-jata-perlis.png" alt="SUK Perlis" class="brand-logo">
+        <img src="images/jata-malaysia.png" alt="JKNPs" class="brand-logo">
+      </header>
+
+      <!-- 2. TAJUK PROGRAM -->
+      <div class="title-box">
+        <span class="tag-banner">Program Rasmi Negeri Perlis</span>
+        <h1 class="main-title">Sambutan Hari Kesihatan Mental Sedunia<br>& Bulan Kaunseling 2026</h1>
+        <p class="sub-title">Anjuran Bersama Jabatan Kesihatan Negeri Perlis (JKNPs) & Pejabat Setiausaha Kerajaan Negeri Perlis (SUK)</p>
+      </div>
+
+      <!-- 3. PERASMI & PENCERAMAH KHAS -->
+      <div class="vip-grid">
+        <!-- Perasmi -->
+        <div class="vip-card">
+          <img src="images/YB-Dato'-Noor-Azman.jpg" alt="Perasmi" class="vip-img">
+          <div class="vip-details">
+            <span class="vip-badge">Perasmi</span>
+            <div class="vip-name">YB Dato' Noor Azman Rahman</div>
+            <div class="vip-role">Setiausaha Kerajaan Negeri Perlis</div>
+          </div>
+        </div>
+
+        <!-- Penceramah -->
+        <div class="vip-card">
+          <img src="images/amin-idris.png" alt="Penceramah" class="vip-img">
+          <div class="vip-details">
+            <span class="vip-badge">Penceramah Khas</span>
+            <div class="vip-name">Tuan Amin Idris</div>
+            <div class="vip-role">Master Trainer & Pengacara TV</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. TEMA SESI KHAS -->
+      <div class="speaker-feature">
+        <div class="speaker-theme-title">Sesi Perkongsian Khas & Lived Experiences</div>
+        <div class="speaker-theme-quote">"Lived Experiences Heard • Real Voices • Real Change: Di Sebalik Senyuman • Bila Suara Didengari Perubahan Bermula"</div>
+      </div>
+
+      <!-- 5. BUTIRAN PROGRAM -->
+      <div class="event-info-box">
+        <div class="info-item">
+          <div class="info-label">Tarikh</div>
+          <div class="info-val">20 Okt 2026</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Hari / Masa</div>
+          <div class="info-val">Selasa (8.00 Pagi)</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Lokasi</div>
+          <div class="info-val">Dewan Bankuet, SUK</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Pakaian</div>
+          <div class="info-val">Rasmi / Uniform</div>
+        </div>
+      </div>
+
+      <!-- 6. ATUR CARA RINGKAS & PAMERAN -->
+      <div class="middle-grid">
+        <div class="section-block">
+          <div class="block-title">Tentatif Ringkas</div>
+          <ul class="agenda-list">
+            <li><span class="agenda-time">08.00 am</span> <span>Pendaftaran & Ujian Profil STIG-9</span></li>
+            <li><span class="agenda-time">08.45 am</span> <span>Majlis Perasmian & Gimik Pelancaran</span></li>
+            <li><span class="agenda-time">10.00 am</span> <span>Sesi Perkongsian Khas Tuan Amin Idris</span></li>
+            <li><span class="agenda-time">01.10 pm</span> <span>Rumusan & Penilaian Kepuasan (e-Sijil)</span></li>
+          </ul>
+        </div>
+
+        <div class="section-block">
+          <div class="block-title">Pempamer Kesihatan</div>
+          <div class="pills-wrap">
+            <span class="pill">LPPKN</span>
+            <span class="pill">AADK Perlis</span>
+            <span class="pill">HIV/AIDS JKNPs</span>
+            <span class="pill">MENTARI Perlis</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. CALL TO ACTION -->
+      <div class="cta-box">
+        <div class="cta-text">📌 SCAN KOD QR DI KAUNSEL PENDAFTARAN PADA HARI KEJADIAN</div>
+        <div class="cta-sub">e-Sijil disediakan selepas melengkapkan penilaian kepuasan program</div>
+      </div>
+    </div>
+
+    <!-- 8. FOOTER LOGOS (2 TINGKAT) -->
+    <footer class="footer-partners">
+      <!-- Tingkat 1: Pempamer -->
+      <div style="margin-bottom: 4px;">
+        <div class="footer-title">Rakan Kerjasama Pempamer</div>
+        <div class="footer-logos-primary">
+          <img src="images/logo-lppkn.png" alt="LPPKN" class="partner-img-primary">
+          <img src="images/logo-aadk.png" alt="AADK" class="partner-img-primary">
+          <img src="images/logo-mentari.png" alt="MENTARI" class="partner-img-primary">
+        </div>
+      </div>
+
+      <!-- Tingkat 2: Kempen Rasmi (ANMS, MADANI, TMP2026, STIGMA, PERLIS SIHAT) -->
+      <div style="padding-top: 4px; border-top: 1px dashed #e2e8f0;">
+        <div class="footer-title">Inisiatif & Kempen Rasmi</div>
+        <div class="footer-logos-campaigns">
+          <img src="images/logo-anms.png" alt="ANMS" class="partner-img-campaign">
+          <img src="images/logo-madani.png" alt="Malaysia Madani" class="partner-img-campaign">
+          <img src="images/logo-tmp2026.png" alt="TMP 2026" class="partner-img-campaign">
+          <img src="images/logo-hentikan-stigma.png" alt="Hentikan Stigma" class="partner-img-campaign">
+          <img src="images/logo-perlis-sihat.png" alt="Perlis Sihat" class="partner-img-campaign">
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>

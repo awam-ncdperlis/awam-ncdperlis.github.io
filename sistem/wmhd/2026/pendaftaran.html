@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borang Pendaftaran Kehadiran - HKM 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.94);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --brand-accent: #0d9488;
+      --brand-accent-hover: #0f766e;
+      --border-color: #cbd5e1;
+      --radius-lg: 24px;
+      --radius-md: 12px;
+      --shadow-md: 0 20px 40px -4px rgba(0, 0, 0, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    body {
+      background-color: #0f172a;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 🎥 VIDEO BACKGROUND & OVERLAY STYLES */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.45); /* Filem gelap untuk kontras */
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: -1;
+    }
+
+    .form-card {
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      max-width: 540px;
+      width: 100%;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header Logo */
+    .brand-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .brand-logo { height: 50px; width: auto; object-fit: contain; }
+
+    .form-body { flex: 1; padding: 16px 0 0; }
+
+    .form-title { font-size: 1.3rem; font-weight: 800; color: var(--text-main); text-align: center; letter-spacing: -0.02em; }
+    .form-subtitle { font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 4px; margin-bottom: 20px; }
+
+    .category-selection-box { margin-bottom: 16px; }
+
+    /* GRID BUTANG KATEGORI (UTAMA BESAR & KECIL) */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .cat-btn {
+      background: #f8fafc;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px 8px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cat-btn-main {
+      grid-column: span 1;
+      padding: 18px 12px;
+      font-size: 0.98rem;
+      background: #ffffff;
+      border-width: 2px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .cat-btn-sub {
+      padding: 10px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .cat-btn.active {
+      background: #f0fdf4;
+      border-color: var(--brand-accent);
+      color: #0f766e;
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    #dynamicFormFields { display: none; animation: fadeIn 0.3s ease-in-out; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
+    
+    .form-control {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      background-color: #ffffff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--brand-accent);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .form-control:disabled {
+      background-color: #f1f5f9;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .no-email-check {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .no-email-check input { cursor: pointer; }
+
+    .btn-submit {
+      width: 100%;
+      background-color: var(--brand-accent);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25);
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background-color: var(--brand-accent-hover); }
+    .btn-submit:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+    #successCard { display: none; text-align: center; padding: 20px 0; }
+    .btn-redirect { display: block; background: #0284c7; color: white; text-decoration: none; padding: 14px; border-radius: var(--radius-md); font-weight: 700; margin-top: 20px; font-size: 0.92rem; }
+
+    .hidden { display: none; }
+
+    /* FOOTER LOGOS */
+    .footer-partners {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+    }
+
+    .footer-section { margin-bottom: 12px; }
+    .footer-section:last-child { margin-bottom: 0; }
+
+    .partner-title { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 8px; }
+
+    .footer-logos-primary { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .partner-img-primary { height: 26px; width: auto; opacity: 0.85; }
+
+    .footer-logos-campaigns { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .partner-img-campaign { height: 22px; width: auto; opacity: 0.8; }
+
+    @media (max-width: 600px) {
+      .form-card { padding: 24px 18px; }
+      .brand-header { gap: 16px; }
+      .brand-logo { height: 42px; }
+      .row-2 { grid-template-columns: 1fr; gap: 10px; }
+      .partner-img-primary { height: 22px; }
+      .partner-img-campaign { height: 18px; }
+      .cat-btn-main { font-size: 0.88rem; padding: 14px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎥 VIDEO BACKGROUND AUTOMATIK -->
+  <video class="video-bg" autoplay loop muted playsinline>
+    <source src="images/background.webm" type="video/webm">
+  </video>
+  <div class="video-overlay"></div>
+
+  <div class="form-card">
+
+    <!-- 1. HEADER LOGO UTAMA -->
+    <header class="brand-header">
+      <img src="images/logo-jata-perlis.png" alt="SUK Perlis (Jata Perlis)" class="brand-logo">
+      <img src="images/jata-malaysia.png" alt="JKNPs (Jata Malaysia)" class="brand-logo">
+    </header>
+
+    <!-- 2. BORANG PENDAFTARAN KEHADIRAN -->
+    <div class="form-body" id="formBody">
+      <h1 class="form-title">Pendaftaran Kehadiran</h1>
+      <p class="form-subtitle">Sila pilih kategori pendaftaran anda di bawah</p>
+
+      <div class="category-selection-box">
+        <div class="category-grid">
+          <button type="button" class="cat-btn cat-btn-main" onclick="selectCategory('Peserta', this)">🧑‍🤝‍🧑 Peserta</button>
+          <button type="button" class="cat-btn cat-btn-main" onclick="selectCategory('Wakil Jabatan/Agensi', this)">🏛️ Wakil Jabatan/Agensi</button>
+          <button type="button" class="cat-btn cat-btn-sub" onclick="selectCategory('Urusetia', this)">📋 Urusetia</button>
+          <button type="button" class="cat-btn cat-btn-sub" onclick="selectCategory('Pempamer', this)">🎪 Pempamer</button>
+        </div>
+      </div>
+
+      <form id="registrationForm">
+        <input type="hidden" id="kategori_peserta" name="kategori_peserta" value="">
+        <input type="hidden" id="no_ic_raw" name="no_ic" value="">
+        <input type="hidden" id="jantina_real" name="jantina" value="">
+
+        <div id="dynamicFormFields">
+
+          <div class="form-group">
+            <label>Nama Penuh (Mengikut KP) *</label>
+            <input type="text" id="nama_penuh" name="nama_penuh" class="form-control" placeholder="AHMAD BIN ABDULLAH" required style="text-transform: uppercase;">
+          </div>
+
+          <div class="row-2">
+            <div class="form-group">
+              <label>No. Kad Pengenalan *</label>
+              <input type="text" id="no_ic_display" class="form-control" placeholder="900101-09-5555" maxlength="14" required oninput="formatICAndDetectGender(this)">
+            </div>
+            <div class="form-group">
+              <label>Jantina (Auto-Detect) *</label>
+              <select id="jantina_display" class="form-control" disabled required>
+                <option value="">-- Auto --</option>
+                <option value="Lelaki">Lelaki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row-2">
+            <div class="form-group">
+              <label>No. Telefon *</label>
+              <input type="tel" id="no_tel" name="no_tel" class="form-control" placeholder="0123456789" required>
+            </div>
+            <div class="form-group">
+              <label>Alamat E-mel (e-Sijil) *</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="nama@gmail.com" required>
+              <label class="no-email-check">
+                <input type="checkbox" id="checkNoEmail" onchange="toggleNoEmail(this)">
+                <span>Peserta tiada alamat e-mel</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Peringkat / Kumpulan *</label>
+            <select id="peringkat_kumpulan" name="peringkat_kumpulan" class="form-control" required onchange="handleKumpulanChange()">
+              <option value="">-- Pilih Kumpulan --</option>
+              <option value="JKN Perlis">JKN Perlis (Kesihatan)</option>
+              <option value="SUK Perlis">SUK Perlis (Negeri)</option>
+              <option value="Agensi Persekutuan">Agensi Persekutuan (Perlis)</option>
+              <option value="IPTA / IPTS">IPTA / IPTS / Kolej</option>
+              <option value="Komuniti / Awam">Komuniti / Awam / NGO</option>
+              <option value="Lain-lain">Lain-lain</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Nama Jabatan / Agensi / Institusi *</label>
+            <select id="nama_agensi_select" class="form-control" required onchange="handleAgencyChange()">
+              <option value="">-- Pilih Peringkat Dahulu --</option>
+            </select>
+            <input type="hidden" id="nama_agensi" name="nama_agensi" value="">
+          </div>
+
+          <div class="form-group hidden" id="group_agensi_manual">
+            <label>Nyatakan Nama Jabatan / Agensi / Persatuan *</label>
+            <input type="text" id="nama_agensi_manual" class="form-control" placeholder="Contoh: Persatuan Belia Perlis">
+          </div>
+
+          <div class="form-group" id="group_jawatan_gred">
+            <label>Jawatan & Gred</label>
+            <input type="text" id="jawatan_gred" name="jawatan_gred" class="form-control" placeholder="Contoh: Penolong Pegawai Perubatan U32 (Opsional)">
+          </div>
+
+          <!-- KATEGORI PEMPAMER -->
+          <div class="form-group hidden" id="group_pempamer">
+            <label>Agensi Pempamer *</label>
+            <select id="kategori_pempamer" name="kategori_pempamer" class="form-control">
+              <option value="">-- Pilih Agensi Pempamer --</option>
+              <option value="LPPKN Negeri Perlis">LPPKN Negeri Perlis</option>
+              <option value="Kawalan Penyakit Tidak Berjangkit (NCD) JKNPs">Kawalan Penyakit Tidak Berjangkit (NCD) JKNPs</option>
+              <option value="Unit HIV/STI JKNPs">Unit HIV/STI JKNPs</option>
+            </select>
+          </div>
+
+          <button type="submit" id="btnSubmit" class="btn-submit">Hantar Kehadiran</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- 3. SUCCESS CARD SCREEN -->
+    <div id="successCard">
+      <h2 style="font-size: 1.2rem; font-weight:800; color:#166534; margin-bottom: 6px;">✓ Kehadiran Berjaya Direkodkan</h2>
+      <p style="font-size: 0.85rem; color: #475569;">Sila tekan butang di bawah untuk melengkapkan ujian profil stigma STIG-9.</p>
+      <a href="https://awam-ncdperlis.github.io/sistem/stig-9/" class="btn-redirect">Lengkapkan Ujian STIG-9 &rarr;</a>
+    </div>
+
+    <!-- 4. FOOTER LOGO KERJASAMA -->
+    <footer class="footer-partners">
+      <div class="footer-section">
+        <div class="partner-title">Rakan Kerjasama Pempamer</div>
+        <div class="footer-logos-primary">
+          <img src="images/logo-lppkn.png" alt="LPPKN" class="partner-img-primary">
+          <img src="images/logo-aadk.png" alt="AADK" class="partner-img-primary">
+        </div>
+      </div>
+
+      <div class="footer-section" style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border-color);">
+        <div class="partner-title">Inisiatif & Kempen Rasmi</div>
+        <div class="footer-logos-campaigns">
+          <img src="images/logo-anms.png" alt="Agenda Nasional Malaysia Sihat" class="partner-img-campaign">
+          <img src="images/logo-madani.png" alt="Malaysia Madani" class="partner-img-campaign">
+          <img src="images/logo-tmp2026.png" alt="Tahun Melawat Perlis 2026" class="partner-img-campaign">
+          <img src="images/logo-hentikan-stigma.png" alt="Hentikan Stigma" class="partner-img-campaign">
+          <img src="images/logo-perlis-sihat.png" alt="Perlis Sihat Sejahtera" class="partner-img-campaign">
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw10wUuvtlFxxGK3t2e54gReRAbF-Ifnw5t6yu8jl0_5YjJvZSLpI4Bks6-e-AKEJVz/exec';
+    const form = document.getElementById('registrationForm');
+    const btnSubmit = document.getElementById('btnSubmit');
+
+    const agencyData = {
+      "JKN Perlis": [
+        "Jabatan Kesihatan Negeri Perlis (Ibu Pejabat JKNPs)",
+        "Hospital Tuanku Fauziah (HTF) Kangar",
+        "Pejabat Kesihatan Daerah (PKD) Kangar",
+        "Pejabat Kesihatan Daerah (PKD) Arau",
+        "Pejabat Kesihatan Daerah (PKD) Padang Besar",
+        "Klinik Kesihatan Kangar",
+        "Klinik Kesihatan Arau",
+        "Klinik Kesihatan Padang Besar",
+        "Klinik Kesihatan Beseri",
+        "Klinik Kesihatan Kuala Perlis",
+        "Klinik Kesihatan Simpang Empat",
+        "Klinik Kesihatan Kaki Bukit",
+        "Klinik Kesihatan Kuala Sanglang",
+        "Klinik Kesihatan Pauh",
+        "Klinik Kesihatan Kampung Gial",
+        "Klinik Kesihatan Jejawi",
+        "Klinik Kesihatan Felda Chuping",
+        "Klinik Kesihatan UTC Perlis",
+        "MENTARI Perlis",
+        "Klinik Pergigian Kangar / Arau / Kaki Bukit / Gial",
+        "Lain-lain (Nyatakan)"
+      ],
+      "SUK Perlis": [
+        "Pejabat Setiausaha Kerajaan Negeri Perlis (SUK)",
+        "Pejabat Tanah dan Galian (PTG) Perlis",
+        "Pejabat D.Y.M.M. Tuanku Raja Perlis",
+        "Jabatan Hal Ehwal Agama Islam Negeri Perlis (JAIPs)",
+        "Majlis Agama Islam dan Adat Istiadat Melayu Perlis (MAIPs)",
+        "Jabatan Kebajikan Masyarakat (JKM) Negeri Perlis",
+        "Pejabat Kewangan Negeri Perlis",
+        "Jabatan Pengairan dan Saliran (JPS) Perlis",
+        "Jabatan Kerja Raya (JKR) Perlis",
+        "Majlis Perbandaran Kangar (MPK)",
+        "Lain-lain (Nyatakan)"
+      ],
+      "Agensi Persekutuan": [
+        "Agensi Anti Dadah Kebangsaan (AADK) Perlis",
+        "Polis Diraja Malaysia (PDRM Kontinjen Perlis)",
+        "Jabatan Pendidikan Negeri (JPN) Perlis",
+        "Jabatan Bomba dan Penyelamat Malaysia (JBPM) Perlis",
+        "Jabatan Imigresen Malaysia Negeri Perlis",
+        "Jabatan Kastam Diraja Malaysia Negeri Perlis",
+        "Jabatan Pengangkutan Jalan (JPJ) Perlis",
+        "Angkatan Pertahanan Awam Malaysia (APM) Perlis",
+        "Jabatan Kemajuan Masyarakat (KEMAS) Perlis",
+        "Jabatan Perpaduan Negara & Integrasi Nasional (JPNIN)",
+        "Jabatan Sukarelawan Malaysia (RELA) Perlis",
+        "Jabatan Tenaga Kerja (JTK) Perlis",
+        "Pejabat Pembangunan Wanita (PPW) Perlis",
+        "Pasukan Gerakan Am (PGA) Perlis",
+        "Pusat Koreksional Perlis / Penjara",
+        "Jabatan Belia dan Sukan (JBS) Perlis",
+        "Jabatan Penerangan Negeri Perlis (JAPen)",
+        "Jabatan Penyiaran Malaysia (RTM Perlis)",
+        "Majlis Keselamatan Negara (MKN) Perlis",
+        "MAQIS Negeri Perlis",
+        "Rejimen 504 Askar Wataniah",
+        "Lain-lain (Nyatakan)"
+      ],
+      "IPTA / IPTS": [
+        "Universiti Malaysia Perlis (UniMAP)",
+        "Universiti Teknologi MARA (UiTM) Arau",
+        "Kolej Matrikulasi Perlis (KMP)",
+        "Institut Pendidikan Guru Kampus Perlis (IPGM)",
+        "Institut Latihan Perindustrian (ILP) Kangar",
+        "Institut Kemahiran Belia Negara (IKBN) Kuala Perlis",
+        "ILKKM Kangar (Kejururawatan)",
+        "Politeknik Tuanku Syed Sirajuddin (PTSS)",
+        "Kolej Komuniti Arau / Kangar",
+        "Lain-lain (Nyatakan)"
+      ],
+      "Komuniti / Awam": [
+        "KOSPEN / KRT",
+        "Ketua Komuniti / JKKK / MPKK",
+        "Pertubuhan Bukan Kerajaan (NGO)",
+        "LPPKN Negeri Perlis",
+        "Orang Awam / Persendirian",
+        "Lain-lain (Nyatakan)"
+      ],
+      "Lain-lain": [
+        "Lain-lain (Nyatakan)"
+      ]
+    };
+
+    function selectCategory(categoryName, btnElement) {
+      document.getElementById('kategori_peserta').value = categoryName;
+      
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      document.getElementById('dynamicFormFields').style.display = 'block';
+
+      const groupPempamer = document.getElementById('group_pempamer');
+      const inputPempamer = document.getElementById('kategori_pempamer');
+
+      if (categoryName === 'Pempamer') {
+        groupPempamer.classList.remove('hidden');
+        inputPempamer.required = true;
+      } else {
+        groupPempamer.classList.add('hidden');
+        inputPempamer.required = false;
+        inputPempamer.value = '';
+      }
+    }
+
+    function toggleNoEmail(checkbox) {
+      const emailInput = document.getElementById('email');
+      if (checkbox.checked) {
+        emailInput.value = "tiada@email.com";
+        emailInput.readOnly = true;
+        emailInput.style.backgroundColor = "#f1f5f9";
+      } else {
+        emailInput.value = "";
+        emailInput.readOnly = false;
+        emailInput.style.backgroundColor = "#ffffff";
+      }
+    }
+
+    function formatICAndDetectGender(input) {
+      let cleanNumbers = input.value.replace(/\D/g, '');
+      document.getElementById('no_ic_raw').value = cleanNumbers;
+
+      let formatted = '';
+      if (cleanNumbers.length > 0) {
+        formatted = cleanNumbers.substring(0, 6);
+        if (cleanNumbers.length > 6) {
+          formatted += '-' + cleanNumbers.substring(6, 8);
+        }
+        if (cleanNumbers.length > 8) {
+          formatted += '-' + cleanNumbers.substring(8, 12);
+        }
+      }
+      input.value = formatted;
+
+      const jantinaSelect = document.getElementById('jantina_display');
+      const jantinaReal = document.getElementById('jantina_real');
+
+      if (cleanNumbers.length === 12) {
+        const lastDigit = parseInt(cleanNumbers.charAt(11), 10);
+        const detectedGender = (lastDigit % 2 === 0) ? 'Perempuan' : 'Lelaki';
+        
+        jantinaSelect.value = detectedGender;
+        jantinaReal.value = detectedGender;
+      } else {
+        jantinaSelect.value = '';
+        jantinaReal.value = '';
+      }
+    }
+
+    function handleKumpulanChange() {
+      const kumpulan = document.getElementById('peringkat_kumpulan').value;
+      const groupJawasan = document.getElementById('group_jawatan_gred');
+      const inputJawatan = document.getElementById('jawatan_gred');
+
+      if (kumpulan === "Komuniti / Awam") {
+        groupJawasan.classList.add('hidden');
+        inputJawatan.value = "";
+      } else {
+        groupJawasan.classList.remove('hidden');
+      }
+
+      const agensiSelect = document.getElementById('nama_agensi_select');
+      agensiSelect.innerHTML = '<option value="">-- Pilih Jabatan / Agensi --</option>';
+
+      if (kumpulan && agencyData[kumpulan]) {
+        agencyData[kumpulan].forEach(agency => {
+          let opt = document.createElement('option');
+          opt.value = agency;
+          opt.textContent = agency;
+          agensiSelect.appendChild(opt);
+        });
+      }
+      handleAgencyChange();
+    }
+
+    function handleAgencyChange() {
+      const selectedAgensi = document.getElementById('nama_agensi_select').value;
+      const groupManual = document.getElementById('group_agensi_manual');
+      const inputManual = document.getElementById('nama_agensi_manual');
+      const hiddenAgensi = document.getElementById('nama_agensi');
+
+      if (selectedAgensi === 'Lain-lain (Nyatakan)') {
+        groupManual.classList.remove('hidden');
+        inputManual.required = true;
+        hiddenAgensi.value = inputManual.value;
+      } else {
+        groupManual.classList.add('hidden');
+        inputManual.required = false;
+        hiddenAgensi.value = selectedAgensi;
+      }
+    }
+
+    document.getElementById('nama_agensi_manual').addEventListener('input', function() {
+      document.getElementById('nama_agensi').value = this.value;
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      
+      const rawIC = document.getElementById('no_ic_raw').value;
+      if (rawIC.length !== 12) {
+        alert('Sila pastikan No. Kad Pengenalan mempunyai 12 digit nombor yang sah.');
+        return;
+      }
+
+      btnSubmit.disabled = true;
+      btnSubmit.innerText = 'Menghantar Kehadiran...';
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => response.json())
+        .then(data => {
+          if(data.result === "success") {
+            document.getElementById('formBody').style.display = 'none';
+            document.getElementById('successCard').style.display = 'block';
+          } else {
+            alert('Ralat semasa menghantar: ' + data.message);
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = 'Hantar Kehadiran';
+          }
+        })
+        .catch(error => {
+          alert('Ralat Rangkaian. Sila cuba lagi.');
+          btnSubmit.disabled = false;
+          btnSubmit.innerText = 'Hantar Kehadiran';
+        });
+    });
+  </script>
+
+</body>
+</html>

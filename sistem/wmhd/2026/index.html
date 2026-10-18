@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sambutan Hari Kesihatan Mental & Bulan Kaunseling Perlis 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --surface: rgba(255, 255, 255, 0.94);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --brand-accent: #0d9488;
+      --brand-accent-hover: #0f766e;
+      --border-color: #e2e8f0;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow-sm: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 20px 40px -4px rgba(0, 0, 0, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    body {
+      background-color: #0f172a;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 🎥 VIDEO BACKGROUND & OVERLAY STYLES */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: -1;
+    }
+
+    .app-card {
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      max-width: 840px;
+      width: 100%;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 10;
+    }
+
+    .brand-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      padding-bottom: 16px;
+    }
+
+    .brand-logo { height: 60px; width: auto; object-fit: contain; transition: transform 0.2s; }
+    .brand-logo:hover { transform: scale(1.03); }
+
+    .program-header-box {
+      text-align: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 16px;
+    }
+
+    .tag-title {
+      display: inline-block;
+      background: #f0fdf4;
+      color: #166534;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+      border: 1px solid #bbf7d0;
+      letter-spacing: 0.02em;
+    }
+
+    .main-program-title { 
+      font-size: 1.35rem; 
+      font-weight: 800; 
+      color: var(--text-main); 
+      line-height: 1.35; 
+      letter-spacing: -0.025em; 
+    }
+
+    .main-program-subtitle { font-size: 0.88rem; color: var(--text-muted); margin-top: 6px; font-weight: 600; line-height: 1.4; }
+
+    .tab-nav {
+      display: flex;
+      gap: 6px;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      padding: 5px;
+      border-radius: var(--radius-md);
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 11px 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .tab-btn.active {
+      background: var(--surface);
+      color: var(--brand-accent);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .slide-container { min-height: 320px; padding: 4px 0; }
+    .slide { display: none; }
+    .slide.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-title-inner { font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px; text-align: center; }
+
+    .vip-split-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .vip-card-elegan {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .vip-card-elegan:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vip-img-box {
+      width: 120px;
+      min-width: 120px;
+      height: 150px;
+      position: relative;
+      background-color: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .vip-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .vip-content-box {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .vip-role-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand-accent);
+      background: #f0fdf4;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+      border: 1px solid #bbf7d0;
+    }
+
+    .vip-name { font-size: 0.95rem; font-weight: 800; color: var(--text-main); line-height: 1.35; }
+    .vip-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; font-weight: 600; line-height: 1.3; }
+
+    .grid-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
+    .info-box { background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; text-align: center; }
+    .info-lbl { font-size: 0.72rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .info-val { font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-top: 3px; }
+
+    .speaker-profile-layout {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      align-items: flex-start;
+    }
+
+    .speaker-img-container {
+      width: 170px;
+      min-width: 170px;
+      height: 230px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(3, 105, 161, 0.12);
+    }
+
+    .speaker-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .speaker-bio-content { 
+      flex: 1; 
+      text-align: left; 
+      max-height: 380px; 
+      overflow-y: auto; 
+      padding-right: 6px;
+    }
+
+    .speaker-bio-title { font-size: 1.25rem; font-weight: 800; color: #0369a1; }
+    .speaker-bio-subtitle { font-size: 0.82rem; font-weight: 700; color: #0284c7; margin-bottom: 8px; }
+    
+    .speaker-theme-box {
+      background: #ffffff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: #334155;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .bio-section-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #0369a1;
+      margin: 10px 0 4px;
+      border-bottom: 1px dashed #bae6fd;
+      padding-bottom: 2px;
+    }
+
+    .bio-list { list-style-type: none; font-size: 0.8rem; color: #334155; line-height: 1.45; }
+    .bio-list li { position: relative; padding-left: 14px; margin-bottom: 4px; }
+    .bio-list li::before { content: "•"; color: #0284c7; font-weight: bold; position: absolute; left: 0; }
+
+    /* Timeline Section (Aturcara) */
+    .timeline { display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; }
+    .t-row { display: flex; gap: 14px; padding-bottom: 8px; border-bottom: 1px dashed var(--border-color); align-items: center; }
+    .t-row:last-child { border-bottom: none; }
+    .t-time { font-weight: 800; color: var(--brand-accent); min-width: 95px; flex-shrink: 0; }
+
+    .badge-wrap { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
+    .badge-item { background: #f8fafc; border: 1px solid var(--border-color); padding: 10px 18px; border-radius: 99px; font-size: 0.88rem; font-weight: 700; color: var(--text-main); }
+
+    .nav-controls { display: flex; gap: 12px; margin-top: 20px; }
+    .btn-nav { 
+      flex: 1; 
+      padding: 13px; 
+      border-radius: var(--radius-md); 
+      font-weight: 700; 
+      font-size: 0.9rem; 
+      border: 1px solid var(--border-color); 
+      background: var(--surface); 
+      color: var(--text-main); 
+      cursor: pointer; 
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: #f1f5f9; }
+
+    .btn-register { 
+      flex: 2; 
+      background: var(--brand-accent); 
+      color: white; 
+      border: none; 
+      font-weight: 700; 
+      text-decoration: none; 
+      text-align: center; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      border-radius: var(--radius-md); 
+      font-size: 0.92rem; 
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25); 
+      transition: all 0.2s;
+    }
+    .btn-register:hover { background: var(--brand-accent-hover); }
+
+    .btn-register.disabled {
+      background: #cbd5e1 !important;
+      color: #64748b !important;
+      box-shadow: none !important;
+      cursor: not-allowed !important;
+      pointer-events: none;
+    }
+
+    .footer-partners {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+    }
+
+    .footer-section { margin-bottom: 14px; }
+    .footer-section:last-child { margin-bottom: 0; }
+
+    .partner-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 8px; }
+    
+    .footer-logos-primary { display: flex; justify-content: center; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .partner-img-primary { height: 28px; width: auto; opacity: 0.85; transition: opacity 0.2s; }
+
+    .footer-logos-campaigns { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .partner-img-campaign { height: 24px; width: auto; opacity: 0.8; transition: opacity 0.2s; }
+
+    .partner-img-primary:hover, .partner-img-campaign:hover { opacity: 1; }
+
+    @media (max-width: 680px) {
+      .app-card { padding: 24px 18px; }
+      .brand-header { gap: 16px; }
+      .brand-logo { height: 46px; }
+      .main-program-title { font-size: 1.15rem; }
+      .vip-split-grid { grid-template-columns: 1fr; gap: 10px; }
+      .speaker-profile-layout { flex-direction: column; align-items: center; text-align: center; }
+      .speaker-img-container { width: 140px; min-width: 140px; height: 180px; }
+      .speaker-bio-content { text-align: center; max-height: none; }
+      .bio-list li { text-align: left; }
+      .grid-info { grid-template-columns: 1fr; gap: 8px; }
+      .tab-btn { font-size: 0.78rem; padding: 8px 4px; }
+      .footer-logos-primary { gap: 16px; }
+      .footer-logos-campaigns { gap: 12px; }
+      .partner-img-primary { height: 24px; }
+      .partner-img-campaign { height: 20px; }
+      .t-time { min-width: 80px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎥 VIDEO BACKGROUND -->
+  <video class="video-bg" autoplay loop muted playsinline>
+    <source src="images/background.webm" type="video/webm">
+  </video>
+  <div class="video-overlay"></div>
+
+  <div class="app-card">
+    
+    <!-- 1. HEADER LOGO UTAMA -->
+    <header class="brand-header">
+      <img src="images/logo-jata-perlis.png" alt="SUK Perlis (Jata Perlis)" class="brand-logo">
+      <img src="images/jata-malaysia.png" alt="JKNPs (Jata Malaysia)" class="brand-logo">
+    </header>
+
+    <!-- 2. TAJUK PROGRAM & ANJURAN RASMI -->
+    <div class="program-header-box">
+      <span class="tag-title">Sambutan Hari Kesihatan Mental Sedunia & Bulan Kaunseling 2026</span>
+      <h1 class="main-program-title">Sambutan Hari Kesihatan Mental Sedunia & Bulan Kaunseling Peringkat Negeri Perlis 2026</h1>
+      <p class="main-program-subtitle">Anjuran bersama Jabatan Kesihatan Negeri Perlis (JKNPs) dan Pejabat Setiausaha Kerajaan (SUK) Negeri Perlis</p>
+    </div>
+
+    <!-- 3. TAB NAVIGASI SLAID -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="goToSlide(0)">Info Utama</button>
+      <button class="tab-btn" onclick="goToSlide(1)">Penceramah</button>
+      <button class="tab-btn" onclick="goToSlide(2)">Tentatif</button>
+      <button class="tab-btn" onclick="goToSlide(3)">Pameran</button>
+    </nav>
+
+    <!-- 4. KANDUNGAN SLAID -->
+    <div class="slide-container">
+      
+      <!-- Slaid 1: Info Utama -->
+      <div class="slide active">
+        <div class="vip-split-grid">
+          <div class="vip-card-elegan">
+            <div class="vip-img-box">
+              <img src="images/YB-Dato'-Noor-Azman.jpg" alt="YB Dato' Noor Azman Rahman">
+            </div>
+            <div class="vip-content-box">
+              <span class="vip-role-tag">Perasmi</span>
+              <div class="vip-name">YB Dato' Noor Azman Rahman</div>
+              <div class="vip-sub">Setiausaha Kerajaan Negeri Perlis</div>
+            </div>
+          </div>
+
+          <div class="vip-card-elegan">
+            <div class="vip-img-box">
+              <img src="images/amin-idris.png" alt="Tuan Amin Idris">
+            </div>
+            <div class="vip-content-box">
+              <span class="vip-role-tag">Penceramah</span>
+              <div class="vip-name">Tuan Amin Idris</div>
+              <div class="vip-sub">Sesi Perkongsian Khas & Lived Experiences</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-info">
+          <div class="info-box"><div class="info-lbl">Tarikh & Masa</div><div class="info-val">20 Okt 2026 (8.00 pagi)</div></div>
+          <div class="info-box"><div class="info-lbl">Lokasi Program</div><div class="info-val">Dewan Bankuet, SUK</div></div>
+        </div>
+      </div>
+
+      <!-- Slaid 2: Detail Penceramah -->
+      <div class="slide">
+        <div class="speaker-profile-layout">
+          <div class="speaker-img-container">
+            <img src="images/amin-idris.png" alt="Tuan Amin Idris">
+          </div>
+          <div class="speaker-bio-content">
+            <div class="speaker-bio-title">Amin Idris</div>
+            <div class="speaker-bio-subtitle">Pengasas AMSSB • Master Trainer • Penceramah & Pengacara TV</div>
+            
+            <div class="speaker-theme-box">
+              <strong>Tema Sesi Khas:</strong> "Lived Experiences Heard • Real Voices • Real Change: Di Sebalik Senyuman • Bila Suara Didengari Perubahan Bermula"
+            </div>
+
+            <div class="bio-section-title">Latar Pendidikan</div>
+            <ul class="bio-list">
+              <li>Ijazah Sarjana Muda Undang-Undang (UIAM)</li>
+            </ul>
+
+            <div class="bio-section-title">Kelayakan Profesional & Akreditasi</div>
+            <ul class="bio-list">
+              <li>Setiausaha Agung Pertubuhan Perunding Latihan & Motivasi Muslim Malaysia (TAMRIN)</li>
+              <li>Certified NLP Practitioner & NLP Master Practitioner (NFNLP, USA)</li>
+              <li>Sijil Iktiraf 'Trainer Basic Training' (TAMRIN)</li>
+              <li>Certified Professional Image Consultant (Akademi Imej / Training Cube Intl)</li>
+              <li>Practitioner Professional Learning Facilitator (Take Charge Sdn. Bhd.)</li>
+              <li>Ahli Bertaraf Profesional kepada Malaysian Association of Professional Speakers (MAPS / IFFPS)</li>
+            </ul>
+
+            <div class="bio-section-title">Pengalaman Media & Pengacaraan TV</div>
+            <ul class="bio-list">
+              <li>Pengacara TV Alhijrah (Assalamu'alaikum, Bicara, Segmen Motivasi, Pentas Dakwah, Maqasid Syariah)</li>
+              <li>Pengacara Rancangan TV Pendidikan (TV9)</li>
+              <li>Pengacara Siaran Langsung Sambutan Maulidur Rasul Kebangsaan</li>
+              <li>Pengacara Tilawah Al-Qur'an Peringkat Antarabangsa</li>
+              <li>Pengacara Forum Perdana Ehwal Islam & Bual Bicara Al-Bayan (JAKIM)</li>
+            </ul>
+
+            <div class="bio-section-title">Kemunculan TV & Radio</div>
+            <ul class="bio-list">
+              <li>Motivator Slot Motivasi Pagi & Tetamu Wanita Hari Ini (TV3)</li>
+              <li>Tetamu Jemputan Slot Motivasi Selamat Pagi Malaysia, Fitrah Kasih & Gen Y (TV1)</li>
+              <li>Tetamu Bual Bicara Radio 24, Nasional.fm & Klip Motivasi Traxxx.fm</li>
+            </ul>
+
+            <div class="bio-section-title">Hasil Karya Penulisan (Buku)</div>
+            <ul class="bio-list">
+              <li>Magnet Diri: Cipta Pengaruh Luarbiasa & Berjaya (Top 10 Best Seller 2009)</li>
+              <li>Magnet Diri: 23 Individu Hebat (2017)</li>
+              <li>Stres Untuk Sukses (2016)</li>
+              <li>Law of Universal Attraction: Magnet Kebahagiaan</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slaid 3: Tentatif Program (Dikemaskini Berdasarkan PDF Rasmi) -->
+      <div class="slide">
+        <h2 class="slide-title-inner">Tentatif Program</h2>
+        <div class="timeline">
+          <div class="t-row"><div class="t-time">08.00 pagi</div><div>Pendaftaran Peserta & Sarapan Pagi</div></div>
+          <div class="t-row"><div class="t-time">08.30 pagi</div><div>Ketibaan Tetamu Jemputan & VVIP</div></div>
+          <div class="t-row"><div class="t-time">08.45 pagi</div><div>Sesi Khas Bersama Amin Idris (Bahagian 1)</div></div>
+          <div class="t-row"><div class="t-time">10.30 pagi</div><div>Sesi X-Break & Kuiz Interaktif Kahoot</div></div>
+          <div class="t-row"><div class="t-time">10.50 pagi</div><div>Sesi Khas Bersama Amin Idris (Bahagian 2)</div></div>
+          <div class="t-row"><div class="t-time">11.30 pagi</div><div>Majlis Perasmian & Nyanyian Lagu Rasmi</div></div>
+          <div class="t-row"><div class="t-time">11.49 pagi</div><div>Bacaan Doa & Ucapan Aluan Pengarah Kesihatan Negeri Perlis</div></div>
+          <div class="t-row"><div class="t-time">12.12 t/hari</div><div>Ucapan Perasmian YB SUK Perlis & Simbolik Pelancaran</div></div>
+          <div class="t-row"><div class="t-time">12.25 t/hari</div><div>Penyampaian Hadiah Kuiz Kahoot, Cenderahati & Sesi Fotografi</div></div>
+          <div class="t-row"><div class="t-time">12.33 t/hari</div><div>Jamuan Makan Tengah Hari & Penilaian Keberkesanan (e-Sijil)</div></div>
+          <div class="t-row"><div class="t-time">01.00 t/hari</div><div>Majlis Bersurai</div></div>
+        </div>
+      </div>
+
+      <!-- Slaid 4: Pameran -->
+      <div class="slide">
+        <h2 class="slide-title-inner">Pameran Agensi Kesihatan</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 12px;">Perkhidmatan saringan & kaunseling terbuka sepanjang program:</p>
+        <div class="badge-wrap">
+          <div class="badge-item">LPPKN Negeri Perlis</div>
+          <div class="badge-item">Agensi Anti Dadah Kebangsaan (AADK) Perlis</div>
+          <div class="badge-item">Kawalan Penyakit Tidak Berjangkit (NCD) JKNPs</div>
+          <div class="badge-item">Unit HIV/STI JKNPs</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 5. BUTTON NAVIGASI -->
+    <div class="nav-controls">
+      <button class="btn-nav" onclick="changeSlide(-1)">← Semula</button>
+      <button class="btn-nav" onclick="changeSlide(1)">Lanjut →</button>
+      <a href="pendaftaran.html" id="btnRegister" class="btn-register">Daftar Kehadiran</a>
+    </div>
+
+    <!-- 6. FOOTER LOGOS -->
+    <footer class="footer-partners">
+      <div class="footer-section">
+        <div class="partner-title">Rakan Kerjasama Pempamer</div>
+        <div class="footer-logos-primary">
+          <img src="images/logo-lppkn.png" alt="LPPKN" class="partner-img-primary">
+          <img src="images/logo-aadk.png" alt="AADK" class="partner-img-primary">
+        </div>
+      </div>
+
+      <div class="footer-section" style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border-color);">
+        <div class="partner-title">Inisiatif & Kempen Rasmi</div>
+        <div class="footer-logos-campaigns">
+          <img src="images/logo-anms.png" alt="Agenda Nasional Malaysia Sihat" class="partner-img-campaign">
+          <img src="images/logo-madani.png" alt="Malaysia Madani" class="partner-img-campaign">
+          <img src="images/logo-tmp2026.png" alt="Tahun Melawat Perlis 2026" class="partner-img-campaign">
+          <img src="images/logo-hentikan-stigma.png" alt="Hentikan Stigma" class="partner-img-campaign">
+          <img src="images/logo-perlis-sihat.png" alt="Perlis Sihat Sejahtera" class="partner-img-campaign">
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const tabs = document.querySelectorAll('.tab-btn');
+
+    function goToSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      tabs[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+      tabs[currentSlide].classList.add('active');
+    }
+
+    function changeSlide(direction) {
+      let newIndex = currentSlide + direction;
+      if (newIndex >= 0 && newIndex < slides.length) {
+        goToSlide(newIndex);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date();
+      const eventDate = new Date(2026, 9, 20); // 20 Oktober 2026
+      
+      const currentDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const btnRegister = document.getElementById('btnRegister');
+
+      if (currentDateOnly < eventDate) {
+        btnRegister.classList.add('disabled');
+        btnRegister.innerText = "Pendaftaran Dibuka 20 Okt 2026";
+        btnRegister.removeAttribute('href');
+      }
+    });
+  </script>
+
+</body>
+</html>
